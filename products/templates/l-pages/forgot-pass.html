@@ -1,0 +1,32 @@
+{% extends 'l-pages/patterns/base.html' %}
+{% block title %}بازیابی رمز عبور{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="card verification-card">
+            <h2>بازیابی رمز عبور</h2>
+
+            <!-- اطلاعات راهنما -->
+            <div class="info-box">
+                لطفاً جهت بازیابی رمز عبور شماره تلفن خود را وارد کنید در ادامه کد بازیابی برای شما ارسال خواهد شد .
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                
+
+                <div class="input-group">
+                    <label for="phone">: شماره تلفن</label>
+                    <input type="text" id="phone" name="phone" placeholder="مثال : 09131234567"  required>
+                    {% if form.phone.errors %}
+                        <div class="error">{{ form.phone.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="button-container">
+                <button type="submit" class="btn">ادامه</button>
+                </div>
+            </form>
+
+            <a href="{% url 'login' %}" class="login-link">بازگشت</a>
+        </div>
+    </div>
+{% endblock %}

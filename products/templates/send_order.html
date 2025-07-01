@@ -1,0 +1,172 @@
+{% extends 'patterns/base.html' %}
+{% load static %}
+{% load custom_filters %}
+ 
+{% block title %}پستینا | خرید پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}}{% endblock title %}
+{% block typebody %}<body class="topics-listing-page" dir="rtl" id="top" style="text-align: right;">{% endblock %}
+    {% block navitem %}
+        <ul class="navbar-nav ms-lg-5 me-lg-auto">
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'products' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-shopping-cart"></i>
+                </span>لیست محصولات</strong>
+            </a>
+        </li>
+        <li class="nav-item">            
+            <a class="nav-link click-scroll" href="{% url 'home' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-home"></i>
+                </span>خانه</strong>
+            </a>
+        </li>
+        <li class="nav-item">            
+            <a class="nav-link click-scroll" href="{% url 'blog' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-coffee"></i>
+                </span>وبلاگ پستینا</strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'send-ticket' 'technical' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-phone"></i>
+                </span>ارتباط با پشتیبانی</strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'about-us' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-info-circle"></i>
+                </span>درباره ما</strong>
+            </a>
+        </li>
+    </ul>
+    {% endblock navitem %}
+{% block header %}
+<header class="site-header d-flex flex-column justify-content-center align-items-center">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-12">
+                <h2 class="text-white">محصولات /  پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}}</h2>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+        <section class="section-padding section-bg">
+            <div class="container">
+                <div class="row" style="flex-direction: row-reverse;">
+                    <div class="col-lg-12 col-12">
+                        <h3 class="mb-4 pb-2">جهت ارسال محصول اطلاعات زیر را وارد کنید</h3>
+                    </div>
+
+                    <div class="col-lg-5 col-12 mx-auto mt-5 mt-lg-5" style="text-align: center;margin-top: -60px !important;">
+                        <img class="google-map" src="{{ p.photo.url }}" alt="" width="100%" height="250" style="border:0;" loading="lazy" />
+                        <h5 class="mt-4 mb-2">شما درحال خرید محصول زیر هستید</h5>
+                        <div class="product-box">
+                            <div class="product-left">
+                                <ul>
+                                    <p><b>محصول</b></p>
+                                    <li>پسته {{p.get_kind_display}}
+                                        {{ p.get_status_display }}
+                                        {{ p.get_quality_display }}
+                                        با انس {{ p.ounce }} 
+                                    </li>
+                                    
+                                    {% if p.discription %}
+                                    <p><b>توضیحات فروشنده</b></p>
+                                    <li>{{p.discription}}</li>
+                                    {% endif %}        
+                                    
+                                    {% if p.free_shipping or p.is_pestina_product %}
+                                    <p><b>توضیحات سفارش محصول</b></p>
+                                    {% if p.free_shipping and p.is_pestina_product %}
+                                    <li>
+                                        محصول متعلق به پستینا و دارای ارسال رایگان است
+                                    </li>
+                                    {% elif p.is_pestina_product %}
+                                    <li>
+                                        محصول متعلق به پستینا است لازم به ذکر است محصولات پستینا تایید شده و دارای کیفیت بهتری هستند
+                                    </li>
+                                    {% elif p.free_shipping %}
+                                    <li>
+                                        محصول دارای ارسال رایگان است
+                                    </li>
+                                    {% endif %} 
+                                    {% endif %} 
+
+                                    
+                                    
+                                </ul>
+                            </div>
+
+                            <div class="product-right">
+                                <ul>
+                                    <p><b>محاسبه هزینه ها</b></p>
+                                    <li>مقدار سفارش  : {{gain | format_weight}}</li>
+                                    <li>هزینه محصول : {{pprice | format_toman}}</li>
+                                    <li>هزینه ارسال : {% if pprice == aprice %} رایگان {% else %} {{p.shipping_cost | format_toman}} {% endif %}</li>
+                                    <li>قابل پرداخت :  {{aprice | format_toman}}</li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-12">
+                        <form class="custom-form contact-form" method="post" role="form">
+                            {% csrf_token %}
+                            <div class="row" style="justify-content:  center;flex-direction: row-reverse;">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input type="text" id="name" name="buyer_namelastname" class="form-control" placeholder="Name" required
+                                            {% if form.buyer_namelastname.value %} value="{{ form.buyer_namelastname.value }}" {% endif %} />
+                                        <label for="floatingInput">نام و نام خانوادگی تحویل گیرنده</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-floating">
+                                        <input type="tel" id="phone" name="buyer_phone" class="form-control" placeholder="mobile" required
+                                            {% if form.buyer_phonenumber.value %} value="{{ form.buyer_phone.value }}" {% endif %} />
+                                        <label for="floatingInput">شماره تماس</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-12">
+                                    <div class="form-floating">
+                                        <input id="code" name="post_code" class="form-control" placeholder="post" required
+                                            {% if form.post_code.value %} value="{{ form.post_code.value }}" {% endif %} />
+                                        <label for="weightInput">کد پستی</label>
+                                    </div>
+                                    <div class="form-floating">
+                                        <textarea id="address" name="address" class="form-control" placeholder="آدرس کامل برای ارسال"></textarea>
+                                        <label for="floatingTextarea">آدرس</label>
+                                    </div>
+                                </div>
+
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            {% for error in field.errors %}
+                                                <blockquote style="text-align: right; margin: 0 16px 11px 0; padding: 0; font-size: 20px; color: red;">
+                                                    {{ field.label }}: {{ error }}
+                                                </blockquote>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div class="col-lg-4 col-12 ms-auto1">
+                                    <button type="submit" class="form-control">ثبت سفارش</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

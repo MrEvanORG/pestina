@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>{% block title %}{% endblock %}</title>
+        {% block head %}{% endblock %}
+        <!-- Link Fonts  -->
+        <!-- <link href="https://fonts.googleapis.com" rel="preconnect"/> -->
+        <!-- <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/> -->
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&amp;family=Open+Sans&amp;display=swap" rel="stylesheet"/> -->
+        <!-- CSS FILES -->
+        <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root.css' %}" rel="stylesheet"/>
+
+        <link rel="icon" href="{% static 'images/fav.svg' %}" sizes="76*76" type="image/svg+xml">
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet"/>
+        <link href="{% static 'css/main-styles.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
+
+
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/click-scroll.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/jquery.sticky.js' %}"></script>
+        <script src="{% static 'js/custom.js' %}"></script>
+        <script src="{% static 'js/theme-toggle.js' %}" defer></script>
+        <!-- <script src="https://kit.fontawesome.com/b72411cf98.js" crossorigin="anonymous"></script> -->
+        <!-- <script src="{% static 'awesome-js/all.min.js' %}" defer></script> -->
+        <!-- <script src="{% static 'awesome-js/duotone.min.js' %}" defer></script> -->
+        <!-- <script src="{% static 'awesome-js/sharp-duotone-solid.min.js' %}" defer></script> -->
+         
+        {% block script %}{% endblock %}
+    </head>
+
+    <!-- body -->
+    {% block typebody %}{% endblock %}
+    <main>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'images/light-logo.svg' %}" alt="پستینا" style="width: 113px ;height: auto;"/>
+                </a>
+
+                <div class="d-lg-none ms-auto me-4" style="display: flex;align-items:center;">
+                    <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}" ></a>
+                    {% if user.is_authenticated %}
+                    <h6 class="login-text" ><a href="{% url 'login' %}">{{user.first_name}} {{user.last_name}}</a></h6>
+                    {% else %}
+                    <h6 class="login-text" ><a href="{% url 'login' %}">ورود | ثبت نام</a></h6>
+                    {% endif %}
+                </div>
+
+                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                        {% block navitem %}{% endblock %}
+                    <div class="d-none d-lg-block">
+                        <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}"></a>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <h6 class="login-text" id="main"><a href="{% url 'login' %}">{{user.first_name}} {{user.last_name}}</a></h6>
+                    {% else %}
+                    <h6 class="login-text" id="main"><a href="{% url 'login' %}">ورود   | ثبت نام</a></h6>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    {% block header %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% include "patterns/footer.html" %}
+    </body>
+</html>

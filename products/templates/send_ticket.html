@@ -1,0 +1,160 @@
+{% extends 'patterns/base.html' %}
+
+{% block title %}ارتباط با پشتیبانی{% endblock title %}
+
+{% block typebody %}
+    <body class="topics-listing-page" dir="rtl" id="top" style="text-align: right;">
+{% endblock %}
+
+{% block navitem %}
+    <ul class="navbar-nav ms-lg-5 me-lg-auto">
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'send-ticket' form_type %}">
+                <strong>
+                    <span style="font-size:var(--menu-font-size);">
+                        <i class="fa-duotone fa-solid fa-phone"></i>
+                    </span>
+                    ارتباط با پشتیبانی
+                </strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'home' %}">
+                <strong>
+                    <span style="font-size:var(--menu-font-size);">
+                        <i class="fa-duotone fa-solid fa-house"></i>
+                    </span>
+                    خانه
+                </strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'blog' %}">
+                <strong>
+                    <span style="font-size:var(--menu-font-size);">
+                        <i class="fa-duotone fa-solid fa-coffee"></i>
+                    </span>
+                    وبلاگ پستینا
+                </strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'products' %}">
+                <strong>
+                    <span style="font-size:var(--menu-font-size);">
+                        <i class="fa-duotone fa-solid fa-shopping-cart"></i>
+                    </span>
+                    لیست محصولات
+                </strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'about-us' %}">
+                <strong>
+                    <span style="font-size:var(--menu-font-size);">
+                        <i class="fa-duotone fa-solid fa-info-circle"></i>
+                    </span>
+                    درباره ما
+                </strong>
+            </a>
+        </li>
+    </ul>
+{% endblock navitem %}
+
+{% block header %}
+    <header class="site-header d-flex flex-column justify-content-center align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 col-12" style="width: 80%;">
+                    <h2 class="text-white">{{ title }}</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <section class="section-padding section-bg">
+        <div class="container">
+            <div class="row" style="justify-content: right;">
+                <div class="col-lg-12 col-12">
+                    <h4 class="mb-4 pb-2" style="padding-right: 0px;">{{ text }}</h4>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <form class="custom-form contact-form" method="post" role="form">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input class="form-control" id="name" name="buyer_namelastname" placeholder="Name" required="true" type="text"
+                                           {% if form.buyer_namelastname.value %} value="{{ form.buyer_namelastname.value }}"
+                                           {% elif user.first_name %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} />
+                                    <label for="floatingInput">نام و نام خانوادکی</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-floating">
+                                    <input class="form-control" id="phone" name="buyer_phonenumber" placeholder="mobile" required="true" type="tel"
+                                           {% if form.buyer_phonenumber.value %} value="{{ form.buyer_phonenumber.value }}"
+                                           {% elif user.phone_number %} value="{{ user.phone_number }}" {% endif %} />
+                                    <label for="floatingInput">شماره تماس</label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-12">
+                                <div class="form-floating">
+                                    <input class="form-control" id="subject" name="request_title" placeholder="subject" required="true" type="text"
+                                           {% if form.request_title.value %} value="{{ form.request_title.value }}" {% endif %} />
+                                    {% if form_type == 'purchase' %}
+                                        <label for="floatingInput">موضوع درخواست</label>
+                                    {% elif form_type == 'technical' %}
+                                        <label for="floatingInput">موضوع نقص فنی</label>
+                                    {% elif form_type == 'feedback' %}
+                                        <label for="floatingInput">عنوان</label>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="passage" name="request_text" placeholder="passage" required="true">{% if form.request_text.value %}{{ form.request_text.value }}{% endif %}</textarea>
+                                    {% if form_type == 'purchase' %}
+                                        <label for="floatingTextarea">متن کامل درخواست</label>
+                                    {% elif form_type == 'technical' %}
+                                        <label for="floatingTextarea">متن </label>
+                                    {% elif form_type == 'feedback' %}
+                                        <label for="floatingTextarea">نظر یا انتقاد شما</label>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if form.errors %}
+                                {% if form.non_field_errors %}
+                                    {% for error in form.non_field_errors %}
+                                        <blockquote style="text-align: right; margin: 0px 16px 11px 0; padding: 0px; font-size: 16px; color: var(--primary-color); width: 95%;">{{ error }}</blockquote>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% for field in form %}
+                                    {% if field.errors %}
+                                        {% for error in field.errors %}
+                                            <blockquote style="text-align: right; margin: 0px 16px 11px 0; padding: 0px; font-size: 16px; color: var(--primary-color); width: 95%;">
+                                                {{ field.label }} : {{ error }}
+                                            </blockquote>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="col-lg-4 col-12 ms-auto">
+                                <button class="form-control" type="submit">ثبت </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

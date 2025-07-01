@@ -1,0 +1,47 @@
+{% extends 'l-pages/patterns/base.html' %}
+{% block title %}ساخت حساب کاربری - پستینا{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="card signup-card">
+            <h2>ساخت حساب کاربری</h2>
+
+            <!-- اطلاعات راهنما -->
+            <div class="info-box">
+                لطفاً اطلاعات خود را با دقت وارد کنید. پس از ثبت‌نام، شماره تلفن شما برای ورود استفاده خواهد شد.
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <label for="name">: نام</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                    {% if form.first_name.errors %}
+                        <div class="error">{{ form.first_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="input-group">
+                    <label for="last_name">: نام خانوادگی</label>
+                    <input type="text" id="last_name" name="last_name" required>
+                    {% if form.last_name.errors %}
+                        <div class="error">{{ form.last_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">: شماره تلفن</label>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="مثال : 09131234567"  required>
+                    {% if form.phone_number.errors %}
+                        <div class="error">{{ form.phone_number.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="button-container">
+                <button type="submit" class="btn">ادامه</button>
+                </div>
+            </form>
+
+            <a href="{% url 'login' %}" class="login-link">حساب کاربری دارید؟ وارد شوید</a>
+        </div>
+    </div>
+{% endblock %}

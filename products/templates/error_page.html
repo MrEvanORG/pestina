@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <link rel="icon" href="{% static 'images/fav.svg' %}" sizes="76*76" type="image/svg+xml">
+        <link href="{% static 'css/error-page.css' %}" rel="stylesheet"/>
+
+        <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
+        <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root.css' %}" rel="stylesheet"/>
+        <script src="{% static 'js/theme-toggle.js' %}" defer></script>
+  <title>
+    {% if type == '404' %}
+    صفحه مورد نظر یافت نشد - 404
+    {% else %}
+    خطای {{status_code}}
+    {% endif %}
+</title>
+</head>
+<body>
+  <div class="gradient"></div>
+  <div class="container">
+    {% if type == '404' %}
+    <h1 style="font-size: var(--h4-font-size);">خطای404 <i class="fa-duotone fa-solid fa-face-sad-sweat"></i><br/> صفحه مورد نظر پیدانشد </h1>
+    <p>بنظر میرسه صفحه ای که دنبالشی گم شده یا وجود نداره این پایین بهت کمک میکنیم برگردی به همون جایی که ازش اومدی <i class="fa-duotone fa-solid fa-face-smile-upside-down"></i></p>
+    {% else %}
+    <h1 style="font-size: var(--h4-font-size);">خطای {{error}} <i class="fa-duotone fa-solid fa-cloud-exclamation"></i><br/>متاسفانه خطایی رخ داده است</h1>
+    <p>بابت خطایی که رخ داده پوزش میطلبیم شما میتوانید نوع خطا و طریقه ای که با این خطا برخورد کردید را به پشتیبانی اطلاع دهید </p>
+    {% endif %}
+    <div class="social-icons">
+      <a href="https://t.me/pestina_co"  rel="nofollow" target="_blank" aria-label="تلگرام"><i class="fab fa-telegram"></i>&nbsp;تلگرام</a>
+      <a href="https://www.intagram.com/pestina_co" rel="nofollow" target="_blank"  aria-label="اینستاگرام"><i class="fab fa-instagram"></i>&nbsp;اینستاگرام</a>
+      <a href="https://x.com/pestina_co"  rel="nofollow" target="_blank" aria-label="توییتر"><i class="fab fa-twitter"></i>&nbsp;شبکه ایکس</a>
+      <a href="{% url 'send-ticket' 'technical' %}"><i class="fa-duotone fa-solid fa-phone"></i>&nbsp;پشتیبانی</a>
+    </div>
+    <div class="buttons">
+      <a href="{% url 'home' %}"><i class="fa-duotone fa-solid fa-home"></i>&nbsp;خانه</a>
+      <a href="javascript:history.back()"><i class="fa-duotone fa-solid fa-backward"></i>&nbsp;بازگشت</a>
+    </div>
+  </div>
+</body>
+</html>

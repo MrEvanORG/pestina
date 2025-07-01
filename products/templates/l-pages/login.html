@@ -1,0 +1,42 @@
+{% extends 'l-pages/patterns/base.html' %}
+{% load static %}
+{% block title %}ورود به پستینا{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="card welcome-card">
+            <h2>به پستینا خوش آمدید</h2>
+            <p>اکانتی ندارید؟</p>
+            <div class="button-container">
+            <a href="{% url 'sign-up' %}" class="btn">نام نویسی کنید</a>
+            </div>
+        </div>
+        <div class="card login-card">
+            <h2>ورود / لاگین</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="phone_number">: شماره تلفن</label>
+                    <input type="text" id="phone_number" name="phone_number" required>
+                    {% if form.phone_number.errors %}
+                        <div class="error">{{ form.phone_number.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="input-group">
+                    <label for="password">: رمز عبور</label>
+                    <input type="password" id="password" name="password" required>
+                    {% if form.password.errors %}
+                        <div class="error">{{ form.password.errors.0 }}</div>
+                    {% endif %}
+                    {% if auth_error %}
+                    <div class="error">نام کاربری یا رمز عبور اشتباه است</div>
+                    {% endif %}
+                </div>
+                <div class="button-container">
+                <button type="submit" class="btn" style="max-width: 140px;">وارد شوید</button>
+                </div>
+            </form>
+            <a href="{% url 'forgot-password' %}" class="forgot-password">بازگردانی پسورد</a>
+        </div>
+    </div>
+
+{% endblock %}

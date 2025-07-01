@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'css/login-styles.css' %}">
+    <script src="{% static 'js/theme-toggle.js' %}" defer></script>
+    {% block head %}{% endblock %}
+</head>
+<body direction="rtl"></body>
+{% block content %}{% endblock %}
+</body>
+</html>

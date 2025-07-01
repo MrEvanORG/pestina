@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <link rel="icon" href="{% static 'images/fav.svg' %}" sizes="76*76" type="image/svg+xml">
+        <link href="{% static 'css/error-page.css' %}" rel="stylesheet"/>
+
+        <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
+        <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
+        <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root.css' %}" rel="stylesheet"/>
+        <script src="{% static 'js/theme-toggle.js' %}" defer></script>
+  <title>به‌زودی...</title>
+</head>
+<body>
+  <div class="gradient"></div>
+  <div class="container">
+    <h1><i class="fa-duotone fa-solid fa-planet-ringed"></i>&nbsp;به‌زودی...</h1>
+    <p>{{text}}</p>
+    <div class="social-icons">
+      <a href="https://t.me/pestina_co"  rel="nofollow" target="_blank" aria-label="تلگرام"><i class="fab fa-telegram"></i>&nbsp;تلگرام</a>
+      <a href="https://www.intagram.com/pestina_co" rel="nofollow" target="_blank"  aria-label="اینستاگرام"><i class="fab fa-instagram"></i>&nbsp;اینستاگرام</a>
+      <a href="https://x.com/pestina_co"  rel="nofollow" target="_blank" aria-label="توییتر"><i class="fab fa-twitter"></i>&nbsp;شبکه ایکس</a>
+      <a href="{% url 'send-ticket' 'technical' %}"><i class="fa-duotone fa-solid fa-phone"></i>&nbsp;پشتیبانی</a>
+    </div>
+    <div class="buttons">
+      <a href="{% url 'home' %}"><i class="fa-duotone fa-solid fa-home"></i>&nbsp;خانه</a>
+      <a href="javascript:history.back()"><i class="fa-duotone fa-solid fa-backward"></i>&nbsp;بازگشت</a>
+    </div>
+  </div>
+</body>
+</html>

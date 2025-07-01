@@ -1,0 +1,98 @@
+{% load static %}
+<footer class="site-footer section-padding">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-12 mb-4 pb-2">
+                <a class="navbar-brand mb-2" href="index.html">
+                    <img src="{% static 'images/light-logo.svg' %}" alt="پستینا" style="width: 130px ;height: auto;"/>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+            <h6 class="site-footer-title mb-3"><i class="fa-solid fa-duotone fa-map"></i> صفحات مرتبط</h6>
+                <ul class="site-footer-links">
+                    <li class="site-footer-link-item">
+                        <a class="site-footer-link" href="{% url 'home' %}"><span style="font-size:var(--menu-font-size);"><i class="fa-solid fa-duotone fa-home"></i> خانه</a>
+                    </li>
+                    <li class="site-footer-link-item">
+                        <a class="site-footer-link" href="{% url 'products' %}"><span style="font-size:var(--menu-font-size);"><i class="fa-solid fa-duotone fa-shopping-cart"></i></span> لیست محصولات</a>
+                    </li>
+                    <li class="site-footer-link-item">
+                        <a class="site-footer-link" href="{% url 'send-ticket' 'purchase' %}"><span style="font-size:var(--menu-font-size);"><i class="fa-solid fa-duotone fa-paper-plane"></i></span> ارسال تیکت</a>
+                    </li>
+                    <li class="site-footer-link-item">
+                        <a class="site-footer-link" href="{% url 'about-us' %}"><span style="font-size:var(--menu-font-size);"><i class="fa-solid fa-duotone fa-info-circle"></i></span> درباره ما</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-4 mb-lg-0">
+                <h6 class="site-footer-title mb-3"><span style="font-size: 1em; color:var(--primary-color);"><i class="fa-solid fa-duotone fa-phone-alt"></i> &nbsp;</span>راه های ارتباطی</h6>
+                <p class="text-white d-flex mb-1">
+                    <a class="site-footer-link" href="tel:09134828860">
+                        <i class="fa-solid fa-duotone fa-phone-square"></i>
+                        &nbsp;09134828860
+                    </a>
+                </p>
+                <p class="text-white d-flex mb-1">
+                    <a class="site-footer-link" href="tel:09134871224">
+                        <i class="fa-solid fa-duotone fa-phone-square"></i>
+                        &nbsp;09134871227
+                    </a>
+                </p>
+                <p class="text-white d-flex">
+                    <a class="site-footer-link" href="mailto:pestina.ir@gmail.com">
+                        <i class="fa-solid fa-duotone fa-envelopes-bulk"></i>
+                        &nbsp;pestina.ir@gmail.com
+                    </a>
+                </p>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <h6 class="site-footer-title mb-3"><i class="fa-solid fa-duotone fa-shield"></i> نماد ها</h6>
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a class="site-footer-link" href="#">اینماد</a>
+                        </li>
+                        <li class="site-footer-link-item">
+                            <a class="site-footer-link" href="#">زرین پال</a>
+                        </li>
+                    </ul>
+            </div>
+
+            {% load static %}
+
+            <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0 ms-auto" style="width: auto;">
+                <div class="dropdown">
+                    <button id="langButton" aria-expanded="false" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa-solid fa-duotone fa-language" aria-hidden="true"></i>
+                        زبان فارسی
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item lang-selector" data-theme="{% static 'css/root/light-root.css' %}" type="button">زبان فارسی </button></li>
+                        <li><button class="dropdown-item lang-selector" data-theme="{% static 'css/root/light-root-2.css' %}" type="button">زبان انگلیسی</button></li>
+                    </ul>
+
+                </div>
+                <div class="dropdown">
+                    <button id="themeButton" aria-expanded="false" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" type="button"><i class="fa-solid fa-duotone fa-adjust" aria-hidden="true"></i>
+                        تم روشن
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item theme-selector" data-theme="{% static 'css/root/light-root.css' %}" type="button">تم روشن</button></li>
+                        <li><button class="dropdown-item theme-selector" data-theme="{% static 'css/root/light-root-2.css' %}" type="button">تم روشن ۲</button></li>
+                        <li><button class="dropdown-item theme-selector" data-theme="{% static 'css/root/dark-root.css' %}" type="button">تم تیره</button></li>
+                        <!-- <li><button class="dropdown-item theme-selector" data-theme="{% static 'css/root/dark-root-2.css' %}" type="button">تم تیره ۲</button></li> -->
+                    </ul>
+                </div>
+                <p class="copyright-text mt-lg-5 mt-4"><b>کپی رایت تیم پستینا 1403</b></p>
+                <p><b>طراحی و توسعه : </b><a href="https://t.me/MrEvan_ORG" rel="nofollow" target="_blank"><i class="fa-solid fa-duotone fa-code"></i><b> Ehsan Ramezani</b></a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+

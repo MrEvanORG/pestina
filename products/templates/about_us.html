@@ -1,0 +1,490 @@
+{% extends 'patterns/base.html' %}
+{% load static %}
+{% block title %}درباره پستینا{% endblock title %}
+{% block typebody %}<body dir="rtl" id="top" style="text-align: right;">{% endblock %}
+
+{% block navitem %}
+    <ul class="navbar-nav ms-lg-5 me-lg-auto">
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'about-us' %}"><strong>
+                <span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-info-circle"></i></span>
+                درباره ما</strong></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_2"><strong> <i class="fa-solid fa-duotone fa-book-open"></i> خواندنی ها</strong></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#section_3"><strong><i class="fa-solid fa-duotone fa-location-arrow"></i> آدرس شرکت</strong></a>
+        </li>       
+
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <strong><i class="fa-duotone fa-solid fa-map"></i> صفحات <i class="fa-solid fa-duotone fa-angle-down" aria-hidden="true"></i></strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" href="{% url 'home' %}">
+                        <span style="font-size:var(--menu-font-size);">
+                            <i class="fa-duotone fa-solid fa-home"></i>
+                        </span>خانه
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'blog' %}">
+                        <span style="font-size:var(--menu-font-size);">
+                            <i class="fa-duotone fa-solid fa-coffee"></i>
+                        </span>وبلاگ پستینا
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'products' %}">
+                        <span style="font-size:var(--menu-font-size);">
+                            <i class="fa-duotone fa-solid fa-shopping-cart"></i>
+                        </span>لیست محصولات
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'send-ticket' 'purchase' %}">
+                        <span style="font-size:var(--menu-font-size);">
+                            <i class="fa-duotone fa-solid fa-paper-plane"></i>
+                        </span>ارسال درخواست خرید پسته
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'send-ticket' 'technical' %}">
+                        <span style="font-size:var(--menu-font-size);">
+                            <i class="fa-duotone fa-solid fa-phone"></i>
+                        </span>ارتباط با پشتیبانی
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endblock navitem %}
+
+{% block header %}
+    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+        <div class="container">
+        </div>
+    </section>
+    
+    <section class="featured-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                    <div class="custom-block custom-block-overlay">
+                        <div class="custom-block bg-white shadow-lg">
+                            <a href="topics-detail.html">
+                                <div class="d-flex">
+                                    <div>
+                                        <h5 class="mb-2">پستینا چیه ؟</h5>
+                                        <p class="mb-0">
+                                            پستینا پلیه بین کشاورز و مصرف‌کننده؛ بدون واسطه‌های اضافه، بدون قیمت‌های ناعادلانه. ما پسته رو مستقیم از دل باغ‌های ایران، با همان کیفیت اصلی، به دست شما می‌رسونیم — چه برای مصرف شخصی، چه برای خرید عمده. پشت این برند یه تیم جوونه که داره با دل و جون کار می‌کنه تا مسیر خرید پسته، شفاف، عادلانه و پایدار باشه.
+                                        </p>
+                                    </div>
+                                </div>
+                                <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Remote_design_team_re_urdx.png' %}"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 col-12">
+                    <div class="custom-block custom-block-overlay">
+                        <div class="d-flex flex-column h-100">
+                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/businesswoman-using-tablet-analysis.jpg' %}"/>
+                            <div class="custom-block-overlay-text d-flex">
+                                <div>
+                                    <h5 class="text-white mb-2">چرا بدون واسطه‌ ؟</h5>
+                                    <p class="text-white">
+                                        ما باور داریم که کشاورز باید سهم واقعی‌اش رو از زحمتی که می‌کشه بگیره، و مصرف‌کننده باید قیمت منصفانه‌ برای کیفیت واقعی پرداخت کنه. حذف واسطه‌ها یعنی حمایت از تولیدکننده، صرفه‌جویی برای مصرف‌کننده، و شفافیت برای همه. پستینا فقط یه فروشنده نیست؛ صدای یه تغییر مثبته
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="social-share d-flex">
+                                <p class="text-white me-4">مارا دنبال کنید : </p>
+                                <ul class="social-icon">
+                                    <li class="social-icon-item">
+                                        <a class="social-icon-link bi-telegram" href="#"></a>
+                                    </li>
+                                    <li class="social-icon-item">
+                                        <a class="social-icon-link bi-instagram" href="#"></a>
+                                    </li>
+                                    <li class="social-icon-item">
+                                        <a class="social-icon-link bi-google" href="#"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="section-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock header %}
+
+{% block content %}
+    <!-- <section class="explore-section section-padding" id="section_2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="mb-4">موضوعات خواندنی</h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button aria-controls="design-tab-pane" aria-selected="true" class="nav-link active" data-bs-target="#design-tab-pane" data-bs-toggle="tab" id="design-tab" role="tab" type="button">محاسبه انس</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button aria-controls="marketing-tab-pane" aria-selected="false" class="nav-link" data-bs-target="#marketing-tab-pane" data-bs-toggle="tab" id="marketing-tab" role="tab" type="button">انواع پسته</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button aria-controls="music-tab-pane" aria-selected="false" class="nav-link" data-bs-target="#music-tab-pane" data-bs-toggle="tab" id="music-tab" role="tab" type="button">کیفیت</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button aria-controls="education-tab-pane" aria-selected="false" class="nav-link" data-bs-target="#education-tab-pane" data-bs-toggle="tab" id="education-tab" role="tab" type="button">مقدار</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="tab-content" id="myTabContent">
+                        <div aria-labelledby="design-tab" class="tab-pane fade show active" id="design-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">محاسبه انس</h5>
+                                                    <p class="mb-0">برای محاسبه اونس پسته باید از ترازوی مخصوص اونسگیر استفاده کرد. بدین صورت که در کفه ترازوی اونسگیر وزنه 142 گرمی قرار می دهیم و در کفه دیگر پسته می ریزیم، بعد از میزان بودن ، پسته ها را به دسته های پنج تایی که هر دسته یک اونس نامیده می شود، تقسیم می کنیم. تعداد بسته 5 تایی را اونس پسته می نامیم .</p>
+                                                </div>
+                                                <span class="badge bg-design rounded-pill ms-auto">1</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Remote_design_team_re_urdx.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">مفهوم انس</h5>
+                                                    <p class="mb-0">هرچه انس پسته کمتر باشد بدین معناست که پسته ها درشت تر هستند و پسته با کیفیت تر است و هرچه انس بیشتر باشد پسته ها ریز تر و همچنین ارزان تر هستند<br><br><br><br><br><br><br></p>
+                                                </div>
+                                                <span class="badge bg-design rounded-pill ms-auto">2</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Redesign_feedback_re_jvm0.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">انس پسته برای آجیل</h5>
+                                                    <p class="mb-0">برای آجیل های خانگی بهتر است پسته ای را انتخاب کنید که دارای دانه های کوچیکنری است تا از لحاظ اقتصادی به صرفه باشد و برای مصارف نمایشگاهی بهنر است از پسته های با انس کمتر استفاده کنید<br><br><br><br><br><br></p>
+                                                </div>
+                                                <span class="badge bg-design rounded-pill ms-auto">3</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/colleagues-working-cozy-office-medium-shot.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div aria-labelledby="marketing-tab" class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">اکبری</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-advertising rounded-pill ms-auto">1</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_online_ad_re_ol62.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">فندقی</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-advertising rounded-pill ms-auto">2</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_online_ad_re_ol62.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">احمدآقایی</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-advertising rounded-pill ms-auto">3</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_online_ad_re_ol62.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">کله قوچی</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-advertising rounded-pill ms-auto">4</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_online_ad_re_ol62.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">انتخاب </h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-advertising rounded-pill ms-auto">5</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Group_video_re_btu7.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">ممتاز</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-advertising rounded-pill ms-auto">6</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_viral_tweet_gndb.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div aria-labelledby="finance-tab" class="tab-pane fade" id="finance-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">اوحدی</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-finance rounded-pill ms-auto">30</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Finance_re_gnv2.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="custom-block custom-block-overlay">
+                                        <div class="d-flex flex-column h-100">
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/businesswoman-using-tablet-analysis-graph-company-finance-strategy-statistics-success-concept-planning-future-office-room.jpg' %}"/>
+                                            <div class="custom-block-overlay-text d-flex">
+                                                <div>
+                                                    <h5 class="text-white mb-2">Finance</h5>
+                                                    <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint animi necessitatibus aperiam repudiandae nam omnis</p>
+                                                    <a class="btn custom-btn mt-2 mt-lg-3" href="topics-detail.html">Learn More</a>
+                                                </div>
+                                                <span class="badge bg-finance rounded-pill ms-auto">25</span>
+                                            </div>
+                                            <div class="social-share d-flex">
+                                                <p class="text-white me-4">Share:</p>
+                                                <ul class="social-icon">
+                                                    <li class="social-icon-item">
+                                                        <a class="social-icon-link bi-twitter" href="#"></a>
+                                                    </li>
+                                                    <li class="social-icon-item">
+                                                        <a class="social-icon-link bi-facebook" href="#"></a>
+                                                    </li>
+                                                    <li class="social-icon-item">
+                                                        <a class="social-icon-link bi-pinterest" href="#"></a>
+                                                    </li>
+                                                </ul>
+                                                <a class="custom-icon bi-bookmark ms-auto" href="#"></a>
+                                            </div>
+                                            <div class="section-overlay"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div aria-labelledby="music-tab" class="tab-pane fade" id="music-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">درجه یک</h5>
+                                                    <p class="mb-0">پسته درجه یک تماما از یک نوع پسته تشکیل شده است و تمامی دانه ها وضعیت یکسان با کمترین خرابی را دارند ، بهترین نوع پسته برای مصارف نمایشگاهی است</p>
+                                                </div>
+                                                <span class="badge bg-music rounded-pill ms-auto">1</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Compose_music_re_wpiw.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">درجه دو</h5>
+                                                    <p class="mb-0">پسته درجه دو شباهت زیادی به پسته درجه یک دارد با این تفاوت که احتمال مشاهده دانه معیوب در این پسته بالا است همچنین بهترین نوع برای پسته آجیلی است </p>
+                                                </div>
+                                                <span class="badge bg-music rounded-pill ms-auto">2</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_happy_music_g6wc.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">درجه سه</h5>
+                                                    <p class="mb-0">این پسته دارای کیفیت کمتری از دو نوع قبلی است و احتمال مشاهده پسته معیوب و از نوع دیگر بیشتر است</p>
+                                                </div>
+                                                <span class="badge bg-music rounded-pill ms-auto">3</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Podcast_audience_re_4i5q.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div aria-labelledby="education-tab" class="tab-pane fade" id="education-tab-pane" role="tabpanel" tabindex="0">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-3">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">Graduation</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-education rounded-pill ms-auto">80</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Graduation_re_gthn.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="custom-block bg-white shadow-lg">
+                                        <a href="topics-detail.html">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <h5 class="mb-2">Educator</h5>
+                                                    <p class="mb-0">Lorem Ipsum dolor sit amet consectetur</p>
+                                                </div>
+                                                <span class="badge bg-education rounded-pill ms-auto">75</span>
+                                            </div>
+                                            <img alt="" class="custom-block-image img-fluid" src="{% static 'images/topics/undraw_Educator_re_ju47.png' %}"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+    
+    <section class="contact-section section-padding section-bg" id="section_3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-12 text-center">
+                    <h2 class="mb-5"> <i class="fa-duotone fa-solid fa-map-location-dot"></i> آدرس شرکت پستینا (به زودی)</h2>
+                </div>
+                
+                <div class="col-lg-5 col-12 mb-4 mb-lg-0">
+                    <iframe allowfullscreen="" class="google-map" height="250" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3229.131805800596!2d55.98074617239668!3d30.408763844185838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f00f77f9b5ca78b%3A0x221169bd5a9080ed!2z2YXZiNiy2Ycg2LHbjNin2LPYqiDYrNmF2YfZiNix24w!5e0!3m2!1sfa!2s!4v1728503789110!5m2!1sfa!2s" style="border:0;" width="100%"></iframe>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-12 mb-3 mb-lg- mb-md-0 ms-auto">
+                    <h4 class="mb-3"><i class="fa-duotone fa-solid fa-buildings"></i> دفتر اصلی</h4>
+                    <p><i class="fa-duotone fa-solid fa-location-dot"></i> نشانی : (به زودی)</p>
+                    <br/>
+                    <p class="d-flex align-items-center mb-1">
+                        <span class="me-2"><i class="fa-duotone fa-solid fa-circle-phone-flip"></i> تماس </span>
+                        <a class="site-footer-link" href="tel: 0000">
+                            (به زودی)
+                        </a>
+                    </p>
+                    <p class="d-flex align-items-center">
+                        <span class="me-2"><i class="fa-duotone fa-solid fa-envelopes"></i> ایمیل</span>
+                        <a class="site-footer-link" href="mailto:info@company.com">
+                            (به زودی)
+                        </a>
+                    </p>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-12 mx-auto">
+                    <h4 class="mb-3"><i class="fa-duotone fa-solid fa-buildings"></i> دفتر دوم</h4>
+                    <p><i class="fa-duotone fa-solid fa-location-dot"></i> نشانی : (به زودی)</p>
+                    <br/>
+                    <p class="d-flex align-items-center mb-1">
+                        <span class="me-2"><i class="fa-duotone fa-solid fa-circle-phone-flip"></i> تماس </span>
+                        <a class="site-footer-link" href="tel: 0000">
+                            (به زودی)
+                        </a>
+                    </p>
+                    <p class="d-flex align-items-center">
+                        <span class="me-2"><i class="fa-duotone fa-solid fa-envelopes"></i> ایمیل</span>
+                        <a class="site-footer-link" href="mailto:info@company.com">(به زودی)</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
