@@ -21,11 +21,20 @@ from django.conf.urls.static import static
 from django.urls import re_path
 from django.views.static import serve
 from products import views
+# site map 
+from django.contrib.sitemaps.views import sitemap
+from products.sitemaps import ProductSitemap , StaticViewSitemap
+
+sitemaps = {
+    'products': ProductSitemap,
+    'static': StaticViewSitemap,
+        }
 
 urlpatterns = [
     path('',include('products.urls')),
     path('blog/',include('products.blogurls')),
     path('admin_jan_ammat_ino_be_kasi_nade/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]

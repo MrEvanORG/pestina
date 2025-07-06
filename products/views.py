@@ -204,11 +204,12 @@ def send_ticket(request,ticket_type):
             ip_address = get_ip(request))
             ticket.save()
             #send message
-            try:
-                rs = send_order_message(ticket.buyer_namelastname,ticket.buyer_phone,ticket.request_title,form_type.label)
-            except Exception as e:
-                print(rs,e)
-                
+            # try:
+            #     rs = send_order_message(ticket.buyer_namelastname,ticket.buyer_phone,ticket.request_title,form_type.label)
+            # except Exception as e:
+            #     print(rs,e)
+            # print(rs)
+
             request.session['buyer-phone'] = form.cleaned_data['buyer_phonenumber']
             request.session['buyer-name'] = form.cleaned_data['buyer_namelastname']
             request.session['form-type'] = ticket_type

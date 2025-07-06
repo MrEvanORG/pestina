@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 # Create your models here.
-
 class User(AbstractUser):
     first_name = models.CharField(max_length=20,verbose_name='نام کاربر')
     last_name = models.CharField(max_length=20,verbose_name='نام خانوادگی کاربر')
@@ -63,6 +63,10 @@ class Product(models.Model):
         if self.free_shipping :
             self.shipping_cost = None
         super().save(*args,**kwargs)
+    
+
+    def get_absolute_url(self):
+        return reverse("buy-product", args=[self.id])
 
 
     def __str__(self):

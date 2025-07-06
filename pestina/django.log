@@ -1,0 +1,122 @@
+[INFO] 2025-07-02 12:23:30,219 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:23:30,219 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:23:45,611 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:23:45,611 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:23:46,311 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:23:46,311 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:25:35,759 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:25:35,759 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:25:36,504 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:25:36,504 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:25:44,765 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:25:44,765 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:25:45,468 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:25:45,468 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:25:49,543 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:25:49,543 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\settings.py changed, reloading.
+[INFO] 2025-07-02 12:25:50,207 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-02 12:25:50,207 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:15:06,142 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:15:06,142 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:15:47,441 [django.utils.autoreload] C:\Users\Ehsan\AppData\Roaming\Python\Python313\site-packages\ghasedak_sms\ghasedak.py changed, reloading.
+[INFO] 2025-07-07 01:15:47,441 [django.utils.autoreload] C:\Users\Ehsan\AppData\Roaming\Python\Python313\site-packages\ghasedak_sms\ghasedak.py changed, reloading.
+[INFO] 2025-07-07 01:15:48,137 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:15:48,137 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:16:18,820 [django.server] "GET /sitemap.xml HTTP/1.1" 200 296
+[INFO] 2025-07-07 01:16:18,820 [django.server] "GET /sitemap.xml HTTP/1.1" 200 296
+[WARNING] 2025-07-07 01:16:18,928 [django.server] "GET /favicon.ico HTTP/1.1" 404 7049
+[WARNING] 2025-07-07 01:16:18,928 [django.server] "GET /favicon.ico HTTP/1.1" 404 7049
+[INFO] 2025-07-07 01:19:39,036 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:19:39,036 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:19:39,769 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:19:39,769 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:19:41,793 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:19:41,793 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:19:42,463 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:19:42,463 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:23,812 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:23,812 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:24,555 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:24,555 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:26,349 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:26,349 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:27,000 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:27,000 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:31,864 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:31,864 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:32,561 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:32,561 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:35,368 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:35,368 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:36,024 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:36,024 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:39,046 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:39,046 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:39,829 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:39,829 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:43,873 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:43,873 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:20:44,551 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:20:44,551 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:22:12,421 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\urls.py changed, reloading.
+[INFO] 2025-07-07 01:22:12,421 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\urls.py changed, reloading.
+[INFO] 2025-07-07 01:22:13,074 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:22:13,074 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:22:26,206 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\urls.py changed, reloading.
+[INFO] 2025-07-07 01:22:26,206 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\pestina\urls.py changed, reloading.
+[INFO] 2025-07-07 01:22:26,861 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:22:26,861 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:22:42,315 [django.server] "GET /sitemap.xml HTTP/1.1" 200 607
+[INFO] 2025-07-07 01:22:42,315 [django.server] "GET /sitemap.xml HTTP/1.1" 200 607
+[INFO] 2025-07-07 01:23:04,916 [django.server] "GET / HTTP/1.1" 200 23556
+[INFO] 2025-07-07 01:23:04,916 [django.server] "GET / HTTP/1.1" 200 23556
+[INFO] 2025-07-07 01:23:05,042 [django.server] "GET /static/css/main-styles.css HTTP/1.1" 200 27571
+[INFO] 2025-07-07 01:23:05,042 [django.server] "GET /static/css/main-styles.css HTTP/1.1" 200 27571
+[INFO] 2025-07-07 01:23:06,669 [django.server] "GET /products/ HTTP/1.1" 200 17483
+[INFO] 2025-07-07 01:23:06,669 [django.server] "GET /products/ HTTP/1.1" 200 17483
+[INFO] 2025-07-07 01:23:06,708 [django.server] "GET /static/css/product-card.css HTTP/1.1" 200 5503
+[INFO] 2025-07-07 01:23:06,708 [django.server] "GET /static/css/product-card.css HTTP/1.1" 200 5503
+[INFO] 2025-07-07 01:23:06,711 [django.server] "GET /media/prdphotos/Untitled-1_7gSF9ep.jpg HTTP/1.1" 200 73157
+[INFO] 2025-07-07 01:23:06,711 [django.server] "GET /media/prdphotos/Untitled-1_7gSF9ep.jpg HTTP/1.1" 200 73157
+[INFO] 2025-07-07 01:23:06,723 [django.server] "GET /static/js/card.js HTTP/1.1" 200 1254
+[INFO] 2025-07-07 01:23:06,723 [django.server] "GET /static/js/card.js HTTP/1.1" 200 1254
+[INFO] 2025-07-07 01:25:51,881 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:25:51,881 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:25:52,571 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:25:52,571 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:25:56,673 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:25:56,673 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:25:57,353 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:25:57,353 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:26:16,891 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:26:16,891 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:26:17,859 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:26:17,859 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:26:19,905 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:26:19,905 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\sitemaps.py changed, reloading.
+[INFO] 2025-07-07 01:26:20,635 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:26:20,635 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:26:23,617 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:23,617 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:24,296 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:24,296 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:24,802 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:24,802 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:25,242 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:25,242 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:25,666 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:25,666 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,098 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,098 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,494 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,494 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,678 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,678 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,826 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,826 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,986 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:26:26,986 [django.server] "GET /sitemap.xml HTTP/1.1" 200 611
+[INFO] 2025-07-07 01:29:29,918 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\views.py changed, reloading.
+[INFO] 2025-07-07 01:29:29,918 [django.utils.autoreload] D:\python-project\Django\pestina project\pestina\products\views.py changed, reloading.
+[INFO] 2025-07-07 01:29:30,847 [django.utils.autoreload] Watching for file changes with StatReloader
+[INFO] 2025-07-07 01:29:30,847 [django.utils.autoreload] Watching for file changes with StatReloader

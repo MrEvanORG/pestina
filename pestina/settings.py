@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     'products',
 ]
 
@@ -130,6 +131,59 @@ AUTH_PASSWORD_VALIDATORS = [
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # SECURE_HSTS_PRELOAD = True
 
+LOG_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_FILE = os.path.join(LOG_DIR, 'django.log')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} [{name}] {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOG_FILE,
+            'maxBytes': 1024 * 1024 * 2,  
+            'backupCount': 0,             
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+
+    'root': {
+        'handlers': ['file', 'console'],
+        'level': 'INFO',
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    }
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -159,25 +213,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-#----------------- EMAIN SECTION------------------
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pestina.ir@gmail.com'
-#birth in 21 aug 20000
-#PpestinaA.1274
-EMAIL_HOST_PASSWORD = 'alya wmbh rcsa orlt'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#send mail : send_mail(subject,message,[recivers],fial_silently=False)
-# send_mail('test','test for ehsan','pestina.ir@gmail.com',['ehsan66845@gmail.com'],fail_silently=True)
-#-------------------------------------------------
-# EMAIL_HOST = 'mail.pestina.ir'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'info@pestina.ir'
-# #birth in 21 aug 20000
-# #PpestinaA.1274
-# EMAIL_HOST_PASSWORD = 'zyF9CTTS2YHHBf3'
-# EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
