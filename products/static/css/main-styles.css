@@ -1271,19 +1271,35 @@ blockquote {
     padding-top: 30px;
     padding-bottom: 0;
   }
+  .row#support-rows{
+    flex-direction: column-reverse !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
 
-  
+  .timeline-container .vertical-scrollable-timeline li .icon-holder::before {
+    width: 65px;
+    height: 65px;
+  }
+  .timeline-container .vertical-scrollable-timeline li .icon-holder {
+    width: 80px;
+    height:80px;
+    }
+
+  .timeline-container .vertical-scrollable-timeline .list-progress {
+    width: 9px;
+    right: 36px;
+  }
+    
+  .timeline-container .vertical-scrollable-timeline li {
+    position: relative;
+    padding: 17px 110px 40px 39px;
+  }
   .col-12 {
     flex: 0 0 auto;
     width: 100%;
     padding: 0px 25px;
-  }
-  .timeline-container .vertical-scrollable-timeline li {
-    position: relative;
-    padding: 17px 110px 40px 39px;
   }
   .custom-block{
     height: auto;

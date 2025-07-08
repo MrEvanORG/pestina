@@ -1,4 +1,5 @@
 {% extends 'patterns/base.html' %}
+{% load static %}
 {% block meta %}ارتباط با پشتیبانی - گزارش نقص فنی در پستینا{% endblock %}
 {% block title %}ارتباط با پشتیبانی{% endblock title %}
 
@@ -76,12 +77,12 @@
 {% block content %}
     <section class="section-padding section-bg">
         <div class="container">
-            <div class="row" style="justify-content: right;">
-                <div class="col-lg-12 col-12">
-                    <h4 class="mb-4 pb-2" style="padding-right: 0px;">{{ text }}</h4>
-                </div>
-
+            <div class="col-lg-12 col-12">
+                <h4 class="mb-4 pb-2" style="padding-right: 0px;">{{ text }}</h4>
+            </div>
+            <div class="row" id="support-rows" style="flex-direction: row;">
                 <div class="col-lg-6 col-12">
+
                     <form class="custom-form contact-form" method="post" role="form">
                         {% csrf_token %}
 
@@ -153,6 +154,29 @@
                         </div>
                     </form>
                 </div>
+                {% if form_type == 'feedback' %}
+                <div class="col-lg-5 col-12 mb-4">
+                    <img class="themed-image img-fluid" src="{% static 'images/light/feedback-light.svg' %}" alt="feedback-img" 
+                    data-light = "{% static 'images/light/feedback-light.svg' %}"
+                    data-light2 = "{% static 'images/light-2/feedback-light-2.svg' %}"
+                    data-dark = "{% static 'images/dark/feedback-dark.svg' %}" />
+                </div>                
+                {% elif form_type == 'technical' %}
+                <div class="col-lg-5 col-12 mb-4">
+                    <img class="themed-image img-fluid" src="{% static 'images/light/support-light.svg' %}" alt="support-img" 
+                    data-light = "{% static 'images/light/support-light.svg' %}"
+                    data-light2 = "{% static 'images/light-2/support-light-2.svg' %}"
+                    data-dark = "{% static 'images/dark/support-dark.svg' %}" />
+                </div>
+
+                {% elif form_type == 'purchase' %}
+                <div class="col-lg-5 col-12 mb-4">
+                    <img class="themed-image img-fluid" src="{% static 'images/light/purchase-light.svg' %}" alt="purchase-img" 
+                    data-light = "{% static 'images/light/purchase-light.svg' %}"
+                    data-light2 = "{% static 'images/light-2/purchase-light-2.svg' %}"
+                    data-dark = "{% static 'images/dark/purchase-dark.svg' %}" />
+                </div>
+                {% endif %}
             </div>
         </div>
     </section>

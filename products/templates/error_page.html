@@ -1,5 +1,4 @@
 {% load static %}
-{% block meta %}صفحه مورد نظر یافت نشد - 404{% endblock %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -7,6 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta name="theme-color" content="var(--secondary-color)">
+            {% if type == '404' %}
+            <meta name="description" content="صفحه مورد نظر یافت نشد - 404">
+            {% else %}
+            <meta name="description" content="خطای سمت سرور">
+            {% endif %}
         <link rel="icon" href="{% static 'images/fav.svg' %}" sizes="76*76" type="image/svg+xml">
         <link href="{% static 'css/error-page.css' %}" rel="stylesheet"/>
         <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet"/>
@@ -37,7 +41,7 @@
     <div class="social-icons">
       <a href="https://t.me/pestina_co"  rel="nofollow" target="_blank" aria-label="تلگرام"><i class="fab fa-telegram"></i>&nbsp;تلگرام</a>
       <a href="https://www.intagram.com/pestina_co" rel="nofollow" target="_blank"  aria-label="اینستاگرام"><i class="fab fa-instagram"></i>&nbsp;اینستاگرام</a>
-      <a href="https://x.com/pestina_co"  rel="nofollow" target="_blank" aria-label="توییتر"><i class="fab fa-twitter"></i>&nbsp;شبکه ایکس</a>
+      <a href="https://x.com/pestina_co"  rel="nofollow" target="_blank" aria-label="توییتر"><i class="fab fa-x-twitter"></i>&nbsp;شبکه ایکس</a>
       <a href="{% url 'send-ticket' 'technical' %}"><i class="fa-duotone fa-solid fa-phone"></i>&nbsp;پشتیبانی</a>
     </div>
     <div class="buttons">

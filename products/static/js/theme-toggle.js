@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const defaultTheme = themeStylesheet.getAttribute("href");
     const defaultThemeText = "تم روشن";
 
+    // تابع برای اعمال تم ذخیره‌شده و عکس‌ها
     function applySavedTheme() {
         const savedTheme = localStorage.getItem("selectedTheme");
         const savedThemeText = localStorage.getItem("selectedThemeText");
@@ -13,7 +14,29 @@ document.addEventListener("DOMContentLoaded", function () {
         if (savedTheme) {
             themeStylesheet.setAttribute("href", savedTheme);
             themeButton.innerText = savedThemeText || defaultThemeText;
+
+            updateImagesBasedOnTheme(savedTheme);
         }
+    }
+
+    // تابع برای آپدیت عکس‌ها بر اساس تم
+    function updateImagesBasedOnTheme(themeHref) {
+        const allImages = document.querySelectorAll('.themed-image');
+
+        let themeKey = "light";  // پیش‌فرض
+
+        if (themeHref.includes("dark-root")) {
+            themeKey = "dark";
+        } else if (themeHref.includes("light-root-2")) {
+            themeKey = "light2";
+        }
+
+        allImages.forEach(img => {
+            const newSrc = img.getAttribute(`data-${themeKey}`);
+            if (newSrc) {
+                img.setAttribute("src", newSrc);
+            }
+        });
     }
 
     applySavedTheme();
@@ -28,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             localStorage.setItem("selectedTheme", selectedTheme);
             localStorage.setItem("selectedThemeText", selectedThemeText);
+
+            updateImagesBasedOnTheme(selectedTheme);
         });
     });
 });
