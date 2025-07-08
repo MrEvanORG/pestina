@@ -1,5 +1,6 @@
 {% extends 'patterns/base.html' %}
 {% load static %}
+{% block meta %}خرید پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}} از پستینا{% endblock %}
 {% load custom_filters %}
 {% block title %}پستینا | خرید پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}}{% endblock title %}
 {% block typebody %}<body class="topics-listing-page" dir="rtl" id="top" style="text-align: right;">{% endblock %}
