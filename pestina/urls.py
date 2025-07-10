@@ -24,6 +24,7 @@ from products import views
 # site map 
 from django.contrib.sitemaps.views import sitemap
 from products.sitemaps import ProductSitemap , StaticViewSitemap
+from django.views.generic import TemplateView
 
 sitemaps = {
     'products': ProductSitemap,
@@ -31,10 +32,13 @@ sitemaps = {
         }
 
 urlpatterns = [
+    
     path('',include('products.urls')),
     path('blog/',include('products.blogurls')),
     path('admin_jan_ammat_ino_be_kasi_nade/', admin.site.urls),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+
+    path('robots.txt/', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]

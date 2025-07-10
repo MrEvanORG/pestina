@@ -48,8 +48,7 @@ def send_ticket_message(name,phone,title,type):
     return response
 
 def send_order_message(name,phone,product,gain,price):
-    msg = f"""
-سفارش محصول جدید
+    msg = f"""سفارش محصول جدید
 محصول : {product}
 نام : {name}
 شماره تماس : {phone}

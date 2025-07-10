@@ -281,7 +281,7 @@ def buy_product2(request):
             )
             order.save()
             try:
-                rs = send_order_message(order.name,order.phone,order.product.get_kind_display,order.gain,order.price)
+                rs = send_order_message(order.name,order.phone,order.product.get_kind_display(),order.gain,order.price)
             except:
                 print(rs)
             form_data['order_number'] = str(order.id).zfill(4)
