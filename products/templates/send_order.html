@@ -74,6 +74,10 @@
                                         {{ p.get_quality_display }}
                                         با انس {{ p.ounce }} 
                                     </li>
+
+                                    <li>
+                                        قیمت هر کیلوگرم محصول : {{p.price | format_toman}}
+                                    </li>
                                     
                                     {% if p.discription %}
                                     <p><b>توضیحات فروشنده</b></p>
@@ -108,7 +112,7 @@
                                     <li>مقدار سفارش  : {{gain | format_weight}}</li>
                                     <li>هزینه محصول : {{pprice | format_toman}}</li>
                                     <li>هزینه ارسال : {% if pprice == aprice %} رایگان {% else %} {{p.shipping_cost | format_toman}} {% endif %}</li>
-                                    <li>قابل پرداخت :  {{aprice | format_toman}}</li>
+                                    <li><b>قابل پرداخت :  {{aprice | format_toman}}</b></li>
                                 </ul>
                             </div>
                             

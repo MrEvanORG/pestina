@@ -120,7 +120,7 @@ class BuyTicket(models.Model):
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی')
 
     def __str__(self):
-        return self.buyer_namelastname
+        return self.name
 
 
 

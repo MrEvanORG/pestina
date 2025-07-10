@@ -203,12 +203,12 @@ def send_ticket(request,ticket_type):
             ticket_type = form_type,
             ip_address = get_ip(request))
             ticket.save()
-            #send message
-            # try:
-            #     rs = send_order_message(ticket.buyer_namelastname,ticket.buyer_phone,ticket.request_title,form_type.label)
-            # except Exception as e:
-            #     print(rs,e)
-            # print(rs)
+            # send message
+            try:
+                rs = send_ticket_message(ticket.buyer_namelastname,ticket.buyer_phone,ticket.request_title,form_type.label)
+            except Exception as e:
+                print(rs,e)
+            print(rs)
 
             request.session['buyer-phone'] = form.cleaned_data['buyer_phonenumber']
             request.session['buyer-name'] = form.cleaned_data['buyer_namelastname']
@@ -280,7 +280,10 @@ def buy_product2(request):
                 ip_address = get_ip(request),
             )
             order.save()
-            #send message
+            try:
+                rs = send_order_message(order.name,order.phone,order.product.get_kind_display,order.gain,order.price)
+            except:
+                print(rs)
             form_data['order_number'] = str(order.id).zfill(4)
             form_data['name'] = form.cleaned_data['buyer_namelastname']
             form_data['phone'] = form.cleaned_data['buyer_phone']
@@ -326,10 +329,10 @@ def registered_order(request):
         'p' : Product.objects.get(id=data.get('product')),
         'gain':  float(data.get('gain')),
     }
-    # try:
-    #     del request.session["form-data"]
-    # except:
-    #     pass
+    try:
+        del request.session["form-data"]
+    except:
+        pass
     return render(request,'registered_order.html',context)
 # ------------------- Order-Buy Pages --------------------->
 ############################################################
