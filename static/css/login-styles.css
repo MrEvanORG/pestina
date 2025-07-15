@@ -1,0 +1,231 @@
+@font-face {
+    font-display: block;
+    font-family:"vazir";
+    src: url("../fonts/Vazir-light.woff2");
+    src:url("../fonts/Vazir-Light.woff")
+  }
+  /* --primary-color:                #123524;
+  --custom-btn-bg-hover-color:    #123524;
+  --link-hover-color:             #123524;
+
+  --secondary-color:              #85A947;
+  --custom-btn-bg-color:          #85A947;
+
+  --section-bg-color:             #EFE3C2;
+
+  --p-color:                      #717275;
+
+  --border-color:                 #3E7B27; */
+/* تعریف متغیرهای رنگی */
+
+body {
+    font-family: var(--body-font-family);
+    background-color: var(--section-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+    margin: 0;
+    padding: 0px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    background:var(--white-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* تنظیمات کلی کارت‌ها */
+.card {
+    padding: 20px;
+    text-align: right;
+    flex: 1;
+}
+
+/* استایل کارت خوشامدگویی */
+.welcome-card {
+    background: var(--secondary-color);
+    color: var(--white-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-card .btn {
+    max-width: 100px;
+    background:var(--white-color);
+    color: var(--secondary-color);
+    padding: 10px 15px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.welcome-card .btn:hover {
+    background: var(--primary-color);
+    color:var(--white-color);
+}
+
+/* استایل کارت فرم */
+.login-card {
+    background: var(--white-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 94%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 100px;
+    font-family: vazir;
+    background-color: var(--white-color);
+}
+
+/* استایل نمایش ارور */
+.error {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.btn {
+    width: 100%;
+    max-width: 285px;
+    padding: 12px;
+    font-size: 1em;
+    background: var(--secondary-color);
+    color:var(--white-color);
+    border: none;
+    padding: 10px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: vazir;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--primary-color);
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 10px;
+    color: var( --link-hover-color);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+/* استایل کارت ثبت‌نام */
+.signup-card {
+    background: var(--white-color);
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    max-width: 400px;
+    width: 90%;
+    margin: auto;
+}
+
+/* استایل باکس اطلاعات */
+.info-box {
+    background: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+/* استایل لینک ورود */
+.login-link {
+    display: block;
+    margin-top: 15px;
+    color: var( --link-hover-color);
+    text-align: center;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+.button-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+/* کارت تأیید شماره تلفن */
+.verification-card {
+    background:var(--white-color);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    max-width: 300px;  /* کوچکتر از سایر کارت‌ها */
+    width: 100%;
+    margin: auto;
+}
+
+/* متن راهنمای وارد کردن کد */
+.verification-text {
+    font-size: 0.9em;
+    color:var(--dark-color);
+    margin-bottom: 15px;
+}
+
+/* استایل ورودی کد */
+.input-code input {
+    width: 80%;  /* کوچک‌تر برای کد ۵ رقمی */
+    text-align: center;
+    letter-spacing: 3px;  /* فاصله بین ارقام برای خوانایی بهتر */
+    font-size: 1.2em;
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    border-radius: 100px
+}
+/* تنظیمات ریسپانسیو */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        max-width: 90%;
+    }
+    
+    .welcome-card {
+        padding: 30px;
+    }
+
+    .login-card {
+        padding: 20px;
+    }
+}

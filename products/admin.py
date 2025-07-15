@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseAdmin
-from .models import User , Product , Ticket ,BuyTicket
+from jsoneditor.forms import JSONEditor
+from .models import *
 
 
 @admin.register(User)
@@ -67,6 +68,34 @@ class BuyTicketAdmin(admin.ModelAdmin):
     readonly_fields = ("id","buy_time","ip_address")
 
 
+@admin.register(BlogCategories)
+class BlogCategoriesAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "discription",
+        "slug",
+        "photo",
+    )
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ("title",
+    "slug",
+    "auther",
+    "category",
+    "created_at",
+    "cover_image",
+    "image1",
+    "image1",
+    "image3",
+    "image4",
+    "image5",
+    "image6",
+    "image7")
+    # prepopulated_fields = {'slug':('title',)}
+    formfield_overrides = {
+        models.JSONField : {'widget':JSONEditor},
+    }
 
 
 # EehsaNn8404

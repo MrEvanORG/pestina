@@ -21,18 +21,20 @@ from django.conf.urls.static import static
 from django.urls import re_path
 from django.views.static import serve
 from products import views
-# site map 
+# site map --------------------------------
 from django.contrib.sitemaps.views import sitemap
-from products.sitemaps import ProductSitemap , StaticViewSitemap
+from products.sitemaps import ProductSitemap , StaticViewSitemap , BlogPostSitemap , blogCategorySitemap
 from django.views.generic import TemplateView
 
 sitemaps = {
-    'products': ProductSitemap,
     'static': StaticViewSitemap,
-        }
+    'products': ProductSitemap,
+    'blog_category':blogCategorySitemap,
+    'blog_Post': BlogPostSitemap,
+    }
 
 urlpatterns = [
-    
+
     path('',include('products.urls')),
     path('blog/',include('products.blogurls')),
     path('admin_jan_ammat_ino_be_kasi_nade/', admin.site.urls),

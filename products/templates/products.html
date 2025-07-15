@@ -195,6 +195,7 @@
                         </ul>
                     </nav>
                 </div>
+                
                 {% else %}
                     <h6>متاسفانه هنوز محصولی موجود نیست</h6>
                 {% endif %}
@@ -202,9 +203,9 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-4 mt-4 mb-4 pt-4 pb-4 text-center"
+    <div class="col-lg-2 col-8 mt-4 pt-3 pb-3 text-center"
          style="background-color: var(--section-bg-color); border-radius: 100px;">
-        <a class="nav-link click-scroll" href="{% url 'send-ticket' 'purchase' %}">
+        <a href="{% url 'send-ticket' 'purchase' %}">
             <strong><span style="font-size:var(--menu-font-size);">
                 <i class="fa-solid fa-duotone fa-paper-plane"></i>
             </span>ارسال درخواست خرید پسته ناموجود</strong>

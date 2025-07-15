@@ -1,0 +1,175 @@
+{% extends 'patterns/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block meta %}وبلاگ پستینا {{ctg.title}} {% for block in post.content_blocks %}{% if block.type == "heading" %}{{block.text}} {% endif %}{% endfor %}{% if post.tags.all %}{% for tag in post.tags.all %}{{tag}} {% endfor %}{% endif %} {% endblock %}
+
+{% block title %}
+    وبلاگ پستینا | {{post.title}}
+{% endblock title %}
+
+{% block typebody %}
+    <body dir="rtl" id="top" style="text-align: right;">
+{% endblock typebody %}
+
+{% block navitem %}
+    <ul class="navbar-nav ms-lg-5 me-lg-auto">
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="#">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-duotone fa-solid fa-coffee"></i>
+                </span>وبلاگ پستینا </strong>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'home' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-duotone fa-solid fa-house"></i>
+                </span>خانه</strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'products' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-shopping-cart"></i>
+                </span>لیست محصولات</strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'send-ticket' 'technical' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-phone"></i>
+                </span>ارتباط با پشتیبانی</strong>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link click-scroll" href="{% url 'about-us' %}">
+                <strong><span style="font-size:var(--menu-font-size);">
+                    <i class="fa-solid fa-duotone fa-info-circle"></i>
+                </span>درباره ما</strong>
+            </a>
+        </li>   
+    </ul>
+{% endblock navitem %}
+
+{% block header %}
+            <header class="site-header d-flex flex-column justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+
+                        <div class="col-lg-5 col-12 mb-5">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    
+                                    <li class="breadcrumb-item"><a href="{% url 'blog' %}"><i class="fa-duotone fa-solid fa-coffee"></i> وبلاگ پستینا</a></li>
+                                    <li class="breadcrumb-item active"><a href="{% url 'blog_category' ctg.slug  %}">{{ctg.title}}</a></li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">{{post.title}}</h2>
+
+                            <div class="d-flex mt-5" style="flex-direction: column;">
+                                <p class="text-white"><i class="fa-duotone fa-solid fa-calendar-days"></i>&nbsp;تاریخ انتشار : {{post.created_at | to_jalali_persian }}</p>
+                                <p class="text-white"><i class="fa-solid fa-duotone fa-clock"></i>&nbsp;زمان مطالعه : {{post.time_to_read}} دقیقه</p>
+                                <p class="text-white"><i class="fa-solid fa-duotone fa-eye"></i>&nbsp;بازدید ها  : {{post.views}} نفر</p>
+                                <!-- <a href="#top" class="custom-icon bi-bookmark smoothscroll me-4"></a> -->
+                                <!-- <a href="#topics-detail" class="btn custom-btn custom-border-btn smoothscroll">بخوانید</a> -->
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 col-12">
+                            <div class="topics-detail-block bg-white shadow-lg">
+                                <img src="{% if post.cover_image %}{{  post.cover_image.url }}{% endif %}" class="topics-detail-block-image img-fluid" loading="lazy">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+{% endblock %}
+{% block content %}
+        <section class="topics-detail-section section-padding" id="topics-detail">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-12 m-auto">
+
+                    {% for block in post.content_blocks %}
+
+                        {# 1. عنوان (هدر) #}
+                        {% if block.type == "heading" %}
+                            <h3 class="mb-4">{{ block.text }}</h3>
+
+                        {# 2. پاراگراف (بدنه‌ی متن) #}
+                        {% elif block.type == "paragraph" %}
+                            <p>{{ block.text|safe }}</p>
+
+                        {# 3. نقل قول (blockquote) #}
+                        {% elif block.type == "block" %}
+                            <blockquote>
+                                {{ block.text }}
+                            </blockquote>
+
+                        {# 4. یک تصویر تکی (تمام‌عرض) #}
+                        {% elif block.type == "image" %}
+                            {% with post|get_image:block.image as image %}
+                                {% if image %}
+                                    <div class="my-4 text-center">
+                                        <img src="{{ image.url }}" class="img-fluid rounded shadow" loading="lazy">
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+
+                        {# 5. چند تصویر در یک ردیف (دو تا در هر ردیف) #}
+                        {% elif block.type == "images" %}
+                            <div class="row my-4">
+                                {% for img_name in block.images %}
+                                    <div class="col-lg-6 col-md-6 col-12 {% if forloop.counter > 2 %}mt-2{% endif %}">
+                                        {% with post|get_image:img_name as image %}
+                                            {% if image %}
+                                                <img src="{{ image.url }}" class="topics-detail-block-image img-fluid" loading="lazy">
+                                            {% endif %}
+                                        {% endwith %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </div>
+                </div>
+                {% if post.refrence_url %}
+                <div class="col-lg-8 col-12 pt-4 text-center" style="width: auto;">
+                    <a class="btn custom-btn custom-border-btn" href="{{post.refrence_link}}">
+                        <span style="font-size:var(--menu-font-size);">
+                            <i class="fa-duotone fa-solid fa-arrow-up-right-from-square fa-flip-horizontal"></i>
+                        </span>{{post.refrence_url_text}}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+            <section class="section-blog section-bg">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-12 m-auto">
+                            {% if post.auther %}
+                            <p><b><i class="fa-duotone fa-solid fa-feather-pointed"></i> نویسنده : <a href="#">{{post.auther.first_name}} {{post.auther.last_name}}</a></b></p>
+                            {% endif %}
+                            <p><b><i class="fa-duotone fa-solid fa-clock-rotate-left"></i> انتشار در : {{post.created_at | time_ago }}</b></p>
+                            {% if post.tags.all %}
+                            <p style="line-height: 38px;"><b><i class="fa-duotone fa-solid fa-hashtag" style="--fa-secondary-opacity: 0.7;"></i> برچسب ها : </b>
+                                {% for tag in post.tags.all %}
+                                <a href="#" class="btn custom-btn custom-border-btn" style="padding: 2px 15px;"><i class="fa-duotone fa-solid fa-hashtag"></i> {{tag}}</a>
+                                {% endfor %}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+{% endblock %}

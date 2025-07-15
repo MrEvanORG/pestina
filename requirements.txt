@@ -1,0 +1,5 @@
+pip install django==5.1.1
+pip install ghasedak_sms
+pip install django-jsoneditor
+pip install pillow
+pip install django-taggit

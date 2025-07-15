@@ -1,9 +1,24 @@
 from django.core.mail import send_mail
 import random
 import ghasedak_sms
+import re
 
 sms_api = ghasedak_sms.Ghasedak(api_key='773c50149197530bfafa31363c45965b1f743d15dc4aa61b487db6fe2dac7f3dimrGkVoVyRykik5T')
 
+
+
+def persian_slugify(value):
+    value = re.sub(r'[\u200c\u200b\u200d\uFEFF]', '',value)
+    
+    value = str(value).strip()
+
+    value = re.sub(r'[^\w\s\-ا-ی]', '', value)
+
+    value = re.sub(r'[\s‌]+', ' ', value)
+
+    value = re.sub(r'\s+', '-', value)
+
+    return value.strip('-')
 
 def get_ip(request):
     forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')

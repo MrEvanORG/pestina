@@ -1,0 +1,141 @@
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .gradient {
+    --size: 750px;
+    --speed: 10s;
+    --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    width: var(--size);
+    height: var(--size);
+    filter: blur(calc(var(--size) / 5));
+    background-image: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+    animation: rotate var(--speed) var(--easing) alternate infinite;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+
+  @media (min-width: 720px) {
+    .gradient {
+      --size: 500px;
+    }
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--body-font-family);
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    background:rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: var(--border-radius-medium);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 700px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  h1 {
+    font-size: var(--h1-font-size);
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: var(--p-font-size);
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+
+  .social-icons {
+    font-size: 5px;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .social-icons a {
+    color: var(--primary-color);
+    font-size: var(--h5-font-size);
+    text-decoration: none;
+    transition: transform 0.3s;
+    margin: 0 3px;
+  }
+
+  .social-icons a:hover {
+    transform: scale(1.1);
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .buttons a {
+    background: rgba(255, 255, 255, 0.014); 
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-small);
+    text-decoration: none;
+    transition: background-color 0.3s, backdrop-filter 0.3s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .buttons a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* شیشه‌ای پررنگ‌تر در حالت هاور */
+  }
+
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: var(--h2-font-size);
+    }
+
+    p {
+      font-size: var(--menu-font-size);
+    }
+
+    .container {
+      max-width: 80%;
+    }
+
+    .social-icons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .social-icons a {
+      font-size: var(--h6-font-size);
+    }
+  }

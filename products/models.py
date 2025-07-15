@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
+from .addons import persian_slugify
+from taggit.managers import TaggableManager
 # Create your models here.
 class User(AbstractUser):
     first_name = models.CharField(max_length=20,verbose_name='نام کاربر')
@@ -122,6 +124,60 @@ class BuyTicket(models.Model):
     def __str__(self):
         return self.name
 
+class BlogCategories(models.Model):
+    title = models.CharField(max_length=50,verbose_name='نام دسته بندی')
+    slug = models.SlugField(allow_unicode=True,unique=True,blank=True,verbose_name='اسلاگ (ساخن خودکار از روی اسم کتگوری)')
+    discription = models.CharField(max_length=300,verbose_name='توضیحات دسته بندی')
+    photo = models.ImageField(upload_to='blog-photos/covers-category/',verbose_name='کاور دسته بندی',blank=True,null=True)
 
+    def save(self,*args,**kwargs):
+        if not self.slug :
+            self.slug = persian_slugify(self.title)
+        super().save(*args,**kwargs)
+    
+    def __str__(self):
+        return self.title
+    
+    def post_count(self):
+        return self.blogpost_set.count()
+    
+    def get_absolute_url(self):
+        return reverse("blog_category", args=[self.slug])
+    
+class BlogPost(models.Model):
+    title = models.CharField(max_length=200,verbose_name='عنوان')
+    auther = models.ForeignKey(User,null=True,on_delete=models.SET_NULL,verbose_name='نویسنده')
+    slug = models.SlugField(allow_unicode=True,unique=True, blank=True,)
+    category = models.ForeignKey(BlogCategories,on_delete=models.SET_NULL,null=True,verbose_name='دسته بندی')
+    content_blocks = models.JSONField(default=list,verbose_name='بلاک های محتوا')  
+    cover_image = models.ImageField(upload_to='blog-photos/covers/',verbose_name='کاور پست')
+    image1 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 1')
+    image2 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 2')
+    image3 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 3')
+    image4 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 4')
+    image5 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 5')
+    image6 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 6')
+    image7 = models.ImageField(upload_to='blog-photos/images/', blank=True, null=True,verbose_name='عکس 7')
+    views = models.PositiveIntegerField(default=0)
+    time_to_read = models.IntegerField(verbose_name='زمان تقریبی خواندن (به دقیقه)',default=3)
+    tags = TaggableManager(blank=True,verbose_name='برچسب ها (با , جداکنید)')
+    refrence_url = models.URLField(blank=True,null=True,verbose_name='لینک ارجاع')
+    refrence_url_text = models.CharField(max_length=30,blank=True,null=True,verbose_name='متن ارجاع')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_confirmed = models.BooleanField(default=False,verbose_name='وضعیت تایید شدن توسط ادمین')
+
+    def save(self,*args,**kwargs):
+        if not self.slug :
+            self.slug = persian_slugify(self.title)
+        super().save(*args,**kwargs)
+
+    def get_image_by_name(self, name):
+        return getattr(self, name, None)
+    
+    def get_absolute_url(self):
+        return reverse("blog_post_detail", args=[self.category.slug,self.slug])
+    
+    def __str__(self):
+        return self.title
 
 
