@@ -2,19 +2,25 @@
 {% load static %}
 {% block meta %}پستینا پلیه بین کشاورز و مصرف‌کننده؛ بدون واسطه‌های اضافه، بدون قیمت‌های ناعادلانه. ما پسته رو مستقیم از دل باغ‌های ایران، با همان کیفیت اصلی، به دست شما می‌رسونیم{% endblock %}
 {% block title %}درباره پستینا{% endblock title %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/resume-card.css' %}" />
+{% endblock %}
 {% block typebody %}<body dir="rtl" id="top" style="text-align: right;">{% endblock %}
 
 {% block navitem %}
     <ul class="navbar-nav ms-lg-5 me-lg-auto">
         <li class="nav-item">
-            <a class="nav-link click-scroll" href="{% url 'about-us' %}"><strong>
+            <a class="nav-link click-scroll" href="#"><strong>
                 <span style="font-size:var(--menu-font-size);">
                     <i class="fa-solid fa-duotone fa-info-circle"></i></span>
                 درباره ما</strong></a>
         </li>
+        {% if rss %}
         <li class="nav-item">
-            <a class="nav-link click-scroll" href="#section_2"><strong> <i class="fa-solid fa-duotone fa-book-open"></i> خواندنی ها</strong></a>
+            {% comment %} <a class="nav-link click-scroll" href="#section_2"><strong> <i class="fa-solid fa-duotone fa-book-open"></i> خواندنی ها</strong></a> {% endcomment %}
+            <a class="nav-link click-scroll" href="#section_2"><strong><i class="fa-duotone fa-solid fa-heart" style="--fa-secondary-opacity: 1;"></i> از دل پستینا</strong></a>
         </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link click-scroll" href="#section_3"><strong><i class="fa-solid fa-duotone fa-location-arrow"></i> آدرس شرکت</strong></a>
         </li>       
@@ -92,7 +98,7 @@
                 </div>
                 
                 <div class="col-lg-6 col-12">
-                    <div class="custom-block custom-block-overlay">
+                    <div class="custom-block custom-block-overlay social-h">
                         <div class="d-flex flex-column h-100">
                             <img alt="" class="custom-block-image img-fluid" src="{% static 'images/businesswoman-using-tablet-analysis.jpg' %}"/>
                             <div class="custom-block-overlay-text d-flex">
@@ -107,14 +113,20 @@
                                 <p class="text-white me-4">مارا دنبال کنید : </p>
                                 <ul class="social-icon">
                                     <li class="social-icon-item">
-                                        <a class="social-icon-link bi-telegram" href="#"></a>
+                                        <a class="social-icon-link" href="https://www.instagram.com/pestina_co" target="_blank"><strong>
+                                        <i class="fa-brands fa-instagram fa-xl"></i></strong></a>
                                     </li>
+
                                     <li class="social-icon-item">
-                                        <a class="social-icon-link bi-instagram" href="#"></a>
+                                        <a class="social-icon-link" href="https://t.me/pestina_co" target="_blank"><strong>
+                                        <i class="fa-brands fa-telegram fa-xl"></i></strong></a>
                                     </li>
+
                                     <li class="social-icon-item">
-                                        <a class="social-icon-link bi-google" href="#"></a>
+                                        <a class="social-icon-link" href="https://x.com/pestina_co" target="_blank"><strong>
+                                        <i class="fa-brands fa-x-twitter fa-xl"></i></strong></a>
                                     </li>
+
                                 </ul>
                             </div>
                             <div class="section-overlay"></div>
@@ -127,6 +139,68 @@
 {% endblock header %}
 
 {% block content %}
+{% if rss  %}
+    <section class="explore-section section-padding" id="section_2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="mb-4">
+                        <i class="fa-duotone fa-solid fa-heart fa-beat" style="--fa-secondary-opacity: 1;"></i>
+                        از دل پستینا </h2>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="main-card">
+                    {% for rs in rss %}
+                    <div class="card-container">
+                        <span class="pro">{{ rs.get_role_display }}</span>
+                        {% if rs.avatar %}
+                            <img class="round" src="{{ rs.avatar.url }}" alt="{{ rs.name }}" width="150px" />
+                        {% else %}
+                            <img class="round" src="{% static 'images/default-avatar.png' %}" alt="user" />
+                        {% endif %}
+
+                        <h3>{{rs.name}}</h3>
+                        <h6>{{rs.address}}</h6>
+                        <p><b>{{rs.title}}</b><br/><br/>{{rs.about_me|truncatewords:25 }}</p>
+
+                        <div class="buttons">
+                            <a href="{% url 'resume_detail' rs.slug %}" class="primary-button-link">
+                                <button class="primary">
+                                    مشاهده رزومه
+                                    <i class="fa-duotone fa-solid fa-arrow-up-right-from-square fa-flip-horizontal"></i>
+                                </button>
+                            </a>
+                        </div>
+
+                        <div class="skills">
+                            <h6>
+                                <i class="fa-duotone fa-solid fa-lightbulb-on"></i>
+                                مهارت ها</h6>
+                            <ul>
+                                {% comment %} 
+                                حالا روی لیست آماده‌ای که از ویو آمده حلقه می‌زنیم.
+                                دیگر نیازی به split یا with نیست.
+                                {% endcomment %}
+
+                                {% for skill_parts in rs.processed_skills %}
+                                    {# skill_parts یک لیست دو عضوی است، مثلا ['HTML', '95'] #}
+                                    <li>{{ skill_parts.0 }}</li>
+                                {% empty %}
+                                    <li>مهارتی ثبت نشده است.</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
     <!-- <section class="explore-section section-padding" id="section_2">
         <div class="container">
             <div class="row">

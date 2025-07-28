@@ -94,14 +94,17 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mydb',
-#         'USER':'pestina1_django-ehsan',
-#         'PASSWORD':'mA2iQuNdp9qi5xB',
-#         'HOST':'localhost',
-#         'PORT':'3306',
+#         'NAME': 'pestina2_django',
+#         'USER':'pestina2_ehsan',
+#         'PASSWORD':'Qou)G++M=LtupiRL',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',
+#             'init_command': "SET NAMES 'utf8mb4'"
+#         },
 #     }
 # }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

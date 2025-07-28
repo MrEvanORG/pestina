@@ -1,5 +1,5 @@
 from django.contrib.sitemaps import Sitemap
-from .models import Product ,BlogPost , BlogCategories
+from .models import Product ,BlogPost , BlogCategories , Resume
 from django.urls import reverse
 
 class StaticViewSitemap(Sitemap):
@@ -11,6 +11,17 @@ class StaticViewSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
+
+class ResumeSiteMap(Sitemap):
+    changefreq = "weekly"
+    priority = 0.6
+
+    def items(self):
+        return Resume.objects.filter(is_confirmed=True)
+
+    def location(self,obj):
+        return obj.get_absolute_url()
+
 
 class blogCategorySitemap(Sitemap):
     changefreq = "weekly"

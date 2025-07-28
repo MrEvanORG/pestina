@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="رزومه {{resume.name}} | {{resume.name}} کیست ؟ | سوابق کاری {{resume.name}} | {{resume.about_me|truncatewords:25 }}">
+    <title>{{ resume.name }} | رزومه</title>
+    {% load static %}
+    {% comment %} <link href="{% static 'css/font-awesome/css/all.min.css' %}?ver=1.2.0" rel="stylesheet"> {% endcomment %}
+    <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root-2.css' %}" rel="stylesheet"/>
+    <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
+
+    <link href="{% static 'css/resume-bootstrap.min.css' %}?ver=1.2.0" rel="stylesheet">
+
+    <link href="{% static 'css/resume-aos.css' %}?ver=1.2.0" rel="stylesheet">
+    <link href="{% static 'css/resume-main.css' %}?ver=1.2.0" rel="stylesheet">
+    
+    <noscript>
+        <style type="text/css">
+            [data-aos] {
+                opacity: 1 !important;
+                transform: translate(0) scale(1) !important;
+            }
+        </style>
+    </noscript>
+</head>
+<body id="top">
+<header class="d-print-none">
+    <div class="container text-center text-lg-right">
+        <div class="py-3 clearfix">
+            <h1 class="site-title mb-0">{{ resume.name }}</h1>
+            <div class="site-nav">
+                <nav role="navigation">
+                    <ul class="nav justify-content-center" style="padding: 0;">
+                        {% if resume.twitter_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.twitter_url }}" title="Twitter"><i class="fab fa-twitter"></i><span class="menu-title sr-only">Twitter</span></a></li>{% endif %}
+                        {% if resume.telegram_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.telegram_url }}" title="Telegram"><i class="fab fa-telegram"></i><span class="menu-title sr-only">Telegram</span></a></li>{% endif %}
+                        {% if resume.instagram_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.instagram_url }}" title="Instagram"><i class="fab fa-instagram"></i><span class="menu-title sr-only">Instagram</span></a></li>{% endif %}
+                        {% if resume.github_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.github_url }}" title="Github"><i class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a></li>{% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="page-content">
+    <div class="container">
+        <div class="cover shadow-lg bg-white">
+            <div class="cover-bg p-3 p-lg-4 text-white">
+                <div class="row">
+                    <div class="col-lg-4 col-md-5">
+                        {% if resume.avatar %}
+                            <div class="avatar hover-effect bg-white shadow-sm p-1"><img src="{{ resume.avatar.url }}" width="200" height="200"/></div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-8 col-md-7 text-center text-middle">
+                        <h2 class="h1 mt-2" data-aos="fade-right" data-aos-delay="0">{{ resume.name }}</h2>
+                        <p data-aos="fade-right" data-aos-delay="100">{{ resume.title }}</p>
+                        <div class="d-print-none" data-aos="fade-right" data-aos-delay="200">
+                            <a class="btn btn-success shadow-sm mt-1" href="#contact">
+                                <i class="fa-duotone fa-solid fa-phone-flip"></i>
+                                ارتباط با من</a>
+                            {% if resume.resume_file %}
+                            <a class="btn btn-light text-dark shadow-sm mt-1 me-1" href="{{ resume.resume_file.url }}" target="_blank">
+                                <i class="fa-duotone fa-solid fa-download"></i>
+                                دانلود رزومه</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-section pt-4 px-3 px-lg-4 mt-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="h3 mb-3">
+                            <i class="fa-duotone fa-solid fa-circle-info"></i>
+                            درباره من</h2>
+                        <p>{{ resume.about_me }}</p>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <div class="row mt-2">
+                            <div class="col-sm-4"><div class="pb-1">سن</div></div>
+                            <div class="col-sm-8"><div class="pb-1 text-secondary">{{ resume.age }}</div></div>
+                            <div class="col-sm-4"><div class="pb-1">ایمیل</div></div>
+                            <div class="col-sm-8"><div class="pb-1 text-secondary">{{ resume.email }}</div></div>
+                            <div class="col-sm-4"><div class="pb-1">شماره همراه</div></div>
+                            <div class="col-sm-8"><div class="pb-1 text-secondary">{{ resume.phone_number }}</div></div>
+                            <div class="col-sm-4"><div class="pb-1">آدرس</div></div>
+                            <div class="col-sm-8"><div class="pb-1 text-secondary">{{ resume.address }}</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="d-print-none"/>
+
+            <div class="skills-section px-3 px-lg-4">
+                <h2 class="h3 mb-3">
+                    <i class="fa-duotone fa-solid fa-lightbulb-on"></i>
+                    مهارت های من</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        {% comment %} حلقه برای نمایش مهارت‌های دسته اول {% endcomment %}
+                        {% for skill in resume.processed_skills_1 %}
+                        <div class="mb-2">
+                            <span>{{ skill.0 }}</span> {# نام مهارت #}
+                            <div class="progress my-1">
+                                <div class="progress-bar bg-primary aos-init aos-animate" 
+                                    role="progressbar"
+                                    data-aos="zoom-in-left"
+                                    data-aos-delay="{{ forloop.counter }}00"
+                                    data-aos-anchor=".skills-section"
+                                    style="width: {{ skill.1 }}%" 
+                                    aria-valuenow="{{ skill.1 }}"
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        {% comment %} حلقه برای نمایش مهارت‌های دسته دوم {% endcomment %}
+                        {% for skill in resume.processed_skills_2 %}
+                        <div class="mb-2">
+                            <span>{{ skill.0 }}</span> {# نام مهارت #}
+                            <div class="progress my-1">
+                                <div class="progress-bar bg-success aos-init aos-animate" 
+                                    role="progressbar" 
+                                    data-aos="zoom-in-left"
+                                    data-aos-delay="{{ forloop.counter|add:3 }}00" 
+                                    data-aos-anchor=".skills-section"
+                                    style="width: {{ skill.1 }}%" 
+                                    aria-valuenow="{{ skill.1 }}"
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <hr class="d-print-none"/>
+            <div class="work-experience-section px-3 px-lg-4">
+                <h2 class="h3 mb-4">
+                    <i class="fa-duotone fa-solid fa-briefcase"></i>
+                    پروژه ها و سوابق کاری</h2>
+                <div class="timeline">
+                    {% for work in resume.work_experiences.all %}
+                    <div class="timeline-card timeline-card-primary card shadow-sm">
+                        <div class="card-body">
+                            <div class="h5 mb-1">{{ work.position }}<span class="text-muted h6"> در {{ work.company }}</span></div>
+                            <div class="text-muted text-small mb-2">{{ work.period }}</div>
+                            <div>{{ work.description }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr class="d-print-none"/>
+            <div class="page-break"></div>
+            <div class="education-section px-3 px-lg-4 pb-4">
+                <h2 class="h3 mb-4">
+                    <i class="fa-duotone fa-solid fa-graduation-cap"></i>
+                    تحصیلات</h2>
+                <div class="timeline">
+                    {% for edu in resume.educations.all %}
+                    <div class="timeline-card timeline-card-success card shadow-sm">
+                        <div class="card-body">
+                            <div class="h5 mb-1">{{ edu.degree }}<span class="text-muted h6"> در {{ edu.institution }}</span></div>
+                            <div class="text-muted text-small mb-2">{{ edu.period }}</div>
+                            <div>{{ edu.description }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr class="d-print-none"/>
+            <div class="contant-section px-3 px-lg-4 pb-4" id="contact">
+                <h2 class="h3 text mb-3">
+                    <i class="fa-duotone fa-solid fa-phone-flip"></i>
+                    ارتباط با من</h2>
+                <div class="row">
+                    <div class="col-md-7 d-print-none">
+                        <div class="my-2">
+                            <form action="https://formspree.io/f/{your_form_id}" method="POST">
+                                <div class="row">
+                                    <div class="col-6"><input class="form-control" type="text" id="name" name="name" placeholder="اسمتون" required></div>
+                                    <div class="col-6"><input class="form-control" type="email" id="email" name="_replyto" placeholder="ایمیلتون" required></div>
+                                </div>
+                                <div class="form-group my-2"><textarea class="form-control" style="resize: none;" id="message" name="message" rows="4"  placeholder="پیام یا درخواست شما از من" required></textarea></div>
+                                <button class="btn btn-primary mt-2" type="submit">
+                                    ارسال
+                                    <i class="fa-duotone fa-solid fa-paper-plane fa-flip-horizontal"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mt-2">
+                            <h3 class="h6">نحوه ارتباط</h3>
+                            <div class="pb-2 text-secondary">پروژه یا درخواست کاری خود را برای من بفرستید در سریع ترین زمان بررسی میکنم<br/>لطفا از صحت اطلاعات وارده اطمینان کسب کنید جهت جلوگیری از تخلفات IP شما ثبت میشود . </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="pt-4 pb-4 text-muted text-center d-print-none">
+    <div class="container">
+        <div class="my-3">
+            <div class="h4">{{ resume.name }}</div>
+            <div class="footer-nav">
+                <nav role="navigation">
+                    <ul class="nav justify-content-center" style="padding: 3px;">
+                        {% if resume.twitter_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.twitter_url }}" title="Twitter"><i class="fab fa-twitter"></i><span class="menu-title sr-only">Twitter</span></a></li>{% endif %}
+                        {% if resume.telegram_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.telegram_url }}" title="Telegram"><i class="fab fa-telegram"></i><span class="menu-title sr-only">Telegram</span></a></li>{% endif %}
+                        {% if resume.instagram_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.instagram_url }}" title="Instagram"><i class="fab fa-instagram"></i><span class="menu-title sr-only">Instagram</span></a></li>{% endif %}
+                        {% if resume.github_url %}<li class="nav-item"><a class="nav-link" href="{{ resume.github_url }}" title="Github"><i class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a></li>{% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="text-small">
+            <div class="mb-1">&copy; حق کپی رایت محفوظ است</div>
+            <div>طراحی توسط - <a href="{% url 'about-us' %}">تیم پستینا</a></div>
+        </div>
+    </div>
+</footer>
+<script src="{% static 'js/resume-bootstrap.bundle.min.js' %}?ver=1.2.0"></script>
+<script src="{% static 'js/resume-aos.js' %}?ver=1.2.0"></script>
+<script src="{% static 'js/resume-main.js' %}?ver=1.2.0"></script>
+{% comment %} <script src="{% static 'js/theme-toggle.js' %}" defer></script> {% endcomment %}
+</body>
+</html>

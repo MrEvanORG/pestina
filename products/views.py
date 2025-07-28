@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 #----------------------------------------------------------#
-from .models import Product , Ticket ,BuyTicket , User 
+from .models import Product , Ticket ,BuyTicket , User ,Resume
 from .forms import *
 from .addons import *
 from .blogviews import *
@@ -26,7 +26,57 @@ def view_products(request):
     return render(request,'products.html',context)
 
 def about_us(request):
-    return render(request,"about_us.html")
+    # تمام رزومه‌ها را از دیتابیس بگیرید
+    all_resumes = Resume.objects.filter(is_confirmed=True)
+
+    # برای هر رزومه، لیست مهارت‌ها را پردازش و به آن اضافه کنید
+    for resume in all_resumes:
+        skill_list = []
+        if resume.skills_category_1:
+            skills = resume.skills_category_1.strip().split(';')
+            for skill_pair in skills:
+                if skill_pair and ',' in skill_pair:
+                    skill_list.append(skill_pair.split(','))
+        
+        # یک ویژگی جدید به نام skill_list به هر آبجکت رزومه اضافه می‌کنیم
+        resume.processed_skills = skill_list
+
+    context = {
+        'rss': all_resumes,
+    }
+    return render(request, 'about_us.html', context)
+
+def resume_detail_view(request, slug):
+    # ۱. رزومه مورد نظر را پیدا می‌کنیم
+    resume_object = get_object_or_404(Resume,slug=slug, is_confirmed=True)
+
+    # ۲. پردازش مهارت‌های دسته اول
+    skills_1_list = []
+    if resume_object.skills_category_1:
+        # با strip(';') مطمئن می‌شویم سمی‌کالن اضافه در ابتدا یا انتها حذف شود
+        skills = resume_object.skills_category_1.strip().strip(';').split(';')
+        for skill_pair in skills:
+            if skill_pair and ',' in skill_pair:
+                skills_1_list.append(skill_pair.split(','))
+    
+    # یک ویژگی جدید به آبجکت اضافه می‌کنیم
+    resume_object.processed_skills_1 = skills_1_list
+
+    # ۳. پردازش مهارت‌های دسته دوم
+    skills_2_list = []
+    if resume_object.skills_category_2:
+        skills = resume_object.skills_category_2.strip().strip(';').split(';')
+        for skill_pair in skills:
+            if skill_pair and ',' in skill_pair:
+                skills_2_list.append(skill_pair.split(','))
+
+    resume_object.processed_skills_2 = skills_2_list
+    
+    # ۴. آبجکت کامل شده را به تمپلیت ارسال می‌کنیم
+    context = {
+        'resume': resume_object,
+    }
+    return render(request, 'resum.html', context)
 # <------------------- Simple Pages ------------------->
 ########################################################
 # <------------------- Login Pages ---------------------

@@ -3,3 +3,4 @@ pip install ghasedak_sms
 pip install django-jsoneditor
 pip install pillow
 pip install django-taggit
+pip install jdatetime

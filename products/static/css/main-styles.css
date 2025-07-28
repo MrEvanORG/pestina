@@ -1315,6 +1315,12 @@ blockquote {
   .custom-block{
     height: auto;
   }
+  .social-h{
+    height: 38vh;
+  }
+  .social-share{
+    padding: 20px 30px;
+  }
   img {
     max-width: 100%; /* Ensure images don't exceed the screen width */
     height: auto;

@@ -98,4 +98,45 @@ class BlogPostAdmin(admin.ModelAdmin):
     }
 
 
+# کلاس Inline برای افزودن سوابق کاری در صفحه رزومه
+class WorkExperienceInline(admin.TabularInline):
+    model = WorkExperience
+    extra = 1  # همیشه یک فرم خالی برای اضافه کردن نمایش بده
+    max_num = 3 # محدودیت برای اضافه کردن حداکثر ۳ مورد
+    verbose_name_plural = "سوابق کاری (حداکثر ۳ مورد)"
+
+
+# کلاس Inline برای افزودن سوابق تحصیلی در صفحه رزومه
+class EducationInline(admin.TabularInline):
+    model = Education
+    extra = 1  # همیشه یک فرم خالی برای اضافه کردن نمایش بده
+    max_num = 3 # محدودیت برای اضافه کردن حداکثر ۳ مورد
+    verbose_name_plural = "سوابق تحصیلی (حداکثر ۳ مورد)"
+
+
+# ثبت نهایی مدل رزومه در پنل ادمین
+@admin.register(Resume)
+class ResumeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'title', 'email', 'phone_number')
+    search_fields = ('name', 'title')
+    inlines = [WorkExperienceInline, EducationInline]
+
+    # دسته‌بندی فیلدها برای نمایش بهتر در پنل ادمین
+    fieldsets = (
+        ('اطلاعات شخصی', {
+            'fields': ('slug','is_confirmed','role','name', 'title', 'avatar', 'about_me', 'age', 'email', 'phone_number', 'address')
+        }),
+        ('فایل‌ها', {
+            'fields': ('resume_file',)
+        }),
+        ('مهارت‌ها', {
+            'description': 'مهارت‌ها را به فرمت "نام,درصد" وارد کرده و با ; جدا کنید. (مثال: HTML,95;CSS,40)',
+            'fields': ('skills_category_1', 'skills_category_2')
+        }),
+        ('شبکه‌های اجتماعی', {
+            'fields': ('twitter_url', 'telegram_url', 'instagram_url', 'github_url'),
+            'classes': ('collapse',) # این بخش به صورت پیش‌فرض بسته باشد
+        }),
+    )
+
 # EehsaNn8404

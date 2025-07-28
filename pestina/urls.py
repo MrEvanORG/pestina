@@ -23,11 +23,12 @@ from django.views.static import serve
 from products import views
 # site map --------------------------------
 from django.contrib.sitemaps.views import sitemap
-from products.sitemaps import ProductSitemap , StaticViewSitemap , BlogPostSitemap , blogCategorySitemap
+from products.sitemaps import ProductSitemap , StaticViewSitemap , BlogPostSitemap , blogCategorySitemap , ResumeSiteMap
 from django.views.generic import TemplateView
 
 sitemaps = {
     'static': StaticViewSitemap,
+    'resume':ResumeSiteMap,
     'products': ProductSitemap,
     'blog_category':blogCategorySitemap,
     'blog_Post': BlogPostSitemap,
