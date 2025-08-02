@@ -19,7 +19,7 @@ def homepage(request):
 
 def view_products(request):
     prd = Product.objects.all()
-    pagin = Paginator(prd,2)
+    pagin = Paginator(prd,6)
     page_number = request.GET.get('page')
     page_obj = pagin.get_page(page_number)
     context = {'prd': page_obj}
@@ -273,21 +273,21 @@ def send_ticket(request,ticket_type):
         return render(request,"send_ticket.html",context)
 
 @csrf_protect
-def buy_product1(request,pid):
+def buy_product1(request,slug):
     # in the first check gain and calculate price and redirect to buy_product2
     order_data = request.session.get("form-data")
     if order_data:
         del request.session["form-data"]
     
 
-    prd = Product.objects.get(id=pid)
+    prd = Product.objects.get(slug=slug)
     if request.method == 'POST':
         
         form = CheckGainBuyForm(data=request.POST,max=prd.max_order,min=prd.min_order)
         if not form.errors and form.is_valid():
             pprice , aprice = calculate_price(prd,form.cleaned_data['quantity'])
             request.session['form-data'] = {
-                'product' : str(pid) ,
+                'product' : str(slug) ,
                 'pprice' : str(pprice) ,
                 'aprice' : str(aprice),
                 'gain' : str(form.cleaned_data['quantity']) ,
@@ -310,7 +310,7 @@ def buy_product2(request):
     'pprice' : float(form_data.get('pprice')),
     'free_shipping' :bool(form_data.get('free_shipping')),
     'aprice' : float(form_data.get('aprice')),
-    'p' : Product.objects.get(id=form_data.get('product')),
+    'p' : Product.objects.get(slug=form_data.get('product')),
     'gain':  float(form_data.get('gain')),
     }
     if request.method == 'GET' :
@@ -322,7 +322,7 @@ def buy_product2(request):
             order = BuyTicket.objects.create(
                 name = form.cleaned_data['buyer_namelastname'],
                 phone = form.cleaned_data['buyer_phone'],
-                product = Product.objects.get(id=form_data.get('product')),
+                product = Product.objects.get(slug=form_data.get('product')),
                 gain = float(form_data.get('gain')),
                 price = float(form_data.get('aprice')),
                 post_code = int(form.cleaned_data['post_code']),
@@ -332,8 +332,8 @@ def buy_product2(request):
             order.save()
             try:
                 rs = send_order_message(order.name,order.phone,order.product.get_kind_display(),order.gain,order.price)
-            except:
-                print(rs)
+            except Exception as e:
+                print(e)
             form_data['order_number'] = str(order.id).zfill(4)
             form_data['name'] = form.cleaned_data['buyer_namelastname']
             form_data['phone'] = form.cleaned_data['buyer_phone']

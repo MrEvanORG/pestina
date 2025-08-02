@@ -14,7 +14,7 @@ urlpatterns = [
 
     path('send_ticket/<str:ticket_type>/',views.send_ticket,name='send-ticket'),
     path('ticket-sent/',views.registered_ticket,name='registered-ticket'),
-    path('buy-product/<int:pid>/',views.buy_product1,name='buy-product'),
+    path('buy-product/<str:slug>/',views.buy_product1,name='buy-product'),
     path('confirm-buy/',views.buy_product2,name='confirm'),
     path('order-sent/',views.registered_order,name='resgtered-order'),
 

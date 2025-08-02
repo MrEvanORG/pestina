@@ -35,7 +35,7 @@ def blog_category(request, category_slug):
         'prd':page_obj,
         'posts': posts,
         'category_slug': category_slug,
-        'category_title': category_slug.replace('-', ' ')
+        'category_title': ctg.title,
     })
 #--------------------------------------------------#
 def blog_post_detail(request, category_slug, post_slug):

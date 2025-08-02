@@ -134,18 +134,20 @@
                                 {% if form.non_field_errors %}
                                     {% for error in form.non_field_errors %}
                                         <blockquote style="text-align: right; margin: 0px 16px 11px 0; padding: 0px; font-size: 16px; color: var(--primary-color); width: 95%;">{{ error }}</blockquote>
-                                    {% endfor %}
-                                {% endif %}
-
-                                {% for field in form %}
-                                    {% if field.errors %}
-                                        {% for error in field.errors %}
-                                            <blockquote style="text-align: right; margin: 0px 16px 11px 0; padding: 0px; font-size: 16px; color: var(--primary-color); width: 95%;">
-                                                {{ field.label }} : {{ error }}
-                                            </blockquote>
                                         {% endfor %}
-                                    {% endif %}
-                                {% endfor %}
+                                        {% endif %}
+                                        
+                                        {% for field in form %}
+                                        {% if field.errors %}
+                                        {% for error in field.errors %}
+                                        <blockquote style="text-align: right; margin: 0px 16px 11px 0; padding: 0px; font-size: 16px; color: var(--primary-color); width: 95%;">
+                                            {{ field.label }} : {{ error }}
+                                        </blockquote>
+                                        {% endfor %}
+                                        {% endif %}
+                                        {% endfor %}
+                                {% else %}
+                                        <blockquote style="text-align: right; margin: 0px 16px 11px 0; padding: 0px; font-size: 16px; color: var(--primary-color); width: 95%;">در ادامه کدی برای تایید شماره تان ارسال میشود . </blockquote>
                             {% endif %}
 
                             <div class="col-lg-4 col-12 ms-auto">

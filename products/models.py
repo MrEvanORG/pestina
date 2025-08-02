@@ -3,17 +3,32 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from .addons import persian_slugify
 from taggit.managers import TaggableManager
-# Create your models here.
+
+class SeoData(models.Model):
+    path = models.CharField(max_length=300,unique=True,verbose_name='مسیر صفحه')
+    title = models.CharField(max_length=200,null=True,blank=True,verbose_name='تایتل صفحه')
+    meta_description = models.TextField(null=True,blank=True,verbose_name='توضیحات صفحه')
+    def __str__(self):
+        return f"Seo Data '{self.title}' for '{self.path}'"
+    class Meta:
+        verbose_name = "داده سئو"
+        verbose_name_plural = "دادهای سئو"
+
 class User(AbstractUser):
     first_name = models.CharField(max_length=20,verbose_name='نام کاربر')
     last_name = models.CharField(max_length=20,verbose_name='نام خانوادگی کاربر')
+    province = models.CharField(max_length=20,verbose_name='استان',default='کرمان')
+    city = models.CharField(max_length=20,verbose_name='شهر',default='رفسنجان')
     phone_number = models.CharField(max_length=15,unique=True,verbose_name='شماره تلفن کاربر')
     is_verified = models.BooleanField(default=False,verbose_name='وضعیت تایید شدن شماره تلغن')
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی کاربر هنگام ثبت نام')
-    register_time = models.DateTimeField(auto_now=True,verbose_name='زمان ثبت نام')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    class Meta:
+        verbose_name = "کاربر"
+        verbose_name_plural = "کاربران" 
 
 class Product(models.Model):
 
@@ -41,8 +56,7 @@ class Product(models.Model):
         D4 = 'd4','درجه چهار'
 
     user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='کاربر')
-    id = models.AutoField(primary_key=True,verbose_name='آیدی محصول')
-
+    slug = models.SlugField(allow_unicode=True,unique=True,verbose_name='اسلاگ محصول')
     photo = models.ImageField(verbose_name='عکس محصول',upload_to='prdphotos')
     kind = models.CharField(max_length=20,choices=ptype.choices,verbose_name='نوع پسته')
     status = models.CharField(max_length=20,choices=pstatus.choices,verbose_name='وضعیت محصول')
@@ -73,21 +87,10 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.kind} uploaded by {'admin' if self.is_pestina_product else self.user.first_name}"
-
-
-# class RawData(models.Model):
-#     user_logout_time = models.BigIntegerField(verbose_name='مدت زمان لاگین ماندن کاربر (به ثانیه)',default=2*60*60)
-#     product_per_page = models.IntegerField(verbose_name='تعداد محصول قابل نمایش در هر صفحه',default=9)
-
-#     minimum_gain_order = models.FloatField(verbose_name='کمترین مقدار قابل سفارش از هز محصولی (به کیلوگرم)',default=0.1)
-
-#     max_post_gain = models.FloatField('بیشترین وزن قابل ارسال با پست (به کیلوگرم)',default=30)
-#     max_post_cost = models.DecimalField(max_digits=13,decimal_places=0,verbose_name='بیشترین هزینه ارسال پست (به تومان)',)
-
-#     max_tipax_gain = models.FloatField(verbose_name='بیشترین وزن قابل ارسال با تیپاکس (به کیلوگرم)')
-#     max_tipax_cost = models.DecimalField(max_digits=13,decimal_places=0,verbose_name='بیشترین هزینه ارسال تیپاکس (به تومان)')
-
     
+    class Meta:
+        verbose_name = "محصول"
+        verbose_name_plural = "محصول ها"
 
 class Ticket(models.Model):
     class TicketType(models.TextChoices):
@@ -96,20 +99,25 @@ class Ticket(models.Model):
         TECHNICAL = "technical","نقص فنی سایت"
 
     user = models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE,verbose_name='کاربر')
-
     ticket_id = models.AutoField(primary_key=True,verbose_name='شماره تیکت')
-    buyer_namelastname = models.CharField(max_length=30,verbose_name='نام خریدار') #need to fill
+    buyer_namelastname = models.CharField(max_length=30,verbose_name='نام خریدار') 
     buyer_phone = models.CharField(max_length=20,verbose_name='شماره تلفن')
     ticket_type = models.CharField(max_length=20,choices=TicketType.choices,verbose_name='نوع تیکت')
     request_title = models.CharField(max_length=20,verbose_name='عنوان تیکت')
     request_discription = models.CharField(max_length=150,verbose_name='متن درخواست')
     ticket_time = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ثبت تیکت')
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='أیپی')
+    message_status = models.IntegerField(null=True,blank=True,verbose_name='وضعیت ارسال پیامک')
 
     def __str__(self):
         return f"{self.ticket_type} -> by {self.buyer_namelastname} {self.buyer_phone}"
+    
+    class Meta:
+        verbose_name = "درخواست"
+        verbose_name_plural = "درخواست ها"
 
 class BuyTicket(models.Model):
+
     id = models.AutoField(primary_key=True,verbose_name='شماره سفارش')
     name = models.CharField(max_length=30,verbose_name='نام خریدار')
     phone = models.CharField(max_length=20,verbose_name='شماره تلفن')
@@ -120,9 +128,14 @@ class BuyTicket(models.Model):
     address = models.CharField(max_length=1500,verbose_name='آدرس')
     buy_time = models.DateTimeField(auto_now=True,verbose_name='تاریخ سفارش')
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی')
+    message_status = models.IntegerField(null=True,blank=True,verbose_name='وضعیت ارسال پیامک')
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = "درخواست خرید"
+        verbose_name_plural = "درخواست های خرید"
 
 class BlogCategories(models.Model):
     title = models.CharField(max_length=50,verbose_name='نام دسته بندی')
@@ -144,6 +157,10 @@ class BlogCategories(models.Model):
     def get_absolute_url(self):
         return reverse("blog_category", args=[self.slug])
     
+    class Meta:
+        verbose_name = "دسته بندی وبلاگ"
+        verbose_name_plural = "دسته بندی های وبلاگ"
+  
 class BlogPost(models.Model):
     title = models.CharField(max_length=200,verbose_name='عنوان')
     auther = models.ForeignKey(User,null=True,on_delete=models.SET_NULL,verbose_name='نویسنده')
@@ -179,9 +196,13 @@ class BlogPost(models.Model):
     
     def __str__(self):
         return self.title
+    
+    class Meta :
+        verbose_name = "پست وبلاگ"
+        verbose_name_plural = "پست های وبلاگ"
 
 class Resume(models.Model):
-    # بخش اطلاعات اصلی
+
     class RoleType(models.TextChoices):
         developer = "developer","توسعه دهنده"
         accountant = "accountant","حسابدار"
@@ -205,7 +226,6 @@ class Resume(models.Model):
     address = models.CharField(max_length=255, verbose_name="آدرس")
     resume_file = models.FileField(upload_to='resumes/', verbose_name="فایل رزومه (PDF)", null=True, blank=True)
 
-    # بخش مهارت‌ها
     skills_category_1 = models.TextField(
         verbose_name="مهارت‌های دسته اول (فنی)",
         help_text='مهارت‌ها را به فرمت "نام,درصد" وارد کنید و با ; جدا نمایید. مثال: HTML,95;CSS,40'
@@ -215,7 +235,7 @@ class Resume(models.Model):
         help_text='مثال: Adobe Photoshop,80;Sketch,85'
     )
 
-    # بخش لینک‌های شبکه‌های اجتماعی
+
     twitter_url = models.URLField(max_length=200, blank=True, null=True, verbose_name="لینک توییتر")
     telegram_url = models.URLField(max_length=200, blank=True, null=True, verbose_name="لینک تلگرام")
     instagram_url = models.URLField(max_length=200, blank=True, null=True, verbose_name="لینک اینستاگرام")
@@ -249,7 +269,7 @@ class WorkExperience(models.Model):
     class Meta:
         verbose_name = "سابقه کاری"
         verbose_name_plural = "سوابق کاری"
-        ordering = ['-id'] # برای نمایش جدیدترین‌ها در ابتدا
+        ordering = ['-id']
 
 class Education(models.Model):
     resume = models.ForeignKey(Resume, related_name='educations', on_delete=models.CASCADE)
@@ -264,4 +284,4 @@ class Education(models.Model):
     class Meta:
         verbose_name = "سابقه تحصیلی"
         verbose_name_plural = "سوابق تحصیلی"
-        ordering = ['-id'] # برای نمایش جدیدترین‌ها در ابتدا
+        ordering = ['-id'] 

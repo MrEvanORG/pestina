@@ -3,7 +3,7 @@
 {% block meta %}لیست محصولات پستینا - خرید پسته های با کیفیت و درجه یک از کشاورزان سراسر کشور{% endblock %}
 {% load custom_filters %}
 
-{% block title %}لیست محصولات{% endblock title %}
+{% block title %}قیمت و خرید انواع پسته اکبری فندوقی  کله قوچی و ... | محصولات پستینا{% endblock title %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/product-card.css' %}" />
@@ -132,9 +132,9 @@
                                                     فروشنده : {{ p.user.last_name }}
                                                 </div>
                                             {% endif %}
-                                            <div class="product-price">{{ p.price }} تومان</div>
+                                            <div class="product-price">{{ p.price | format_cost_number }} هرکیلو تومان</div>
 
-                                            <form action="{% url 'buy-product' p.id %}" method="get">
+                                            <form action="{% url 'buy-product' p.slug %}" method="get">
                                                 <button class="order-btn" type="submit">
                                                     <i class="fa-solid fa-duotone fa-shopping-basket"></i>&nbsp; سفارش دهید
                                                 </button>

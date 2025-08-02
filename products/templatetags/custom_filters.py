@@ -40,7 +40,15 @@ def format_toman(value):
         return f"{thousand} هزار تومان"
     else:
         return f"{value:,} تومان"
-    
+
+@register.filter
+def format_cost_number(value):
+    try:
+        value = int(value)
+        return f"{value:,}"
+    except:
+        return value
+
 @register.filter
 def get_image(post,name):
     return getattr(post,name,None)

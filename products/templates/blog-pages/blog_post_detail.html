@@ -157,7 +157,7 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-8 col-12 m-auto">
                             {% if post.auther %}
-                            <p><b><i class="fa-duotone fa-solid fa-feather-pointed"></i> نویسنده : <a href="#">{{post.auther.first_name}} {{post.auther.last_name}}</a></b></p>
+                            <p><b><i class="fa-duotone fa-solid fa-feather-pointed"></i> نویسنده : <a href="{% if post.auther.first_name == 'احسان' %}{% url 'resume_detail' 'Ehsan-Ramezani' %}{% else %}#{% endif %}">{{post.auther.first_name}} {{post.auther.last_name}}</a></b></p>
                             {% endif %}
                             <p><b><i class="fa-duotone fa-solid fa-clock-rotate-left"></i> انتشار در : {{post.created_at | time_ago }}</b></p>
                             {% if post.tags.all %}

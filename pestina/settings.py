@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'products.context_processor.seo_processor',
             ],
         },
     },
@@ -100,11 +101,11 @@ DATABASES = {
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #         'OPTIONS': {
-#             'charset': 'utf8mb4',
-#             'init_command': "SET NAMES 'utf8mb4'"
+#             'init_command': "SET NAMES 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'"
 #         },
 #     }
 # }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

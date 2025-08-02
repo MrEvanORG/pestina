@@ -14,6 +14,9 @@ body{
   font-family: "vazir";
   background-color:var(--section-bg-color); 
 }
+body,html{
+  overflow-x: hidden;
+}
 
 .h1, .h2, .h3, .h4, .h5, .h6,h1{
   font-family: "vazir" !important;
@@ -80,8 +83,14 @@ body{
 }
 
 .timeline {
-  border-right: 2px solid var(--border-color);
   padding: 1rem 0; }
+
+.timeline.up{
+  border-right: 2px solid var(--secondary-color);
+}
+.timeline.down{
+  border-right: 2px solid var(--primary-color);
+}
 
 .timeline-card {
   position: relative;

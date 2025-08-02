@@ -2,7 +2,8 @@
 {% load static %}
 {% block meta %}خرید پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}} از پستینا{% endblock %}
 {% load custom_filters %}
-{% block title %}پستینا | خرید پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}}{% endblock title %}
+{% comment %} {% block title %}پستینا | خرید پسته {{p.get_kind_display}} {{p.get_status_display}} {{p.get_quality_display}}{% endblock title %} {% endcomment %}
+{% block title %}خرید و قیمت پسته {{p.get_kind_display}} {{p.user.city}} ، {{p.get_status_display}} و {{p.get_quality_display}} | پستینا{% endblock %}
 {% block typebody %}<body class="topics-listing-page" dir="rtl" id="top" style="text-align: right;">{% endblock %}
     {% block navitem %}
     <ul class="navbar-nav ms-lg-5 me-lg-auto">

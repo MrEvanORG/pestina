@@ -9,6 +9,7 @@
     {% load static %}
     {% comment %} <link href="{% static 'css/font-awesome/css/all.min.css' %}?ver=1.2.0" rel="stylesheet"> {% endcomment %}
     <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root-2.css' %}" rel="stylesheet"/>
+    <link rel="icon" href="{% static 'images/fav.svg' %}" type="image/svg+xml">
     <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
@@ -147,7 +148,7 @@
                 <h2 class="h3 mb-4">
                     <i class="fa-duotone fa-solid fa-briefcase"></i>
                     پروژه ها و سوابق کاری</h2>
-                <div class="timeline">
+                <div class="timeline up">
                     {% for work in resume.work_experiences.all %}
                     <div class="timeline-card timeline-card-primary card shadow-sm">
                         <div class="card-body">
@@ -165,7 +166,7 @@
                 <h2 class="h3 mb-4">
                     <i class="fa-duotone fa-solid fa-graduation-cap"></i>
                     تحصیلات</h2>
-                <div class="timeline">
+                <div class="timeline down">
                     {% for edu in resume.educations.all %}
                     <div class="timeline-card timeline-card-success card shadow-sm">
                         <div class="card-body">
