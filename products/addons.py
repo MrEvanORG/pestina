@@ -106,19 +106,15 @@ def send_otp(request, phone=None, name=None, mode='signup'):
             udh=False
         )
         response = sms_api.send_otp_sms(newotpcommand) #send otpcode to phone
-        print(response) 
-        sms_status = response.statusCode
-        send_status = response.message
+
+        sms_status = response['statusCode']
+
         otp_waited_phones[phone] = now_time 
         request.session['otp-last-send'] = otp_waited_phones[phone] #save limits for sending
-        if sms_status != 200:
+        if not sms_status == 200:
             return JsonResponse({"status": sms_status, "message": "ارسال پیامک با خطا مواجه شد"}, status=sms_status)
         else:
             return JsonResponse({"status": 200, "message": "کد تأیید با موفقیت ارسال شد"})
-
-
-
-
 
 
 def send_ticket_message(name,phone,title,type):
@@ -147,7 +143,7 @@ def send_ticket_message(name,phone,title,type):
 
 def send_order_message(name,phone,product,gain,price):
     msg = f"""سفارش محصول جدید
-محصول : {product}
+محصول : {product.get_kind_display()}
 نام : {name}
 شماره تماس : {phone}
 مقدار : {format_weight(gain)}
@@ -157,19 +153,11 @@ def send_order_message(name,phone,product,gain,price):
     response = sms_api.send_single_sms(
         ghasedak_sms.SendSingleSmsInput(
             message=msg,
-            receptor='09302366684',
+            receptor=product.user.phone_number,
             line_number='30006707215215',
             send_date='',
             client_reference_id=''
         )
     )
-    response = sms_api.send_single_sms(
-        ghasedak_sms.SendSingleSmsInput(
-            message=msg,
-            receptor='09134871227',
-            line_number='30006707215215',
-            send_date='',
-            client_reference_id=''
-        )
-    )
+
     return response

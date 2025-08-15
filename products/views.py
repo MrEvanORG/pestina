@@ -145,7 +145,7 @@ def number_verify(request):
     if request.method == "GET":
         phone = main_session.get('form-data', {}).get('phone_number')
 
-        send_otp(request, phone,mode='signup')
+        # send_otp(request, phone,mode='signup')
 
         otp_last_send = request.session.get('otp-last-send',0)
         last_send = int(otp_last_send)
@@ -352,7 +352,7 @@ def buy_product2(request):
             )
             order.save()
             try:
-                rs = send_order_message(order.name,order.phone,order.product.get_kind_display(),order.gain,order.price)
+                rs = send_order_message(order.name,order.phone,order.product,order.gain,order.price)
             except Exception as e:
                 print(e)
             form_data['order_number'] = str(order.id).zfill(4)

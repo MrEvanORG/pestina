@@ -23,8 +23,8 @@
         {% block content %}{% endblock %}
         {% include "patterns/floating-menu.html" %}
     </body>
+    <script src="{% static 'js/theme-toggle.js' %}" defer></script>
     {% block script %}
     {% endblock %}
-    <script src="{% static 'js/theme-toggle.js' %}" defer></script>
     <script src="{% static 'js/loading.js' %}"></script>
 </html>

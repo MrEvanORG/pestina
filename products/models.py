@@ -3,9 +3,11 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from .addons import persian_slugify
 from taggit.managers import TaggableManager
+from django.core.exceptions import ValidationError
+from PIL import Image
 
 class SeoData(models.Model):
-    path = models.CharField(max_length=300,unique=True,verbose_name='مسیر صفحه')
+    path = models.CharField(max_length=254,unique=True,verbose_name='مسیر صفحه')
     title = models.CharField(max_length=200,null=True,blank=True,verbose_name='تایتل صفحه')
     meta_description = models.TextField(null=True,blank=True,verbose_name='توضیحات صفحه')
     def __str__(self):
@@ -26,18 +28,11 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
-class SuperUserProxy(User):
-    class Meta:
-        proxy = True
-        verbose_name = "کاربر"
-        verbose_name_plural = "کاربران" 
-
-class FarmerUserProxy(User):
-    class Meta:
-        proxy = True
-        verbose_name = "مشخصات من"
-        verbose_name_plural = "مشخصات من" 
-
+def validate_productphoto_size(image):
+    max_size = 500
+    if image.size > max_size * 1024 :
+        raise ValidationError("حجم عکس نباید بیشتر از 500 کیلوبایت باشد")
+    
 class Product(models.Model):
 
     class ptype(models.TextChoices):
@@ -65,7 +60,7 @@ class Product(models.Model):
 
     user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='کاربر')
     slug = models.SlugField(allow_unicode=True,unique=True,verbose_name='اسلاگ محصول')
-    photo = models.ImageField(verbose_name='عکس محصول',upload_to='prdphotos')
+    photo = models.ImageField(verbose_name='عکس محصول',upload_to='prdphotos',validators=[validate_productphoto_size])
     kind = models.CharField(max_length=20,choices=ptype.choices,verbose_name='نوع پسته')
     status = models.CharField(max_length=20,choices=pstatus.choices,verbose_name='وضعیت محصول')
     ounce = models.PositiveIntegerField(verbose_name='انس محصول')
@@ -84,6 +79,15 @@ class Product(models.Model):
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی')
     upload_time = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ثبت محصول')
 
+    def clean(self):
+        super().clean()
+        if self.photo :
+            img = Image.open(self.photo)
+            if img.width > 3000 or img.height > 3000 :
+                raise ValidationError("ابعاد عکس بیش از حد بزرگ است")
+            if img.height > img.width :
+                raise ValidationError("عکس عمودی است توصیه میشود عکس افقی باشد")
+
     def save(self,*args,**kwargs):
         if self.free_shipping :
             self.shipping_cost = None
@@ -97,16 +101,6 @@ class Product(models.Model):
     def __str__(self):
         return f"پسته {self.get_kind_display()} بارگذاری شده توسط :  {'admin' if self.is_pestina_product else self.user.first_name+' '+self.user.last_name}"
     
-class SuperProductProxy(Product):
-    class Meta:
-        verbose_name = 'محصول'
-        verbose_name_plural = 'محصولات'
-
-class FarmerProductProxy(Product):
-    class Meta:
-        verbose_name = 'محصول من'
-        verbose_name_plural = 'محصولات من'
-
 class Ticket(models.Model):
     class TicketType(models.TextChoices):
         FEEDBACK = "feedback","نظرات و پیشنهادات"
