@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
+from django.urls import reverse
+from django.contrib.auth.models import Group
 #----------------------------------------------------------#
 from .models import Product , Ticket ,BuyTicket , User ,Resume
 from .forms import *
@@ -39,7 +41,7 @@ def about_us(request):
                     skill_list.append(skill_pair.split(','))
         
         # یک ویژگی جدید به نام skill_list به هر آبجکت رزومه اضافه می‌کنیم
-        resume.processed_skills = skill_list
+        resume.processed_skills = skill_list # type: ignore
 
     context = {
         'rss': all_resumes,
@@ -80,9 +82,19 @@ def resume_detail_view(request, slug):
 # <------------------- Simple Pages ------------------->
 ########################################################
 # <------------------- Login Pages ---------------------
+# from django.contrib.auth.models import Group
+
+# # ... پس از اینکه کاربر جدید ساخته شد (مثلا user = User.objects.create_user(...))
+# user.is_staff = True  # این خط به کاربر اجازه ورود به پنل ادمین را می‌دهد
+# farmer_group = Group.objects.get(name='کشاورزان')
+# user.groups.add(farmer_group)
+# user.save()
+
+
+
 @csrf_protect
 def login_page(request):
-    return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
+    # return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
     if request.user.is_authenticated : 
         return redirect(dashboard)
     
@@ -107,73 +119,76 @@ def login_page(request):
 
 @csrf_protect
 def signup(request):
-    return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
+    # return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            otp = random.randint(10000,99999)
-            print(">> otp" + str(otp))
-            request.session['form-data'] = form.cleaned_data
-            request.session['phone-number'] = form.cleaned_data['phone_number']
-            request.session['otp-code'] = otp
-            request.session['is-verified'] = False
-
-            # send code with function
-            # send_otp(form.cleaned_data['first_name'],form.cleaned_data['phone_number'],otp)
+            request.session['signup-form-data'] = {
+                "form-data":form.cleaned_data,
+                "is_verified":False,
+                "phone_number":form.cleaned_data['phone_number'],
+            }
             return redirect(number_verify)
-
         else:
             context = {'form':form}
             return render(request,'l-pages/signup.html',context)
-
-
-
 
     if request.method == 'GET':
         return render(request,'l-pages/signup.html')
 
 @csrf_protect
 def number_verify(request):
-    if not 'phone-number' in request.session : #if session has destroid
+    main_session = request.session.get('signup-form-data')
+    if not main_session or 'phone_number' not in main_session:
         return redirect(signup)
-    
-    if request.method == 'POST': #for submit form
+
+    if request.method == "GET":
+        phone = main_session.get('form-data', {}).get('phone_number')
+
+        send_otp(request, phone,mode='signup')
+
+        otp_last_send = request.session.get('otp-last-send',0)
+        last_send = int(otp_last_send)
+        now_time = int(time.time())
+        retry_seconds = max(0, 90 - (now_time - last_send))
+
+        return render(
+            request,
+            'l-pages/verify-sms.html',
+            {'number': phone, 'retry_seconds': retry_seconds}
+        )
+
+    if request.method == "POST":
         form = VerifyNumberForm(request.POST)
-
-        if form.is_valid(): #if format of code be correct
-
+        if form.is_valid():
             form_code = form.cleaned_data['code']
-            otp_code = request.session.get('otp-code')
-            if str(form_code) == str(otp_code) :
-                request.session['is-verified'] = True
-                print('phone veified save in session check for correction : '+str(request.session['is-verified']))
+            otp_code = main_session.get('otp-code')
+
+            if str(form_code) == str(otp_code):
+                main_session['is-verified'] = True
+                request.session['signup-form-data'] = main_session
                 return redirect(set_password)
             else:
-                context = {'form':{'code':{'errors':'کد وارد شده اشتباه است'}}}
-                return render(request,'l-pages/verify-sms.html',context)
-
-
-        else:
-            context = {'form':form}
-            return render(request,'l-pages/verify-sms.html',context)
-
-
-    
-
-    if request.method == "GET": #for comming to this page from signup
-        form_phone = request.session.get('phone-number')
-        return render(request,'l-pages/verify-sms.html',{'number':form_phone})
+                phone = main_session.get('form-data', {}).get('phone_number')
+                now_time = int(time.time())
+                last_send = int(request.session.get('otp-last-send'))
+                retry_seconds = max(0, 90 - (now_time - last_send))
+                return render(
+                    request,
+                    'l-pages/verify-sms.html',
+                    {'number': phone, 'retry_seconds': retry_seconds, 'form': {'code': {'errors': 'کد وارد شده اشتباه است'}}}
+                )
 
 @csrf_protect
 def set_password(request):
-    if not request.session.get('is-verified'):
+    temp_session = request.session.get('signup-form-data',{})
+    if not temp_session.get('is-verified'):
         return redirect(signup)
     
     if request.method == 'POST':
         form = SetPasswordForm(request.POST)
         if form.is_valid():
-            data = request.session.get('form-data',{})
-            # form = SignUpForm(data=data)
+            data = request.session['signup-form-data'].get('form-data',{})
             user = User.objects.create_user(
                 phone_number = data.get('phone_number'),
                 first_name = data.get('first_name'),
@@ -183,13 +198,12 @@ def set_password(request):
                 password = form.cleaned_data['new_password1'],
                 ip_address = get_ip(request),
             )
+            user.is_staff = True
+            farmer_group = Group.objects.get(name='کشاورزان')
+            user.groups.add(farmer_group)
             user.save()
-            del request.session['form-data'] 
-            del request.session['phone-number'] 
-            del request.session['otp-code'] 
-            del request.session['is-verified'] 
+            del request.session['signup-form-data']
             login(request,user)
-            # login(request,user)
             request.session.set_expiry(2*60*60)
             return redirect(dashboard)
 
@@ -201,14 +215,15 @@ def set_password(request):
 
 @csrf_protect
 def forgotpass(request):
-    return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
+    # return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
     return render(request,'l-pages/forgot-pass.html')    
 
-@csrf_protect
+
 def dashboard(request):
-    if not request.user.is_authenticated : 
-        return redirect(login_page)
-    return render(request,'l-pages/dashboard.html')
+    if request.user.is_authenticated : 
+        return redirect(reverse('farmer-dashboard'))
+    else:
+        redirect(login_page)
 
 def user_logout(request):
     logout(request)
@@ -218,6 +233,7 @@ def user_logout(request):
 # <------------------- Order-Buy Pages -----------------
 @csrf_protect
 def send_ticket(request,ticket_type):
+    context = None
     if str(ticket_type) == 'technical':
         context = {'title':'ارتباط با پشتیبانی/گزارش نقص فنی',
                     'text':'لطفا جهت گزارش نقص فنی فرم زیر را تکمیل کنید',
@@ -279,8 +295,8 @@ def buy_product1(request,slug):
     if order_data:
         del request.session["form-data"]
     
+    prd = get_object_or_404(Product,slug=slug)
 
-    prd = Product.objects.get(slug=slug)
     if request.method == 'POST':
         
         form = CheckGainBuyForm(data=request.POST,max=prd.max_order,min=prd.min_order)
@@ -298,6 +314,11 @@ def buy_product1(request,slug):
             return render(request,"buy_product.html",context)
 
     elif request.method == 'GET':
+        session_key = f"viewed_product_{prd.id}" #calcualte views
+        if not request.session.get(session_key,False):
+            prd.views += 1
+            prd.save()
+            request.session[session_key] = True
         context = {'p':prd}
         return render(request, "buy_product.html", context)
 
@@ -376,7 +397,7 @@ def registered_order(request):
         "post_code":int(data.get('post_code')),
         "address":str(data.get('address')),
         'aprice' : float(data.get('aprice')),
-        'p' : Product.objects.get(id=data.get('product')),
+        'p' : Product.objects.get(slug=data.get('product')),
         'gain':  float(data.get('gain')),
     }
     try:

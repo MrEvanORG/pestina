@@ -11,38 +11,39 @@
                 لطفاً اطلاعات خود را با دقت وارد کنید. پس از ثبت‌نام، شماره تلفن شما برای ورود استفاده خواهد شد.
             </div>
 
-            <form method="POST">
+            <form method="POST" dir=rtl>
                 {% csrf_token %}
                 
                 <div class="input-group">
-                    <label for="name">: نام</label>
-                    <input type="text" id="first_name" name="first_name" required>
+                    <label for="first_name">نام : </label>
+                    <input type="text" id="first_name" name="first_name" {% if form.first_name.value %}value="{{ form.first_name.value }}"{% endif %} required>
                     {% if form.first_name.errors %}
                         <div class="error">{{ form.first_name.errors.0 }}</div>
                     {% endif %}
                 </div>
                 
                 <div class="input-group">
-                    <label for="last_name">: نام خانوادگی</label>
-                    <input type="text" id="last_name" name="last_name" required>
+                    <label for="last_name">نام خانوادگی : </label>
+                    <input type="text" id="last_name" name="last_name" {% if form.last_name.value %}value="{{form.last_name.value}}"{% endif %} required>
                     {% if form.last_name.errors %}
                         <div class="error">{{ form.last_name.errors.0 }}</div>
                     {% endif %}
                 </div>
 
                 <div class="input-group">
-                    <label for="phone">: شماره تلفن</label>
-                    <input type="text" id="phone_number" name="phone_number" placeholder="مثال : 09131234567"  required>
+                    <label for="phone">شماره همراه : </label>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="مثال : 09131234567" {% if form.phone_number.value %}value="{{form.phone_number.value}}"{% endif %} required>
                     {% if form.phone_number.errors %}
                         <div class="error">{{ form.phone_number.errors.0 }}</div>
                     {% endif %}
                 </div>
                 <div class="button-container">
-                <button type="submit" class="btn">ادامه</button>
+                <button type="submit" class="btn">ادامه <i class="fa-solid fa-duotone fa-arrow-left-long"></i>
+                </button>
                 </div>
             </form>
 
-            <a href="{% url 'login' %}" class="login-link">حساب کاربری دارید؟ وارد شوید</a>
+            <a href="{% url 'login' %}" class="login-link">حساب کاربری دارید؟ <i class="fa-duotone fa-solid fa-arrow-left-to-bracket"></i>وارد شوید</a>
         </div>
     </div>
 {% endblock %}

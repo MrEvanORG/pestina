@@ -1,7 +1,8 @@
 {% extends 'l-pages/patterns/base.html' %}
-{% block meta %}پستینا - بازیابی رمز عبور{% enblock %}
+{% block meta %}پستینا - بازیابی رمز عبور{% endblock %}
 {% block title %}بازیابی رمز عبور{% endblock title %}
 {% block content %}
+{% load static %}
     <div class="container">
         <div class="card verification-card">
             <h2>بازیابی رمز عبور</h2>
@@ -30,4 +31,388 @@
             <a href="{% url 'login' %}" class="login-link">بازگشت</a>
         </div>
     </div>
+<!-- این کد را در انتهای body قرار دهید، قبل از بستن تگ </body> -->
+<div class="floating-settings-container">
+  <div class="settings-capsule">
+    <!-- دکمه اصلی -->
+    <button class="settings-main-btn" id="settingsMainButton">
+      <i class="fas fa-cog"></i>
+    </button>
+    
+    <!-- دکمه‌های ثانویه -->
+    <div class="secondary-buttons">
+      <!-- دکمه زبان -->
+      <div class="setting-btn-wrapper lang-wrapper">
+        <button id="langButton" class="setting-btn">
+          <i class="fas fa-language"></i>
+        </button>
+        <div class="setting-options lang-options">
+          <button class="setting-option lang-selector" data-theme="{% static 'css/root/light-root.css' %}">
+            <span>فارسی</span>
+          </button>
+          <button class="setting-option lang-selector" data-theme="{% static 'css/root/light-root-2.css' %}">
+            <span>English</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- دکمه تم -->
+      <div class="setting-btn-wrapper theme-wrapper">
+        <button id="themeButton" class="setting-btn">
+          <i class="fas fa-adjust"></i>
+        </button>
+        <div class="setting-options theme-options">
+          <button class="setting-option theme-selector" data-theme="{% static 'css/root/light-root.css' %}">
+            <i class="fas fa-sun"></i>
+          </button>
+          <button class="setting-option theme-selector" data-theme="{% static 'css/root/light-root-2.css' %}">
+            <i class="fas fa-cloud-sun"></i>
+          </button>
+          <button class="setting-option theme-selector" data-theme="{% static 'css/root/dark-root.css' %}">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* استایل‌های پایه با استفاده از متغیرهای شما */
+  .floating-settings-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .floating-settings-container.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+  }
+  
+  .settings-capsule {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* دکمه اصلی */
+  .settings-main-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--custom-btn-bg-color);
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+  
+  .settings-main-btn:hover {
+    background-color: var(--custom-btn-bg-hover-color);
+    transform: scale(1.1);
+  }
+  
+  .settings-main-btn i {
+    font-size: 1.5rem;
+  }
+  
+  /* دکمه‌های ثانویه */
+  .secondary-buttons {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+  
+  .settings-capsule.expanded .secondary-buttons {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* هر دکمه تنظیمات */
+  .setting-btn-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .setting-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--white-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+  }
+  
+  .setting-btn:hover {
+    transform: scale(1.1);
+    background-color: #f5f5f5;
+  }
+  
+  .setting-btn i {
+    font-size: 1.2rem;
+  }
+  
+  /* گزینه‌های هر دکمه */
+  .setting-options {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  
+  .setting-btn-wrapper.expanded .setting-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .setting-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--white-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .setting-option:hover {
+    transform: scale(1.1);
+    background-color: #f5f5f5;
+  }
+  
+  /* حالت محو شدن کامل دکمه زبان هنگام باز شدن منوی تم */
+  .theme-wrapper.expanded ~ .lang-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    pointer-events: none;
+  }
+  
+  /* حالت محو شدن کامل دکمه تم هنگام باز شدن منوی زبان */
+  .lang-wrapper.expanded ~ .theme-wrapper {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    pointer-events: none;
+  }
+  
+  /* ریسپانسیو */
+  @media (max-width: 768px) {
+    .floating-settings-container {
+      bottom: 16px;
+      right: 16px;
+    }
+    
+    .settings-main-btn {
+      width: 48px;
+      height: 48px;
+    }
+    
+    .setting-btn {
+      width: 42px;
+      height: 42px;
+    }
+    
+    .setting-option {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<script>
+  // کد جاوااسکریپت شما بدون هیچ تغییری
+  document.addEventListener("DOMContentLoaded", function () {
+    const themeButton = document.getElementById("themeButton");
+    const themeSelectors = document.querySelectorAll(".theme-selector");
+    const themeStylesheet = document.getElementById("themeStylesheet");
+
+    const defaultTheme = themeStylesheet.getAttribute("href");
+    const defaultThemeText = "تم روشن";
+
+    // تابع برای اعمال تم ذخیره‌شده و عکس‌ها
+    function applySavedTheme() {
+        const savedTheme = localStorage.getItem("selectedTheme");
+        const savedThemeText = localStorage.getItem("selectedThemeText");
+
+        if (savedTheme) {
+            themeStylesheet.setAttribute("href", savedTheme);
+            themeButton.innerText = savedThemeText || defaultThemeText;
+
+            updateImagesBasedOnTheme(savedTheme);
+        }
+    }
+
+    // تابع برای آپدیت عکس‌ها بر اساس تم
+    function updateImagesBasedOnTheme(themeHref) {
+        const allImages = document.querySelectorAll('.themed-image');
+
+        let themeKey = "light";  // پیش‌فرض
+
+        if (themeHref.includes("dark-root")) {
+            themeKey = "dark";
+        } else if (themeHref.includes("light-root-2")) {
+            themeKey = "light2";
+        }
+
+        allImages.forEach(img => {
+            const newSrc = img.getAttribute(`data-${themeKey}`);
+            if (newSrc) {
+                img.setAttribute("src", newSrc);
+            }
+        });
+    }
+
+    applySavedTheme();
+
+    themeSelectors.forEach(button => {
+        button.addEventListener("click", function () {
+            const selectedTheme = this.getAttribute("data-theme");
+            const selectedThemeText = this.innerText;
+
+            themeStylesheet.setAttribute("href", selectedTheme);
+            themeButton.innerText = selectedThemeText;
+
+            localStorage.setItem("selectedTheme", selectedTheme);
+            localStorage.setItem("selectedThemeText", selectedThemeText);
+
+            updateImagesBasedOnTheme(selectedTheme);
+        });
+    });
+
+    // کد کنترل دکمه‌های شناور
+    const settingsMainButton = document.getElementById('settingsMainButton');
+    const settingsCapsule = document.querySelector('.settings-capsule');
+    const settingWrappers = document.querySelectorAll('.setting-btn-wrapper');
+    const floatingSettings = document.querySelector('.floating-settings-container');
+    const footer = document.querySelector('.site-footer');
+    
+    // کنترل باز و بسته شدن منوی اصلی
+    settingsMainButton.addEventListener('click', function(e) {
+      e.stopPropagation();
+      settingsCapsule.classList.toggle('expanded');
+      
+      // اگر منوی اصلی بسته می‌شود، منوهای آیتم‌ها هم بسته شوند
+      if (!settingsCapsule.classList.contains('expanded')) {
+        settingWrappers.forEach(wrapper => {
+          wrapper.classList.remove('expanded');
+        });
+      }
+    });
+    
+    // کنترل باز و بسته شدن آیتم‌ها
+    settingWrappers.forEach(wrapper => {
+      const settingBtn = wrapper.querySelector('.setting-btn');
+      
+      settingBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        wrapper.classList.toggle('expanded');
+        
+        // بستن سایر آیتم‌های باز
+        settingWrappers.forEach(otherWrapper => {
+          if (otherWrapper !== wrapper) {
+            otherWrapper.classList.remove('expanded');
+          }
+        });
+      });
+    });
+    
+    // بستن منوها با کلیک خارج
+    document.addEventListener('click', function() {
+      settingsCapsule.classList.remove('expanded');
+      settingWrappers.forEach(wrapper => {
+        wrapper.classList.remove('expanded');
+      });
+    });
+    
+    // جلوگیری از بسته شدن هنگام کلیک روی منوها
+    settingsCapsule.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    
+    // کنترل نمایش/مخفی کردن دکمه شناور هنگام اسکرول
+    if (footer) {
+      let lastScrollPosition = 0;
+      let ticking = false;
+      
+      const handleScroll = () => {
+        const footerRect = footer.getBoundingClientRect();
+        const floatingRect = floatingSettings.getBoundingClientRect();
+        
+        // اگر فوتر در حال نمایش است و دکمه شناور با آن همپوشانی دارد
+        if (footerRect.top < window.innerHeight && 
+            floatingRect.bottom > footerRect.top) {
+          floatingSettings.classList.add('hide');
+        } else {
+          floatingSettings.classList.remove('hide');
+        }
+      };
+      
+      window.addEventListener('scroll', function() {
+        lastScrollPosition = window.scrollY;
+        
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            handleScroll();
+            ticking = false;
+          });
+          
+          ticking = true;
+        }
+      });
+      
+      // بررسی اولیه
+      handleScroll();
+    }
+  });
+</script>
 {% endblock %}

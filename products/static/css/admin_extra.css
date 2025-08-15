@@ -1,0 +1,69 @@
+:root{
+    --primary:var(--primary-color) !important;
+    --secondary:var(--secondary-color) !important;
+
+    --accent: #ffe032;
+
+    --button-hover-bg:var(--primary) !important;
+    --default-button-bg:var(--primary) !important;
+    --breadcrumbs-bg:var(--primary) !important;
+    --link-fg:var(--link-color) !important;
+    --link-hover-color:var(--link-color-hover) !important;
+    /* --header-branding-color: var(--accent);
+    --border-color: var(--border-color) !important;
+    
+    
+    --button-hover-bg:var(--primary) !important;
+    --default-button-hover-bg: var(--primary) !important;
+    --link-selected-fg: var(--primary) !important;
+    --link-fg: var(--primary-color) !important;
+    --breadcrumbs-bg : var(--primary) !important;
+    
+    --default-button-bg:var(--secondary)!important;
+    --header-bg: var(--secondary) !important;
+    --button-bg: var(--secondary) !important;
+    --link-hover-color:var(--secondary-color) !important;
+    
+    
+    --primary-fg:var(--white-color) !important;
+    --header-link-color: var(--primary-fg) !important;
+    --body-bg:var(--section-bg-color) !important;
+    --breadcrumbs-link-fg: var(--body-bg) !important;
+
+    --body-loud-color:var(--dark-color) !important; */
+}
+/* html[data-theme="light"], :root {
+    --body-bg:var(--section-bg-color);
+    --border-color:var(--border) !important;
+} */
+
+
+
+/* html[data-theme="light"],
+:root {
+    --header-color: #ffc;
+
+    --breadcrumbs-fg: #c4dce8;
+    --breadcrumbs-bg: #264b5d;
+
+
+    --hairline-color: #e8e8e8;
+    --border-color: #ccc;
+
+    --error-fg: #ba2121;
+
+    --message-success-bg: #dfd;
+    --message-warning-bg: #ffc;
+    --message-error-bg: #ffefef;
+
+    --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
+    /* --selected-bg: #e4e4e4; /* E.g. selected table cells */
+    /* --selected-row: #ffc;
+
+    --button-fg: #fff;
+
+    --close-button-bg: #747474;
+    --close-button-hover-bg: #333;
+    --delete-button-bg: #ba2121;
+    --delete-button-hover-bg: #a41515; 
+} */

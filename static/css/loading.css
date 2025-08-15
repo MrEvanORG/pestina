@@ -1,0 +1,75 @@
+/* =================================================================== */
+/* LOADER STYLES                              */
+/* =================================================================== */
+
+
+/* ----- استایل کلی پوشاننده لودینگ ----- */
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; /* بالاتر از همه عناصر قرار می‌گیرد */
+  background-color: var(--section-bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* انیمیشن محو شدن */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+/* ----- کلاسی که با جاوااسکریپت برای مخفی کردن اضافه می‌شود ----- */
+#loader-wrapper.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ----- محتوای لودر (لوگو و انیمیشن) ----- */
+#loader-content {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  /* چیدمان پیش‌فرض برای موبایل (زیر هم) */
+  flex-direction: column;
+}
+
+/* ----- استایل لوگو ----- */
+#loader-logo {
+  width: 130px;
+  height:auto;
+  object-fit: contain;
+  /* فاصله لوگو از انیمیشن در حالت موبایل */
+  margin-bottom: 25px;
+}
+
+/* ----- استایل خط انیمیشن ----- */
+.spinner-line {
+  width: 100px;
+  height: 6px;
+  background-color: var(--primary-color);
+  border-radius: 40px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* ----- انیمیشن ساده و سبک ----- */
+@keyframes pulse {
+  0% {
+    transform: scaleX(0.4);
+    background-color: var(--secondary-color);
+  }
+  50% {
+    transform: scaleX(1);
+    background-color: var(--primary-color);
+  }
+  100% {
+    transform: scaleX(0.4);
+    background-color: var(--secondary-color);
+  }
+}
+
+/* =================================================================== */
+/* RESPONSIVE STYLES (Desktop)                   */
+/* =================================================================== */

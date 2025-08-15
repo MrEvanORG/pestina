@@ -1,14 +1,6 @@
 /* Buttons */
 /* Inputs */
 /* Timeline custom component */
-
-@font-face {
-  font-display: block;
-  font-family:"vazir";
-  src: url("../fonts/Vazir-Regular.woff2");
-  src:url("../fonts/Vazir-Regular.woff");
-  font-weight : normal;
-}
 /* abi ha secondary sabz ha primary */
 body{
   font-family: "vazir";

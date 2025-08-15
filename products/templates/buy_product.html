@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="col-lg-6 col-12">
-                        <form class="custom-form contact-form" method="post" action="{% url 'buy-product' pid=p.id %}" role="form">
+                        <form class="custom-form contact-form" method="post" action="{% url 'buy-product' slug=p.slug %}" role="form">
                             {% csrf_token %}
                             <div class="row" style="justify-content:center;">
                                 <div class="col-lg-12 col-12">

@@ -198,15 +198,15 @@ class SignUpForm(forms.ModelForm):
                 
 class VerifyNumberForm(forms.Form):
 
-    code = forms.CharField(max_length=5,required=True,label='verification')
+    code = forms.CharField(max_length=6,required=True,label='verification')
 
     def clean_code(self):
         code = (self.cleaned_data['code']).strip()
 
         if not code.isdigit() :
             raise ValidationError('کد تایید باید عددی باشد')
-        if not len(code) == 5 :
-            raise ValidationError('کد باید به طول ۵ کاراکتر باشد')
+        if not len(code) == 6 :
+            raise ValidationError('کد باید به طول 6 کاراکتر باشد')
         
         return code
     

@@ -8,10 +8,12 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 """
 
 import os
+import threading
 
 from django.core.wsgi import get_wsgi_application
+from products.addons import cleanup_waited_phones
 
-
+threading.Thread(target=cleanup_waited_phones,daemon=True).start()
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pestina.settings')

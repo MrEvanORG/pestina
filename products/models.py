@@ -26,9 +26,17 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
+class SuperUserProxy(User):
     class Meta:
+        proxy = True
         verbose_name = "کاربر"
         verbose_name_plural = "کاربران" 
+
+class FarmerUserProxy(User):
+    class Meta:
+        proxy = True
+        verbose_name = "مشخصات من"
+        verbose_name_plural = "مشخصات من" 
 
 class Product(models.Model):
 
@@ -72,6 +80,7 @@ class Product(models.Model):
     shipping_cost = models.DecimalField(max_digits=13,null=True,blank=True,decimal_places=0,verbose_name='(تومان) هزینه ارسال')
     is_pestina_product = models.BooleanField(default=False,verbose_name='محصول پستینا')
     is_confirmed = models.BooleanField(default=False,verbose_name='وضعیت تایید شدن توسط ادمین')
+    views = models.PositiveIntegerField(default=0,verbose_name='بازدیدها')
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی')
     upload_time = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ثبت محصول')
 
@@ -82,15 +91,21 @@ class Product(models.Model):
     
 
     def get_absolute_url(self):
-        return reverse("buy-product", args=[self.id])
+        return reverse("buy-product", args=[self.slug])
 
 
     def __str__(self):
-        return f"{self.kind} uploaded by {'admin' if self.is_pestina_product else self.user.first_name}"
+        return f"پسته {self.get_kind_display()} بارگذاری شده توسط :  {'admin' if self.is_pestina_product else self.user.first_name+' '+self.user.last_name}"
     
+class SuperProductProxy(Product):
     class Meta:
-        verbose_name = "محصول"
-        verbose_name_plural = "محصول ها"
+        verbose_name = 'محصول'
+        verbose_name_plural = 'محصولات'
+
+class FarmerProductProxy(Product):
+    class Meta:
+        verbose_name = 'محصول من'
+        verbose_name_plural = 'محصولات من'
 
 class Ticket(models.Model):
     class TicketType(models.TextChoices):

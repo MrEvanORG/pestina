@@ -8,8 +8,12 @@
     <title>{{ resume.name }} | رزومه</title>
     {% load static %}
     {% comment %} <link href="{% static 'css/font-awesome/css/all.min.css' %}?ver=1.2.0" rel="stylesheet"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/root/vazir-fonts.css' %}" rel="stylesheet"/>
     <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root-2.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/loading.css' %}" rel="stylesheet"/>
     <link rel="icon" href="{% static 'images/fav.svg' %}" type="image/svg+xml">
+
+    <link href="{% static 'css/floating-menu.css' %}" rel="stylesheet"/>
     <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
     <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
@@ -29,6 +33,7 @@
     </noscript>
 </head>
 <body id="top">
+{% include "patterns/loading.html" %}
 <header class="d-print-none">
     <div class="container text-center text-lg-right">
         <div class="py-3 clearfix">
@@ -231,9 +236,11 @@
         </div>
     </div>
 </footer>
+{% include "patterns/floating-menu.html" %}
 <script src="{% static 'js/resume-bootstrap.bundle.min.js' %}?ver=1.2.0"></script>
 <script src="{% static 'js/resume-aos.js' %}?ver=1.2.0"></script>
 <script src="{% static 'js/resume-main.js' %}?ver=1.2.0"></script>
-{% comment %} <script src="{% static 'js/theme-toggle.js' %}" defer></script> {% endcomment %}
+<script src="{% static 'js/loading.js' %}?ver=1.2.0"></script>
+<script src="{% static 'js/theme-toggle.js' %}" defer></script>
 </body>
 </html>

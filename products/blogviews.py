@@ -42,7 +42,7 @@ def blog_post_detail(request, category_slug, post_slug):
     ctg = get_object_or_404(BlogCategories,slug=category_slug)
     post = get_object_or_404(BlogPost, slug=post_slug, category=ctg)
 
-    session_key = f"viewed_post_{post.id}" #calcualte views
+    session_key = f"viewed_post_{post.id}" #calcualte views #ignore
     if not request.session.get(session_key,False):
         post.views += 1
         post.save()

@@ -136,7 +136,7 @@ p {
 ul li {
   color: var(--p-color);
   font-size: var(--p-font-size);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-medium);
 }
 
 a, 
@@ -1034,6 +1034,11 @@ blockquote {
   color: var(--primary-color);
 }
 
+.site-footer .dropdown-item.active {
+  /* background-color: transparent; */
+  background-color: var(--secondary-color) !important;
+}
+
 .site-footer .dropdown-menu li:first-child .dropdown-item {
   padding-top: 10px;
 }
@@ -1043,6 +1048,7 @@ blockquote {
 }
 
 .site-footer .dropdown-toggle {
+  color: var(--white-color);
   background-color: var(--secondary-color);
   border-color: var(--white-color);
 }
@@ -1051,6 +1057,8 @@ blockquote {
   background-color: var(--primary-color);
   border-color: transparent;
 }
+
+
 
 .site-footer-links {
   padding-right: 0;

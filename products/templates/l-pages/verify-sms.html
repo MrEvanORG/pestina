@@ -20,15 +20,78 @@
                         border: 1px solid var(--border-color);
                         border-radius: 100px;">
                     {% if form.code.errors %}
-                        <div class="error">{{ form.code.errors }}</div>
+                        <div class="error"><p style="font-weight:bold;">{{ form.code.errors }}</p></div>
                     {% endif %}
+                    <p id="otp-message" style="color:var(--secondary-color); font-weight:bold;"></p>
                 </div>
-
                 <div class="button-container">
-                    <button type="submit" class="btn">ادامه</button>
+                    <button id="resend-btn" class="btn" type="button" disabled>
+                        تلاش مجدد تا <span id="timer">{{ retry_seconds }}</span> ثانیه دیگر
+                    </button>
+                    <button type="submit" class="btn" style="width:85%;margin-top:10px;">ادامه</button>
                 </div>
-                <a href="{% url 'login' %}" class="login-link">ارسال مجدد کد </a>
             </form>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+<script>
+    let timer = {{ retry_seconds|default:0 }};
+    let btn = document.getElementById('resend-btn');
+    let timerEl = document.getElementById('timer');
+    let msgBox = document.getElementById('otp-message');
+
+    function startCountdown() {
+        btn.disabled = true;
+        timerEl.textContent = timer;
+        let interval = setInterval(() => {
+            timer--;
+            if (timer > 0) {
+                timerEl.textContent = timer;
+            } else {
+                clearInterval(interval);
+                btn.disabled = false;
+                btn.textContent = "ارسال مجدد کد";
+            }
+        }, 1000);
+    }
+
+    btn.addEventListener('click', function () {
+        btn.disabled = true;
+        btn.textContent = "در حال ارسال...";
+        fetch("{% url 'send-otp' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `phone={{ number }}`
+        })
+        .then(res => res.json())
+        .then(data => {
+            msgBox.textContent = data.message;
+            if (data.status === 200) {
+                btn.innerHTML = 'تلاش مجدد تا <span id="timer">90</span> ثانیه دیگر';
+                timerEl = document.getElementById('timer');
+                timer = 90;
+                startCountdown();
+            } else {
+                btn.disabled = false;
+                btn.textContent = "ارسال مجدد کد";
+            }
+        })
+        .catch(err => {
+            msgBox.textContent = "خطا در ارتباط با سرور";
+            btn.disabled = false;
+            btn.textContent = "ارسال مجدد کد";
+        });
+    });
+
+    if (timer > 0) {
+        startCountdown();
+    } else {
+        btn.disabled = false;
+        btn.textContent = "ارسال کد";
+    }
+</script>
 {% endblock %}

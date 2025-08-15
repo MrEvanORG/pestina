@@ -1,0 +1,204 @@
+/* استایل‌های پایه با استفاده از متغیرهای شما */
+.floating-settings-container {
+position: fixed;
+bottom: 40px;
+right: 28px;
+z-index: 1000;
+display: flex;
+justify-content: center;
+align-items: center;
+transition: all 0.3s ease;
+}
+
+.floating-settings-container.hide {
+opacity: 0;
+visibility: hidden;
+transform: translateY(20px);
+}
+
+.settings-capsule {
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+/* دکمه اصلی */
+.settings-main-btn {
+width: 60px;
+height: 60px;
+border-radius: 50%;
+background-color: var(--custom-btn-bg-color);
+color: var(--white-color);
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+outline: none;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+transition: all 0.3s ease;
+z-index: 10;
+}
+
+.settings-main-btn:hover {
+background-color: var(--custom-btn-bg-hover-color);
+transform: scale(1.1);
+}
+
+.settings-main-btn i {
+font-size: 1.5rem;
+}
+
+/* دکمه‌های ثانویه */
+.secondary-buttons {
+position: absolute;
+bottom: 100%;
+right: 5px;
+display: flex;
+flex-direction: column-reverse;
+align-items: center;
+gap: 12px;
+margin-bottom: 12px;
+opacity: 0;
+visibility: hidden;
+transform: translateY(20px);
+transition: all 0.3s ease;
+}
+
+.settings-capsule.expanded .secondary-buttons {
+opacity: 1;
+visibility: visible;
+transform: translateY(0);
+}
+
+/* هر دکمه تنظیمات */
+.setting-btn-wrapper {
+position: relative;
+display: flex;
+flex-direction: column-reverse;
+align-items: center;
+gap: 8px;
+transition: all 0.3s ease;
+}
+
+.setting-btn {
+width: 48px;
+height: 48px;
+border-radius: 50%;
+background-color: var(--white-color);
+color: var(--primary-color);
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+transition: all 0.3s ease;
+z-index: 5;
+}
+
+.setting-btn:hover {
+transform: scale(1.1);
+background-color: #f5f5f5;
+}
+
+.setting-btn i {
+font-size: 1.2rem;
+}
+
+/* گزینه‌های هر دکمه */
+.setting-options {
+display: flex;
+flex-direction: column-reverse;
+gap: 8px;
+position: absolute;
+bottom: 100%;
+right: 4px;
+margin-bottom: 8px;
+opacity: 0;
+visibility: hidden;
+transform: translateY(10px);
+transition: all 0.3s ease;
+}
+
+.setting-btn-wrapper.expanded .setting-options {
+opacity: 1;
+visibility: visible;
+transform: translateY(0);
+}
+
+.setting-option {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+background-color: var(--white-color);
+color: var(--primary-color);
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.setting-option:hover {
+transform: scale(1.1);
+background-color: #f5f5f5;
+}
+.setting-option:active{
+    background-color: var(--dark-color);
+}
+
+/* استایل جدید برای دکمه فعال */
+.setting-option.theme-selector.active {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.setting-option.theme-selector.active:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+
+/* حالت محو شدن کامل دکمه زبان هنگام باز شدن منوی تم */
+.theme-wrapper.expanded ~ .lang-wrapper {
+opacity: 0;
+visibility: hidden;
+transform: translateY(10px);
+pointer-events: none;
+}
+
+/* حالت محو شدن کامل دکمه تم هنگام باز شدن منوی زبان */
+.lang-wrapper.expanded ~ .theme-wrapper {
+opacity: 0;
+visibility: hidden;
+transform: translateY(10px);
+pointer-events: none;
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+.floating-settings-container {
+    bottom: 20px;
+    right: 16px;
+}
+
+.settings-main-btn {
+    width: 60px;
+    height: 60px;
+}
+
+.setting-btn {
+    width: 52px;
+    height: 52px;
+}
+
+.setting-option {
+    width: 46px;
+    height: 46px;
+}
+}

@@ -1,29 +1,36 @@
 {% extends 'l-pages/patterns/base.html' %}
 {% load static %}
-{% block meta %}ورود به پستینا - فروش پسته در پستینا{% endblock %}
 {% block title %}ورود به پستینا{% endblock title %}
+{% block meta %}ورود به پستینا - فروش پسته در پستینا{% endblock %}
 {% block content %}
     <div class="container">
         <div class="card welcome-card">
-            <h2>به پستینا خوش آمدید</h2>
-            <p>اکانتی ندارید؟</p>
+            <h2>
+                به
+                 <a class="navbar-brand" href="{% url 'home' %}"><img class="themed-image" src="{% static 'images/light/light-logo.svg' %}" alt="پستینا" style="width: 107px ;height: auto;vertical-align:text-bottom;" data-light = "{% static 'images/light/light-logo.svg' %}" data-light2 = "{% static 'images/light-2/light-logo-2.svg' %}" data-dark = "{% static 'images/dark/dark-logo.svg' %}" /></a>
+                 خوش آمدید
+            </h2>
+            <p>در پستینا میتوانید محصولات خود را به صورت رایگان به مصرف کنندگان سراسز کشور به فروش رسانید</p>
+            <p>حسابی ندارید؟</p>
             <div class="button-container">
-            <a href="{% url 'sign-up' %}" class="btn">نام نویسی کنید</a>
+            <a href="{% url 'sign-up' %}" class="btn">
+                <i class="fa-duotone fa-solid fa-pen-nib"></i>
+                نام نویسی کنید</a>
             </div>
         </div>
         <div class="card login-card">
-            <h2>ورود / لاگین</h2>
-            <form method="POST">
+            <h2>ورود / ساخت حساب </h2>
+            <form method="POST" dir="rtl">
                 {% csrf_token %}
                 <div class="input-group">
-                    <label for="phone_number">: شماره تلفن</label>
+                    <label for="phone_number">شماره همراه : </label>
                     <input type="text" id="phone_number" name="phone_number" required>
                     {% if form.phone_number.errors %}
                         <div class="error">{{ form.phone_number.errors.0 }}</div>
                     {% endif %}
                 </div>
                 <div class="input-group">
-                    <label for="password">: رمز عبور</label>
+                    <label for="password">رمز عبور : </label>
                     <input type="password" id="password" name="password" required>
                     {% if form.password.errors %}
                         <div class="error">{{ form.password.errors.0 }}</div>
@@ -33,10 +40,13 @@
                     {% endif %}
                 </div>
                 <div class="button-container">
-                <button type="submit" class="btn" style="max-width: 140px;">وارد شوید</button>
+                <button type="submit" class="btn" style="max-width: 140px;">
+                    وارد شوید
+                    <i class="fa-duotone fa-solid fa-arrow-left-to-bracket"></i>
+                </button>
                 </div>
             </form>
-            <a href="{% url 'forgot-password' %}" class="forgot-password">بازگردانی پسورد</a>
+            <a href="{% url 'forgot-password' %}" class="forgot-password"><i class="fa-duotone fa-solid fa-rotate-right fa-xs"></i>ورود با کد یکبار مصرف </a>
         </div>
     </div>
 

@@ -5,13 +5,6 @@
 url("../fonts/bootstrap-icons.woff?8d200481aa7f02a2d63a331fc782cfaf") format("woff");
 }
 
-@font-face {
-  font-display: block;
-  font-family:"vazir";
-  src: url("../fonts/Vazir-Regular.woff2");
-  src:url("../fonts/Vazir-Regular.woff")
-}
-
 .bi::before,
 [class^="bi-"]::before,
 [class*=" bi-"]::before {

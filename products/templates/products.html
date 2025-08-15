@@ -129,7 +129,7 @@
                                                 </div>
                                             {% else %}
                                                 <div class="product-price seller">
-                                                    فروشنده : {{ p.user.last_name }}
+                                                    فروشنده : {{p.user.first_name}} {{ p.user.last_name }} از {{p.user.city}}
                                                 </div>
                                             {% endif %}
                                             <div class="product-price">{{ p.price | format_cost_number }} هرکیلو تومان</div>

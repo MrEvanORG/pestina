@@ -1,0 +1,39 @@
+{% load static %}
+<div class="floating-settings-container">
+    <div class="settings-capsule">
+        <button class="settings-main-btn" id="settingsMainButton">
+        <i class="fa-solid fa-duotone fa-gear" aria-hidden="true"></i>
+        </button>
+        <div class="secondary-buttons">
+            <div class="setting-btn-wrapper theme-wrapper">
+            <button id="floatingThemeButton" class="setting-btn">
+                <i class="fa-solid fa-duotone fa-palette" aria-hidden="true"></i>
+            </button>
+            <div class="setting-options theme-options">
+                <button class="setting-option theme-selector" data-theme="{% static 'css/root/light-root.css' %}">
+                <i class="fa-solid fa-duotone fa-sun" aria-hidden="true"></i>
+                </button>
+                <button class="setting-option theme-selector" data-theme="{% static 'css/root/light-root-2.css' %}">
+                    <i class="fa-solid fa-duotone fa-sun-alt" aria-hidden="true"></i>
+                </button>
+                <button class="setting-option theme-selector" data-theme="{% static 'css/root/dark-root.css' %}">
+                    <i class="fa-solid fa-duotone fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+            </div>
+        <div class="setting-btn-wrapper lang-wrapper">
+            <button id="langButton" class="setting-btn">
+                <i class="fa-solid fa-duotone fa-language" aria-hidden="true"></i>
+            </button>
+            <div class="setting-options lang-options">
+            <button class="setting-option lang-selector" data-theme="{% static 'css/root/light-root.css' %}">
+                <span>فا</span>
+            </button>
+            <button class="setting-option lang-selector" data-theme="{% static 'css/root/light-root-2.css' %}">
+                <span>En</span>
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

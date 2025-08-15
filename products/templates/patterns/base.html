@@ -5,17 +5,18 @@
         <meta charset="utf-8"/>
         <meta name="description" content="{% if seo_description %}{{seo_description}}{% else %}{% block meta %}{% endblock %}{% endif %}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="var(--secondary-color)">
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta name="theme-color" content="var(--secondary-color)">
         <title>{% if seo_title %}{{seo_title}}{% else %}{% block title %}{% endblock %}{% endif %}</title>
         {% block head %}{% endblock %}
-
+        <link rel="stylesheet" href="{% static 'css/root/vazir-fonts.css' %}" rel="stylesheet"/>
         <link id="themeStylesheet" rel="stylesheet" href="{% static 'css/root/light-root.css' %}" rel="stylesheet"/>
 
         <link href="{% static 'css/loading.css' %}" rel="stylesheet"/>
         <link rel="icon" href="{% static 'images/fav.svg' %}" type="image/svg+xml">
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
         <link href="{% static 'css/main-styles.css' %}" rel="stylesheet"/>
+        <link href="{% static 'css/floating-menu.css' %}" rel="stylesheet"/>
         <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
         <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
         <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
@@ -23,29 +24,19 @@
 
 
 
-        <!-- JAVASCRIPT FILES -->
-        <script src="{% static 'js/loading.js' %}"></script>
         <script src="{% static 'js/theme-toggle.js' %}" defer></script>
-        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'js/custom.js' %}"></script>
-        <script src="{% static 'js/click-scroll.js' %}"></script>
+        <script src="{% static 'js/loading.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> 
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/jquery.sticky.js' %}"></script>
+        <script src="{% static 'js/custom.js' %}"></script>
+        <script src="{% static 'js/click-scroll.js' %}"></script>
          
         {% block script %}{% endblock %}
     </head>
 
-    <!-- body -->
     {% block typebody %}{% endblock %}
-    <div id="loader-wrapper">
-        <div id="loader-content">
-                    <img id="loader-logo" class="themed-image" src="{% static 'images/light/light-logo.svg' %}" alt="پستینا" style="width: 113px ;height: auto;"
-                        data-light = "{% static 'images/light/light-logo.svg' %}"
-                        data-light2 = "{% static 'images/light-2/light-logo-2.svg' %}"
-                        data-dark = "{% static 'images/dark/dark-logo.svg' %}" />
-            <div class="spinner-line"></div>
-        </div>
-    </div>
+    {% include "patterns/loading.html" %}
     <main>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
@@ -56,7 +47,6 @@
                         data-light2 = "{% static 'images/light-2/light-logo-2.svg' %}"
                         data-dark = "{% static 'images/dark/dark-logo.svg' %}" />
                 </a>
-
                 <div class="d-lg-none ms-auto me-4" style="display: flex;align-items:center;">
                     <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}" ></a>
                     {% if user.is_authenticated %}
@@ -85,5 +75,6 @@
         {% block header %}{% endblock %}
         {% block content %}{% endblock %}
         {% include "patterns/footer.html" %}
-    </body>
+        {% include "patterns/floating-menu.html" %}
+</body>
 </html>

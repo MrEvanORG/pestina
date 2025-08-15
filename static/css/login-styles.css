@@ -40,6 +40,7 @@ body {
     width: 100%;
 }
 
+
 /* تنظیمات کلی کارت‌ها */
 .card {
     padding: 20px;
@@ -58,7 +59,7 @@ body {
 }
 
 .welcome-card .btn {
-    max-width: 100px;
+    min-width: 125px;
     background:var(--white-color);
     color: var(--secondary-color);
     padding: 10px 15px;

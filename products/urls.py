@@ -1,10 +1,10 @@
-from django.urls import path , include
-from . import views
+from django.urls import path ,include
+from . import views , addons
 from django.contrib import admin
 
 urlpatterns = [
     path('',views.homepage,name='home'),
-
+    path('send-otp/',addons.send_otp,name='send-otp'),
     path('login/',views.login_page,name='login'),
     path('login/forgot-password',views.forgotpass,name='forgot-password'),
     path('sign_up/',views.signup,name='sign-up'),

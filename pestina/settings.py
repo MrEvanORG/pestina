@@ -37,6 +37,7 @@ AUTH_USER_MODEL = 'products.User'
 # Application definition
 
 INSTALLED_APPS = [ 
+    'products.apps.ProductsConfig', #myapp
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'taggit',
     'jsoneditor',
-    'products',
 ]
 
 CSRF_TRUSTED_ORIGINS = ['http://192.168.1.7','http://127.0.0.1','http://localhost','https://pestina.ir','https://www.pestina.ir']
@@ -66,7 +66,7 @@ ROOT_URLCONF = 'pestina.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -194,7 +194,7 @@ LOGGING = {
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'Asia/Tehran'
 
