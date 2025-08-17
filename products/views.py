@@ -199,9 +199,11 @@ def set_password(request):
                 ip_address = get_ip(request),
             )
             user.is_staff = True
-            farmer_group = Group.objects.get(name='کشاورزان')
+            farmer_group = Group.objects.get(name="کشاورزان")
             user.groups.add(farmer_group)
+            send_admin_notif(mode="new_user",user=user)
             user.save()
+
             del request.session['signup-form-data']
             login(request,user)
             request.session.set_expiry(2*60*60)
@@ -214,10 +216,63 @@ def set_password(request):
         return render(request,'l-pages/set-password.html')
 
 @csrf_protect
-def forgotpass(request):
-    # return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
-    return render(request,'l-pages/forgot-pass.html')    
+def otp_verify(request):
+    main_session = request.session.get('otp-login-phone')
+    if not main_session :
+        return redirect(otp_login)
 
+    if request.method == "GET":
+        phone = int(main_session)
+
+        otp_last_send = request.session.get('otp-last-send',0)
+        last_send = int(otp_last_send)
+        now_time = int(time.time())
+        retry_seconds = max(0, 90 - (now_time - last_send))
+
+        return render(
+            request,
+            'l-pages/verify-sms.html',
+            {'number': phone, 'retry_seconds': retry_seconds}
+        )
+
+    if request.method == "POST":
+        form = VerifyNumberForm(request.POST)
+        if form.is_valid():
+            form_code = form.cleaned_data['code']
+
+            sign_session = request.session.get('signup-form-data')
+            otp_code = sign_session.get('otp-code')
+
+            phone = str(main_session)
+            if str(form_code) == str(otp_code):
+                user = User.objects.get(phone_number=phone)
+                if user:
+                    login(request,user)
+                    request.session.set_expiry(2*60*60)
+                    return redirect(dashboard)
+            else:
+                now_time = int(time.time())
+                last_send = int(request.session.get('otp-last-send'))
+                retry_seconds = max(0, 90 - (now_time - last_send))
+                return render(
+                    request,
+                    'l-pages/verify-sms.html',
+                    {'number': phone, 'retry_seconds': retry_seconds, 'form': {'code': {'errors': 'کد وارد شده اشتباه است'}}}
+                )
+
+@csrf_protect
+def otp_login(request):
+    if request.method == 'POST':
+        form = OTPLoginForm(request.POST)
+        if form.is_valid():
+            request.session['otp-login-phone'] = form.cleaned_data['phone_number']
+            return redirect(otp_verify)
+        else:
+            return render(request,'l-pages/otp-login.html',{"form":form})    
+
+    if request.method == 'GET':
+        return render(request,'l-pages/otp-login.html')    
+    # return render(request,"soon_page.html",{'text':'پستینایی عزیز به زودی میتوانید حساب کاربری ایجاد کنید ومحصولات خود را در پستینا به فروش برسانید'})
 
 def dashboard(request):
     if request.user.is_authenticated : 
@@ -268,13 +323,14 @@ def send_ticket(request,ticket_type):
             request_discription = form.cleaned_data['request_text'],
             ticket_type = form_type,
             ip_address = get_ip(request))
-            ticket.save()
             # send message
             try:
-                rs = send_ticket_message(ticket.buyer_namelastname,ticket.buyer_phone,ticket.request_title,form_type.label)
+                rs = send_admin_notif(mode="new_ticket",ticket=ticket)
+                # rs = send_ticket_message(ticket.buyer_namelastname,ticket.buyer_phone,ticket.request_title,form_type.label)
+                ticket.message_status = rs
             except Exception as e:
-                print(rs,e)
-            print(rs)
+                print(e)
+            ticket.save()
 
             request.session['buyer-phone'] = form.cleaned_data['buyer_phonenumber']
             request.session['buyer-name'] = form.cleaned_data['buyer_namelastname']
@@ -350,11 +406,12 @@ def buy_product2(request):
                 address = form.cleaned_data['address'],
                 ip_address = get_ip(request),
             )
-            order.save()
             try:
                 rs = send_order_message(order.name,order.phone,order.product,order.gain,order.price)
+                order.message_status = rs['message']
             except Exception as e:
                 print(e)
+            order.save()
             form_data['order_number'] = str(order.id).zfill(4)
             form_data['name'] = form.cleaned_data['buyer_namelastname']
             form_data['phone'] = form.cleaned_data['buyer_phone']

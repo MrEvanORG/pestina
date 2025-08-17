@@ -9,6 +9,47 @@ from products.templatetags.custom_filters import format_weight , format_toman , 
 sms_api = ghasedak_sms.Ghasedak(api_key='773c50149197530bfafa31363c45965b1f743d15dc4aa61b487db6fe2dac7f3dimrGkVoVyRykik5T')
 
 
+def send_admin_notif(mode=None,user=None,product=None,ticket=None):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    admin_users = User.objects.filter(is_superuser=True)
+    sms_response = None
+    if mode :
+        if mode == "new_user" and user:
+            for admin in admin_users:
+                response = sms_api.send_single_sms(
+                    ghasedak_sms.SendSingleSmsInput(
+                        message=f"کاربر {user.first_name} {user.last_name} ثبت نام کرد .\nلغو 11",
+                        receptor=str(admin.phone_number),
+                        line_number='30006707215215',
+                        send_date='',
+                        client_reference_id=''
+                    )
+                )
+        elif mode == "new_product" and product:
+            for admin in admin_users:
+                response = sms_api.send_single_sms(
+                    ghasedak_sms.SendSingleSmsInput(
+                        message=f"محصول پسته {product.get_kind_display()} توسط {product.user.first_name} {product.user.last_name} روی سایت قرار گرفت  \nلغو11",
+                        receptor=str(admin.phone_number),
+                        line_number='30006707215215',
+                        send_date='',
+                        client_reference_id=''
+                    )
+                )
+        elif mode == "new_ticket" and ticket:
+            for admin in admin_users:
+                response = sms_api.send_single_sms(
+                    ghasedak_sms.SendSingleSmsInput(
+                        message=f"تیکت جدید توسط {ticket.buyer_namelastname} در دپارتمان {ticket.get_ticket_type_display()} روی سایت قرار گرفت\nلغو 11",
+                        receptor=str(admin.phone_number),
+                        line_number='30006707215215',
+                        send_date='',
+                        client_reference_id=''
+                    )
+                )
+                sms_response = response['message']
+    return "No Response" if not sms_response else sms_response
 
 def persian_slugify(value):
     value = re.sub(r'[\u200c\u200b\u200d\uFEFF]', '',value)
@@ -40,7 +81,7 @@ def calculate_price(product,gain):
         all_price = float(gain) * float(product.price) + float(product.shipping_cost)
 
     return  product_price , all_price
-#------------- otp secton 
+#------------- otp secton -------------
 otp_waited_phones = {}
 WAIT_TIME = 90  
 CLEANUP_INTERVAL = 300 
@@ -89,9 +130,11 @@ def send_otp(request, phone=None, name=None, mode='signup'):
 
     if mode == 'signup':
         otp_code = random.randint(100000, 999999)
+        #save code in signup session
         main_session = request.session.get('signup-form-data', {})
         main_session['otp-code'] = otp_code
-        request.session['signup-form-data'] = main_session #save otp code in session
+        request.session['signup-form-data'] = main_session 
+        #save code in otplogin session
         newotpcommand = ghasedak_sms.SendOtpInput(
             send_date=None,
             receptors=[
@@ -115,31 +158,7 @@ def send_otp(request, phone=None, name=None, mode='signup'):
             return JsonResponse({"status": sms_status, "message": "ارسال پیامک با خطا مواجه شد"}, status=sms_status)
         else:
             return JsonResponse({"status": 200, "message": "کد تأیید با موفقیت ارسال شد"})
-
-
-def send_ticket_message(name,phone,title,type):
-    msg = f"""تیکت جدید از نوع {type}\nعنوان : {title}\nنام : {name}\nشماره تماس : {phone}"""
-
-
-    response = sms_api.send_single_sms(
-        ghasedak_sms.SendSingleSmsInput(
-            message=msg,
-            receptor='09302366684',
-            line_number='30006707215215',
-            send_date='',
-            client_reference_id=''
-        )
-    )
-    response = sms_api.send_single_sms(
-        ghasedak_sms.SendSingleSmsInput(
-            message=msg,
-            receptor='09134871227',
-            line_number='30006707215215',
-            send_date='',
-            client_reference_id=''
-        )
-    )
-    return response
+# ---------- end otp section ----------
 
 def send_order_message(name,phone,product,gain,price):
     msg = f"""سفارش محصول جدید
@@ -147,13 +166,13 @@ def send_order_message(name,phone,product,gain,price):
 نام : {name}
 شماره تماس : {phone}
 مقدار : {format_weight(gain)}
-هزینه : {format_toman(price)}"""
+هزینه : {format_toman(price)}\nلغو 11"""
     print(msg)
 
     response = sms_api.send_single_sms(
         ghasedak_sms.SendSingleSmsInput(
             message=msg,
-            receptor=product.user.phone_number,
+            receptor=str(product.user.phone_number),
             line_number='30006707215215',
             send_date='',
             client_reference_id=''

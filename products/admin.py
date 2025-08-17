@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from django.urls import reverse
 from jsoneditor.forms import JSONEditor
-
+from .addons import send_admin_notif
 from .models import (
     SeoData, Product, Ticket, BuyTicket, BlogCategories, 
     BlogPost, Resume, Education, WorkExperience, models, User , 
@@ -44,8 +44,9 @@ class CustomUserAdmin(BaseUserAdmin):
         (None, {'fields': ('username', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone_number', 'province', 'city')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined','ip_address')}),
     )
+    readonly_fields = ("ip_address",)
     list_filter = ("is_staff", "is_superuser", "is_active", "groups", "is_verified", "province")
     search_fields = ("username", "first_name", "last_name", "email", "phone_number")
     ordering = ("-date_joined",)
@@ -127,8 +128,6 @@ class TicketAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
 
-
-
 @admin.register(BlogCategories)
 class BlogCategoriesAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'get_post_count')
@@ -150,7 +149,6 @@ class BlogCategoriesAdmin(admin.ModelAdmin):
     
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
-
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
@@ -303,7 +301,7 @@ class FarmerProductAdmin(admin.ModelAdmin):
 
     list_display = ('kind', 'status', 'price', 'inventory', 'is_confirmed_status', 'jalali_date_upload','views')
     fieldsets = (
-        ('مشخصات اصلی محصول', {'fields': ('slug', 'photo', 'kind', 'status', 'ounce', 'quality', 'discription')}),
+        ('مشخصات اصلی محصول', {'fields': ('photo', 'kind', 'status', 'ounce', 'quality', 'discription')}),
         ('قیمت و موجودی', {'fields': ('price', 'inventory', 'show_inventory', 'min_order', 'max_order')}),
         ('جزئیات ارسال', {'fields': ('free_shipping', 'shipping_cost')}),
         ('اطلاعات سیستم',{'fields':('jalali_date_upload','views')}),
@@ -318,6 +316,12 @@ class FarmerProductAdmin(admin.ModelAdmin):
         return super().get_queryset(request).filter(user=request.user)
 
     def save_model(self, request, obj, form, change):
+        if not change :
+            from threading import Thread
+            Thread(target=send_admin_notif,kwargs={"mode":"new_product","product":obj}).start()
+            from products.addons import get_ip 
+            obj.ip_address = get_ip(request)
+
         if not obj.pk:
             obj.user = request.user
         obj.is_confirmed = False
@@ -343,7 +347,7 @@ class FarmerBuyTicketAdmin(admin.ModelAdmin):
         ('مشخصات خریدار', {'fields': ('name', 'phone')},),
         ('جزئیات سفارش', {'fields': ('product', 'formatted_gain', 'formatted_price')},),
         ('آدرس و کدپستی', {'fields': ('address', 'post_code')},),
-        ('اطلاعات سفارش', {'fields': ('jalali_buy_time', 'message_status')},),
+        ('اطلاعات سفارش', {'fields': ('jalali_buy_time',)},),
     )
 
     def formatted_gain(self, obj):

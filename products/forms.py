@@ -209,7 +209,22 @@ class VerifyNumberForm(forms.Form):
             raise ValidationError('کد باید به طول 6 کاراکتر باشد')
         
         return code
+
+class OTPLoginForm(forms.Form):
+    phone_number = forms.CharField(max_length=13,required=True,label='phone_number')
+
+    def clean_phone_number(self):
+        phone = (self.cleaned_data['phone_number']).strip()
+        if not phone.isdigit():
+            raise ValidationError('شماره تلفن باید فقط شامل اعداد باشد')
+        if not len(phone) == 11 :
+            raise ValidationError('شماره تلفن نامعتبر است')
+        if not User.objects.filter(phone_number=phone).exists() :
+            raise ValidationError('این شماره تلفن در سیستم وجود ندارد')
+        
+        return phone
     
+
 class SetPasswordForm(forms.Form):
     new_password1 = forms.CharField(max_length=128,required=True,label='password')
     new_password2 = forms.CharField(max_length=128,required=True,label='repassword')

@@ -59,7 +59,7 @@ class Product(models.Model):
         D4 = 'd4','درجه چهار'
 
     user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='کاربر')
-    slug = models.SlugField(allow_unicode=True,unique=True,verbose_name='اسلاگ محصول')
+    slug = models.SlugField(allow_unicode=True,unique=True,null=True,blank=True,verbose_name='اسلاگ محصول')
     photo = models.ImageField(verbose_name='عکس محصول',upload_to='prdphotos',validators=[validate_productphoto_size])
     kind = models.CharField(max_length=20,choices=ptype.choices,verbose_name='نوع پسته')
     status = models.CharField(max_length=20,choices=pstatus.choices,verbose_name='وضعیت محصول')
@@ -81,16 +81,29 @@ class Product(models.Model):
 
     def clean(self):
         super().clean()
+        #check photo
         if self.photo :
             img = Image.open(self.photo)
             if img.width > 3000 or img.height > 3000 :
                 raise ValidationError("ابعاد عکس بیش از حد بزرگ است")
             if img.height > img.width :
                 raise ValidationError("عکس عمودی است توصیه میشود عکس افقی باشد")
+        #check min order and max order
+        if self.min_order and self.max_order:
+            if self.min_order > self.max_order :
+                raise ValidationError("کف سفارش نمیتواند بیشتر از سقف سفارش باشد")
+            if self.max_order - self.min_order < 3 :
+                raise ValidationError("بازه سفارش محصول نمیتواند کمتر از 3 کیلوگرم باشد این برای کاربران گیج کننده است")
+        #check free shipping and shipping cost
+        if self.free_shipping and self.shipping_cost :
+            raise ValidationError("محصول نمیتواند هم هزینه ارسال داشته باشد هم ارسالش رایگان باشد ، لطفا از یکی از این 2 آپشن استفاده کنید")
+        
 
     def save(self,*args,**kwargs):
         if self.free_shipping :
             self.shipping_cost = None
+        if not self.slug :
+            self.is_confirmed = False
         super().save(*args,**kwargs)
     
 
@@ -109,14 +122,14 @@ class Ticket(models.Model):
 
     user = models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE,verbose_name='کاربر')
     ticket_id = models.AutoField(primary_key=True,verbose_name='شماره تیکت')
-    buyer_namelastname = models.CharField(max_length=30,verbose_name='نام خریدار') 
+    buyer_namelastname = models.CharField(max_length=30,verbose_name='نام کاربر') 
     buyer_phone = models.CharField(max_length=20,verbose_name='شماره تلفن')
     ticket_type = models.CharField(max_length=20,choices=TicketType.choices,verbose_name='نوع تیکت')
     request_title = models.CharField(max_length=20,verbose_name='عنوان تیکت')
     request_discription = models.CharField(max_length=150,verbose_name='متن درخواست')
     ticket_time = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ثبت تیکت')
     ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='أیپی')
-    message_status = models.IntegerField(null=True,blank=True,verbose_name='وضعیت ارسال پیامک')
+    message_status = models.CharField(null=True,blank=True,max_length=254,verbose_name='وضعیت ارسال پیامک')
 
     def __str__(self):
         return f"{self.ticket_type} -> by {self.buyer_namelastname} {self.buyer_phone}"
@@ -136,8 +149,8 @@ class BuyTicket(models.Model):
     post_code = models.BigIntegerField(verbose_name='کد پستی')
     address = models.CharField(max_length=1500,verbose_name='آدرس')
     buy_time = models.DateTimeField(auto_now=True,verbose_name='تاریخ سفارش')
-    ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی')
-    message_status = models.IntegerField(null=True,blank=True,verbose_name='وضعیت ارسال پیامک')
+    ip_address = models.GenericIPAddressField(null=True,blank=True,verbose_name='آیپی کاربر سفارش دهنده')
+    message_status = models.CharField(null=True,blank=True,max_length=254,verbose_name='وضعیت ارسال پیامک')
 
     def __str__(self):
         return self.name

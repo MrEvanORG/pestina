@@ -1,0 +1,33 @@
+{% extends 'l-pages/patterns/base.html' %}
+{% block meta %}پستینا - بازیابی رمز عبور{% endblock %}
+{% block title %}بازیابی رمز عبور{% endblock title %}
+{% block content %}
+{% load static %}
+    <div class="container">
+        <div class="card verification-card">
+            <h2>ورود با کد یکبار مصرف</h2>
+
+            <!-- اطلاعات راهنما -->
+            <div class="info-box">
+                لطفا شماره تلفن همراهی که با آن ثبت نام کرده اید را وارد کنید در ادامه برای شما کد تایید ارسال خواهد شد . 
+            </div>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="phone_number">شماره تلفن : </label>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="مثال : 09131234567"  required>
+                    {% if form.phone_number.errors %}
+                        <div class="error">{{ form.phone_number.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="button-container">
+                <button type="submit" class="btn">ادامه <i class="fa-solid fa-duotone fa-arrow-left-long"></i>
+                </button>
+                </div>
+            </form>
+
+            <a href="{% url 'login' %}" class="login-link">بازگشت</a>
+        </div>
+    </div>
+{% endblock %}

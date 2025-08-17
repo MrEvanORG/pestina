@@ -5,7 +5,7 @@
         <div class="card verification-card">
             <h2>تأیید شماره تلفن</h2>
             <p class="verification-text">کد پیامک‌ شده به شماره تلفن <strong>{{number}}</strong> را وارد کنید.</p>
-            <a href="{% url 'login' %}" class="login-link" style="margin-top: 0px;">شماره اشتباه است ؟</a>
+            <a href="{% url 'sign-up' %}" class="login-link" style="margin-top: 0px;">شماره اشتباه است ؟</a>
 
             <form method="POST">
                 {% csrf_token %}
@@ -24,7 +24,7 @@
                     {% endif %}
                     <p id="otp-message" style="color:var(--secondary-color); font-weight:bold;"></p>
                 </div>
-                <div class="button-container">
+                <div class="button-container" style="flex-direction:column;align-items:center;">
                     <button id="resend-btn" class="btn" type="button" disabled>
                         تلاش مجدد تا <span id="timer">{{ retry_seconds }}</span> ثانیه دیگر
                     </button>
