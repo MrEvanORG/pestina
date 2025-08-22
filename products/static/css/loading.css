@@ -49,7 +49,7 @@
 .spinner-line {
   width: 100px;
   height: 6px;
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   border-radius: 40px;
   animation: pulse 1.5s infinite ease-in-out;
 }
@@ -58,15 +58,15 @@
 @keyframes pulse {
   0% {
     transform: scaleX(0.4);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
   50% {
     transform: scaleX(1);
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
   }
   100% {
     transform: scaleX(0.4);
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 }
 

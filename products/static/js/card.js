@@ -15,9 +15,9 @@ function toggleDetails(button) {
         if (otherRibbon !== ribens) {
             otherRibbon.classList.remove('active');
         }
-        if (otherButton !== button) {
-            otherButton.textContent = 'جزئیات ▼';
-        }
+        // if (otherButton !== button) {
+        //     otherButton.textContent = 'جزئیات ▼';
+        // }
     });
 
     // تغییر وضعیت کارت فعلی
@@ -25,9 +25,9 @@ function toggleDetails(button) {
     ribens.classList.toggle('active');
 
     // متن دکمه فعلی
-    if (detailsContent.classList.contains('active')) {
-        button.textContent = '➜';
-    } else {
-        button.textContent = 'جزئیات ▼';
-    }
+    // if (detailsContent.classList.contains('active')) {
+    //     button.textContent = '➜';
+    // } else {
+    //     button.textContent = 'جزئیات ▼';
+    // }
 }

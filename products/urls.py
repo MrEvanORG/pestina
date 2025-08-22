@@ -4,6 +4,9 @@ from django.contrib import admin
 
 urlpatterns = [
     path('',views.homepage,name='home'),
+
+    path('send-sms-to-users/', views.send_sms_page_view, name='send_sms_page'),
+
     path('send-otp/',addons.send_otp,name='send-otp'),
     path('login/',views.login_page,name='login'),
     path('login/otp-login',views.otp_login,name='otp-login'),

@@ -2,11 +2,12 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
 from django.shortcuts import render ,get_object_or_404 , redirect
 from django.http import HttpResponse
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.models import Group
+from django.contrib.admin.views.decorators import staff_member_required
 #----------------------------------------------------------#
 from .models import Product , Ticket ,BuyTicket , User ,Resume
 from .forms import *
@@ -19,13 +20,58 @@ from time import sleep
 def homepage(request):
     return render(request,'index.html')
 
+
 def view_products(request):
-    prd = Product.objects.all()
-    pagin = Paginator(prd,6)
+    products = Product.objects.filter(is_confirmed=True)  # فقط محصولات تایید شده
+    
+    # اعمال فیلترها
+    is_pestina = request.GET.get('is_pestina_product', '').lower() == 'true'
+    free_shipping = request.GET.get('free_shipping', '').lower() == 'true'
+    kind = request.GET.get('kind', '')
+    status = request.GET.get('status', '')
+    quality = request.GET.get('quality', '')
+    
+    if is_pestina:
+        products = products.filter(is_pestina_product=True)
+    if free_shipping:
+        products = products.filter(free_shipping=True)
+    if kind:
+        products = products.filter(kind=kind)
+    if status:
+        products = products.filter(status=status)
+    if quality:
+        products = products.filter(quality=quality)
+    
+    # اعمال مرتب‌سازی
+    sort_by = request.GET.get('sort', '-upload_time')  # پیش‌فرض: جدیدترین
+    if sort_by:
+        products = products.order_by(sort_by)
+    
+    # صفحه‌بندی
+    paginator = Paginator(products, 6)
     page_number = request.GET.get('page')
-    page_obj = pagin.get_page(page_number)
-    context = {'prd': page_obj}
-    return render(request,'products.html',context)
+    
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    
+    context = {
+        'prd': page_obj,
+        'product_ptype_choices': Product.ptype.choices,
+        'product_pstatus_choices': Product.pstatus.choices,
+        'product_pquality_choices': Product.pquality.choices,
+        'filter_kind': kind,
+        'filter_status': status,
+        'filter_quality': quality,
+        'filter_pestina': is_pestina,
+        'filter_free_shipping': free_shipping,
+        'sort_by': request.GET.get('sort', ''),
+    }
+    
+    return render(request, 'products.html', context)
 
 def about_us(request):
     # تمام رزومه‌ها را از دیتابیس بگیرید
@@ -351,7 +397,17 @@ def buy_product1(request,slug):
     if order_data:
         del request.session["form-data"]
     
-    prd = get_object_or_404(Product,slug=slug)
+    try:
+        prd = Product.objects.get(slug=slug)
+    except Product.DoesNotExist:
+        return redirect(reverse('products'))
+
+    if not prd.is_confirmed:
+        has_confirmed = Product.objects.filter(kind=prd.kind, is_confirmed=True).exists()
+        if has_confirmed:
+            return redirect(f"{reverse('products')}?kind={prd.kind}")
+        else:
+            return redirect(reverse('products'))
 
     if request.method == 'POST':
         
@@ -479,3 +535,82 @@ def unknown_error(request, exception=None, status_code=500):
                 }
     return render(request, 'error_page.html',status=status_code ,context=context)
 # ------------------- Error Pages ------------------------->
+
+@staff_member_required
+def send_sms_page_view(request):
+    user_ids = request.session.get('selected_user_ids_for_sms')
+    
+    if not user_ids:
+        messages.error(request, 'کاربری انتخاب نشده یا نشست شما منقضی شده است.')
+        return HttpResponseRedirect(reverse('admin:products_user_changelist'))
+
+    users = User.objects.filter(id__in=user_ids)
+    
+    if request.method == 'POST':
+        form = SmsForm(request.POST)
+        if form.is_valid():
+            message_template = form.cleaned_data['message']
+            results = []
+            success_count = 0
+            fail_count = 0
+
+            for user in users:
+                # ساخت متن پیامک برای هر کاربر با استفاده از متغیرها
+                final_message = message_template.format(user=user)
+                
+                try:
+                    response = sms_api.send_single_sms(
+                        ghasedak_sms.SendSingleSmsInput(
+                            message=final_message,
+                            receptor=str(user.phone_number),
+                            line_number='30006707215215',
+                        )
+                    )
+
+                    if response.get('isSuccess'):
+                        success_count += 1
+                        status = 'موفق'
+                    else:
+                        fail_count += 1
+                        status = 'ناموفق'
+
+                    results.append({
+                        'user_id': user.id,
+                        'full_name': user.get_full_name() or user.username,
+                        'phone_number': user.phone_number,
+                        'sms_text' : final_message , 
+                        'status': status,
+                        'reason': response.get('message', 'خطای نامشخص')
+                    })
+
+                except Exception as e:
+                    # برای خطاهای کلی در ارتباط با سرویس پیامک
+                    fail_count += 1
+                    results.append({
+                        'user_id': user.id,
+                        'full_name': user.get_full_name() or user.username,
+                        'phone_number': user.phone_number,
+                        'status': 'ناموفق',
+                        'reason': f'خطای سیستمی: {str(e)}'
+                    })
+
+            # پاک کردن سشن بعد از اتمام عملیات
+            del request.session['selected_user_ids_for_sms']
+            
+            context = {
+                'title': 'گزارش نهایی ارسال پیامک',
+                'results': results,
+                'success_count': success_count,
+                'fail_count': fail_count,
+                'total_count': len(users)
+            }
+            return render(request, 'admin/sms_results.html', context)
+    else:
+        form = SmsForm()
+
+    context = {
+        'title': f'ارسال پیامک به {len(users)} کاربر',
+        'users': users,
+        'form': form,
+    }
+    return render(request, 'admin/send_sms_form.html', context)

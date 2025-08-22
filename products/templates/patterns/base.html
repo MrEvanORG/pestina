@@ -20,61 +20,58 @@
         <link href="{% static 'awesome-css/duotone.min.css' %}" rel="stylesheet"/>
         <link href="{% static 'awesome-css/fontawesome.min.css' %}" rel="stylesheet"/>
         <link href="{% static 'awesome-css/brands.css' %}" rel="stylesheet"/>
-        <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet"/>
-
-
-
-        <script src="{% static 'js/theme-toggle.js' %}" defer></script>
-        <script src="{% static 'js/loading.js' %}"></script>
-        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> 
-        <script src="{% static 'js/jquery.min.js' %}"></script>
-        <script src="{% static 'js/jquery.sticky.js' %}"></script>
-        <script src="{% static 'js/custom.js' %}"></script>
-        <script src="{% static 'js/click-scroll.js' %}"></script>
-         
-        {% block script %}{% endblock %}
+        <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet"/>         
     </head>
 
     {% block typebody %}{% endblock %}
-    {% include "patterns/loading.html" %}
-    <main>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                
-                <a class="navbar-brand" href="#">
-                    <img class="themed-image" src="{% static 'images/light/light-logo.svg' %}" alt="پستینا" style="width: 113px ;height: auto;"
-                        data-light = "{% static 'images/light/light-logo.svg' %}"
-                        data-light2 = "{% static 'images/light-2/light-logo-2.svg' %}"
-                        data-dark = "{% static 'images/dark/dark-logo.svg' %}" />
-                </a>
-                <div class="d-lg-none ms-auto me-4" style="display: flex;align-items:center;">
-                    <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}" ></a>
-                    {% if user.is_authenticated %}
-                    <h6 class="login-text" ><a href="{% url 'login' %}">{{user.first_name}} {{user.last_name}}</a></h6>
-                    {% else %}
-                    <h6 class="login-text" ><a href="{% url 'login' %}">ورود | ثبت نام</a></h6>
-                    {% endif %}
-                </div>
-
-                <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                        {% block navitem %}{% endblock %}
-                    <div class="d-none d-lg-block">
-                        <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}"></a>
+        {% include "patterns/loading.html" %}
+        <main>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    
+                    <a class="navbar-brand" href="#">
+                        <img class="themed-image" src="{% static 'images/light/light-logo.svg' %}" alt="پستینا" style="width: 113px ;height: auto;"
+                            data-light = "{% static 'images/light/light-logo.svg' %}"
+                            data-light2 = "{% static 'images/light-2/light-logo-2.svg' %}"
+                            data-dark = "{% static 'images/dark/dark-logo.svg' %}" />
+                    </a>
+                    {% comment %} <div class="d-lg-none ms-auto me-4" style="display: flex;align-items:center;"> {% endcomment %}
+                    <div class="d-lg-none" style="display: flex;align-items:center;">
+                        <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}" ></a>
+                        {% if user.is_authenticated %}
+                        <h6 class="login-text" ><a href="{% url 'login' %}">{{user.first_name}} {{user.last_name}}</a></h6>
+                        {% else %}
+                        <h6 class="login-text" ><a href="{% url 'login' %}">ورود | ثبت نام</a></h6>
+                        {% endif %}
                     </div>
-                    {% if user.is_authenticated %}
-                        <h6 class="login-text" id="main"><a href="{% url 'login' %}">{{user.first_name}} {{user.last_name}}</a></h6>
-                    {% else %}
-                        <h6 class="login-text" id="main"><a href="{% url 'login' %}">ورود   | ثبت نام</a></h6>
-                    {% endif %}
+
+                    <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                            {% block navitem %}{% endblock %}
+                        <div class="d-none d-lg-block">
+                            <a class="navbar-icon bi-person smoothscroll" href="{% url 'login' %}"></a>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <h6 class="login-text" id="main"><a href="{% url 'login' %}">{{user.first_name}} {{user.last_name}}</a></h6>
+                        {% else %}
+                            <h6 class="login-text" id="main"><a href="{% url 'login' %}">ورود   | ثبت نام</a></h6>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        </nav>
-        {% block header %}{% endblock %}
-        {% block content %}{% endblock %}
-        {% include "patterns/footer.html" %}
-        {% include "patterns/floating-menu.html" %}
-</body>
+            </nav>
+            {% block header %}{% endblock %}
+            {% block content %}{% endblock %}
+            {% include "patterns/footer.html" %}
+            {% include "patterns/floating-menu.html" %}
+    </body>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/click-scroll.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}" defer></script>
+    <script src="{% static 'js/loading.js' %}"></script>
+    {% block script %}{% endblock %}
 </html>

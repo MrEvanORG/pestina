@@ -4,6 +4,60 @@ import jdatetime
 
 register = template.Library()
 
+@register.simple_tag
+def generate_filter_title(kind, quality, status, is_pestina, free_shipping):
+    parts = []
+    
+    # دیکشنری ترجمه انواع پسته
+    kind_dict = {
+        'akbari': 'اکبری',
+        'fandoghi': 'فندوقی',
+        'ahmadaghaii': 'احمد آقایی',
+        'kaleghoochi': 'کله قوچی',
+        'shahpasand': 'شاه پسند',
+        'sefid': 'سفید',
+        'badami': 'بادامی',
+        'khanjari': 'خنجری',
+        'makhloot': 'مخلوط'
+    }
+    
+    # دیکشنری ترجمه کیفیت‌ها
+    quality_dict = {
+        'd1': 'درجه یک',
+        'd2': 'درجه دو',
+        'd3': 'درجه سه',
+        'd4': 'درجه چهار'
+    }
+    
+    # دیکشنری ترجمه وضعیت‌ها
+    status_dict = {
+        'khandan': 'خندان',
+        'dahanbast': 'دهن بست',
+        'abkhandan': 'آب خندان',
+        'tarkibi': 'ترکیبی'
+    }
+    
+    if kind:
+        parts.append(f"{kind_dict.get(kind, '')}")
+    
+    if status:
+        parts.append(status_dict.get(status, ''))
+        
+    if quality:
+        parts.append(quality_dict.get(quality, ''))
+    
+    
+    if is_pestina is True or str(is_pestina).lower() == 'true':
+        parts.append("پستینا")
+    
+    if free_shipping is True or str(free_shipping).lower() == 'true':
+        parts.append("با ارسال رایگان")
+    
+    if parts :
+        parts.insert(0,"پسته های")
+    
+    return "لیست " + " ".join(filter(None, parts)) if parts else "لیست محصولات"
+
 @register.filter
 def format_weight(value):
     try:
@@ -106,3 +160,4 @@ def time_ago(value):
             return f"{years} سال پیش"
     except Exception:
         return ""
+    

@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 import os
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # )
 # print(STATICFILES_DIRS)
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m9nu_q3511xj4kkezhhr_nwt4q_4#)7k+8ki1=5%10mc+-3%0t'
+SECRET_KEY = config("DJANGO_SECRET_KEY")
+print(SECRET_KEY)
+# SECRET_KEY = 'django-insecure-m9nu_q3511xj4kkezhhr_nwt4q_4#)7k+8ki1=5%10mc+-3%0t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -95,9 +98,9 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'pestina2_django',
-#         'USER':'pestina2_ehsan',
-#         'PASSWORD':'Qou)G++M=LtupiRL',
+#         'NAME': config("DATABASE_NAME", default="db.sqlite3"),
+#         'USER': config("DATABASE_USER", default=""),
+#         'PASSWORD': config("DATABASE_PASSWORD", default=""),
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #         'OPTIONS': {

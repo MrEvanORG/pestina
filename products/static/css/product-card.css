@@ -1,5 +1,5 @@
 :root{
-  --accent-color: #c49b9b;
+  --accent-color: #be7878;
   --light-text: #fff;
   --shadow: 0 10px 20px rgba(100, 100, 100, 0.1);
   --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -117,15 +117,16 @@
 
 
 .details-btn {
+  background-color: var(--secondary-color) !important;
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: var(--section-gb-color);
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  padding: 6px 10px;
+  top: -18px;
+  right: -23px;
+  /* background: var(--section-bg-color); */
+  color: var(--white-color);
+  border: 1px solid var(--secondary-color);
+  padding: 30px 32px 18px 22px;
   border-radius: var(--border-radius-large);
-  font-size: 12px;
+  font-size: 18px;
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
   z-index: 8;
@@ -135,7 +136,7 @@
 
 .details-btn:hover {
   background: var(--primary-color);
-  color: white;
+  color: var(--primary-color);
 }
 
 .ribbon-container {

@@ -6,6 +6,14 @@ from django.core.exceptions import ValidationError
 from products.templatetags.custom_filters import format_weight
 #---------------------------------------------------
 
+
+class SmsForm(forms.Form):
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 6, 'cols': 80}),
+        label='متن پیامک',
+        help_text='می‌توانید از متغیرهایی مانند {user.first_name}, {user.last_name}, {user.phone_number} در متن پیام استفاده کنید.'
+    )
+
 #  ------ ticket forms {  
 class OrderForm(forms.Form):
     buyer_namelastname = forms.CharField(max_length=30, required=True, label='نام و نام خانوادگی')

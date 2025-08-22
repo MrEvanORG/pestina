@@ -1,16 +1,13 @@
 {% extends 'patterns/base.html' %}
 {% load static %}
-{% block meta %}لیست محصولات پستینا - خرید پسته های با کیفیت و درجه یک از کشاورزان سراسر کشور{% endblock %}
 {% load custom_filters %}
+{% block meta %}لیست محصولات پستینا - خرید پسته های با کیفیت و درجه یک از کشاورزان سراسر کشور{% endblock %}
 
 {% block title %}قیمت و خرید انواع پسته اکبری فندوقی  کله قوچی و ... | محصولات پستینا{% endblock title %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/product-card.css' %}" />
-{% endblock %}
-
-{% block script %}
-    <script src="{% static 'js/card.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'css/filter-bar.css' %}" />
 {% endblock %}
 
 {% block typebody %}
@@ -62,7 +59,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-5 col-12">
-                <h2 class="text-white">محصولات / لیست محصولات</h2>
+                <h2 class="text-white">محصولات / خرید پسته عمده </h2>
             </div>
         </div>
     </div>
@@ -72,11 +69,95 @@
 {% block content %}
 <section class="section-padding" style="display: grid; justify-items: center;">
     <div class="container">
+
+<div class="filter-wrapper">
+    <!-- دکمه همبرگر فقط برای موبایل -->
+    <button class="filter-toggle-btn d-lg-none" aria-expanded="false" aria-label="فیلترها">
+        <i class="fa-solid fa-duotone fa-bars"></i>
+        <span>فیلتر و مرتب‌سازی</span>
+    </button>
+    
+    <!-- پنل فیلتر اصلی -->
+    <div class="filter-container">
+        <div class="filter-header">
+            <h3>فیلتر و مرتب‌سازی محصولات</h3>
+            <button class="clear-filters">حذف فیلترها</button>
+        </div>
+        
+        <div class="filter-section">
+            <div class="filter-group toggle-group">
+                <label class="toggle-label">محصولات پستینا :</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" name="is_pestina_product" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="filter-group toggle-group">
+                <label class="toggle-label">ارسال رایگان :</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" name="free_shipping" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="filter-group toggle-group">
+                <label class="toggle-label">فقط محصولات موجود :</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" name="free_shipping" class="toggle-input">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="filter-group">
+                <label for="kind">نوع پسته :</label>
+                <select id="kind" name="kind" class="filter-select">
+                    <option value="">همه انواع</option>
+                    {% for value, label in product_ptype_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="status">وضعیت محصول :</label>
+                <select id="status" name="status" class="filter-select">
+                    <option value="">همه وضعیت‌ها</option>
+                    {% for value, label in product_pstatus_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="quality">کیفیت :</label>
+                <select id="quality" name="quality" class="filter-select">
+                    <option value="">همه کیفیت‌ها</option>
+                    {% for value, label in product_pquality_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="sort-section">
+            <label>مرتب‌سازی بر اساس :</label>
+            <div class="sort-options">
+                <button class="sort-btn" data-sort="views">پر بازدیدترین</button>
+                <button class="sort-btn" data-sort="-price">گران‌ترین</button>
+                <button class="sort-btn" data-sort="price">ارزان‌ترین</button>
+            </div>
+        </div>
+    </div>
+</div>
+
         <div class="row">
             <div class="col-lg-12 col-12 text-center">
-                {% if prd %}
-                    <h3 class="mb-4">محصولات</h3>
-                </div>
+                <h3 class="mb-4">
+                    {% generate_filter_title filter_kind filter_quality filter_status filter_pestina|yesno:"True,False" filter_free_shipping|yesno:"True,False" %}
+                </h3>           
+            </div>
+            {% if prd %}
 
                 <div class="product-card-wrapper">
                     <div class="p-card-body">
@@ -84,7 +165,7 @@
                             {% for p in prd %}
                                 {% if p.is_confirmed %}
                                 <div class="product-card">
-                                    <button class="details-btn" onclick="toggleDetails(this)">جزئیات ▼</button>
+                                    <button class="details-btn" onclick="toggleDetails(this)"><i class="fa-solid fa-duotone fa-info-circle fa-xl"></i></button>
 
                                     <div class="ribbon-container">
                                         {% if p.free_shipping %}
@@ -129,7 +210,7 @@
                                                 </div>
                                             {% else %}
                                                 <div class="product-price seller">
-                                                    فروشنده : {{p.user.first_name}} {{ p.user.last_name }} از {{p.user.city}}
+                                                    فروشنده : {{ p.user.last_name }} از {{p.user.city}}
                                                 </div>
                                             {% endif %}
                                             <div class="product-price">{{ p.price | format_cost_number }} هرکیلو تومان</div>
@@ -197,7 +278,11 @@
                 </div>
                 
                 {% else %}
-                    <h6>متاسفانه هنوز محصولی موجود نیست</h6>
+                <div class="col-lg-12 col-12 text-center">
+                    <h6 class="mt-4">
+                        محصولی با ویژگی های ذکر شده یافت نشد !
+                    </h6>           
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -214,3 +299,7 @@
 </section>
 </main>
 {% endblock content %}
+{% block script %}
+<script src="{% static 'js/filter-bar.js' %}"></script>
+<script src="{% static 'js/card.js' %}" defer></script>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 from jsoneditor.forms import JSONEditor
 from .addons import send_admin_notif
 from .models import (
@@ -36,6 +37,8 @@ class SeoDataAdmin(admin.ModelAdmin):
     
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+
 
 @admin.register(User)
 class CustomUserAdmin(BaseUserAdmin):
@@ -62,6 +65,17 @@ class CustomUserAdmin(BaseUserAdmin):
     
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
+    
+    actions = ['send_custom_sms']
+
+    @admin.action(description='ارسال پیامک سفارشی به کاربران')
+    def send_custom_sms(self, request, queryset):
+        # ID کاربران انتخاب شده را در سشن ذخیره می‌کنیم
+        selected_ids = list(queryset.values_list('id', flat=True))
+        request.session['selected_user_ids_for_sms'] = selected_ids
+        
+        # کاربر را به صفحه فرم ارسال پیامک هدایت می‌کنیم
+        return HttpResponseRedirect(reverse('send_sms_page'))
     
 @admin.register(Product)
 class SuperUserProductAdmin(admin.ModelAdmin):

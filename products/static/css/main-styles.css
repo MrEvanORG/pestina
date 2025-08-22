@@ -328,7 +328,7 @@ strong {
 .navbar {
   background: transparent;
   border-bottom: 1px solid rgba(128, 208, 199, 0.35);
-  z-index: 9;
+  z-index: 12;
 }
 
 .navbar-brand,
@@ -730,7 +730,11 @@ blockquote {
 }
 
 .custom-block-topics-listing {
+
   height: inherit;
+}
+.custom-block-topics-listing:hover {
+  background-color: var(--white-color);
 }
 
 .custom-block-topics-listing .custom-block-image {
@@ -889,8 +893,8 @@ blockquote {
 }
 
 .faq-section .accordion-button {
-  font-size: var(--h6-font-size);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-bold);
 }
 
 .faq-section .accordion-item:first-of-type .accordion-button {
@@ -1124,6 +1128,10 @@ blockquote {
   margin-right: 5px;
 }
 
+.login-text a{
+  font-weight: 500;
+}
+
 
 .filter-btn.active {
   background-color: var(--primary-color);
@@ -1313,7 +1321,7 @@ blockquote {
     
   .timeline-container .vertical-scrollable-timeline li {
     position: relative;
-    padding: 17px 110px 40px 39px;
+    padding: 17px 110px 40px 0px;
   }
   .col-12 {
     flex: 0 0 auto;
@@ -1333,6 +1341,13 @@ blockquote {
     max-width: 100%; /* Ensure images don't exceed the screen width */
     height: auto;
   }
+  /* for hiding and new change for navbar */
+  .sticky-wrapper .navbar-brand{
+    display: none;
+  }
+  .sticky-wrapper .container{
+    flex-direction: row-reverse;
+  }
   h1 {
     font-size: 34px;
   }
@@ -1343,6 +1358,7 @@ blockquote {
 
   h3 {
     font-size: 24px;
+    line-height: normal;
   }
 
   h4 {
